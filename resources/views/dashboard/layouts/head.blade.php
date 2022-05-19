@@ -12,7 +12,7 @@
 <meta name="csrf-token" content="{{ csrf_token() }}">
 
 <meta name="mobile-web-app-capable" content="yes">
-<link rel="shortcut icon" sizes="196x196" href="{{ asset('assets/dashboard/images/logo.png') }}">
+<link rel="shortcut icon" sizes="196x196" href="{{ asset('assets/dashboard/images/favicon.png') }}">
 @stack('before-styles')
 <link rel="stylesheet" href="{{ asset('assets/dashboard/css/animate.css/animate.min.css') }}" type="text/css"/>
 <link rel="stylesheet" href="{{ asset('assets/dashboard/css/animate.css/animate.min.css') }}" type="text/css"/>
