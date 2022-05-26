@@ -37,195 +37,193 @@ $mnu_title_var2 = 'title_' . env('DEFAULT_LANGUAGE');
                     </li>
 
 
-                    @if (env('GEOIP_STATUS', false))
-                        @if (Helper::GeneralWebmasterSettings('analytics_status'))
-                            @if (@Auth::user()->permissionsGroup->analytics_status)
-                                <?php
-                                $currentFolder = 'analytics'; // Put folder name here
-                                $PathCurrentFolder = substr($urlAfterRoot, 0, strlen($currentFolder));
+{{--                    @if (env('GEOIP_STATUS', false))--}}
+{{--                        @if (Helper::GeneralWebmasterSettings('analytics_status'))--}}
+{{--                            @if (@Auth::user()->permissionsGroup->analytics_status)--}}
+{{--                                <?php--}}
+{{--                                $currentFolder = 'analytics'; // Put folder name here--}}
+{{--                                $PathCurrentFolder = substr($urlAfterRoot, 0, strlen($currentFolder));--}}
 
-                                $currentFolder2 = 'ip'; // Put folder name here
-                                $PathCurrentFolder2 = substr($urlAfterRoot, 0, strlen($currentFolder2));
+{{--                                $currentFolder2 = 'ip'; // Put folder name here--}}
+{{--                                $PathCurrentFolder2 = substr($urlAfterRoot, 0, strlen($currentFolder2));--}}
 
-                                $currentFolder3 = 'visitors'; // Put folder name here
-                                $PathCurrentFolder3 = substr($urlAfterRoot, 0, strlen($currentFolder3));
-                                ?>
-                                <li
-                                    {{ $PathCurrentFolder == $currentFolder || $PathCurrentFolder2 == $currentFolder2 || $PathCurrentFolder3 == $currentFolder3 ? 'class=active' : '' }}>
-                                    <a>
-                                        <span class="nav-caret">
-                                            <i class="fa fa-caret-down"></i>
-                                        </span>
-                                        <span class="nav-icon">
-                                            <i class="material-icons">&#xe1b8;</i>
-                                        </span>
-                                        <span class="nav-text">{{ __('backend.visitorsAnalytics') }}</span>
-                                    </a>
-                                    <ul class="nav-sub">
-                                        <li>
-                                            <a onclick="location.href='{{ route('analytics', 'date') }}'">
-                                                <span
-                                                    class="nav-text">{{ __('backend.visitorsAnalyticsBydate') }}</span>
-                                            </a>
-                                        </li>
+{{--                                $currentFolder3 = 'visitors'; // Put folder name here--}}
+{{--                                $PathCurrentFolder3 = substr($urlAfterRoot, 0, strlen($currentFolder3));--}}
+{{--                                ?>--}}
+{{--                                <li--}}
+{{--                                    {{ $PathCurrentFolder == $currentFolder || $PathCurrentFolder2 == $currentFolder2 || $PathCurrentFolder3 == $currentFolder3 ? 'class=active' : '' }}>--}}
+{{--                                    <a>--}}
+{{--                                        <span class="nav-caret">--}}
+{{--                                            <i class="fa fa-caret-down"></i>--}}
+{{--                                        </span>--}}
+{{--                                        <span class="nav-icon">--}}
+{{--                                            <i class="material-icons">&#xe1b8;</i>--}}
+{{--                                        </span>--}}
+{{--                                        <span class="nav-text">{{ __('backend.visitorsAnalytics') }}</span>--}}
+{{--                                    </a>--}}
+{{--                                    <ul class="nav-sub">--}}
+{{--                                        <li>--}}
+{{--                                            <a onclick="location.href='{{ route('analytics', 'date') }}'">--}}
+{{--                                                <span--}}
+{{--                                                    class="nav-text">{{ __('backend.visitorsAnalyticsBydate') }}</span>--}}
+{{--                                            </a>--}}
+{{--                                        </li>--}}
 
-                                        <?php
-                                        $currentFolder = 'analytics/country'; // Put folder name here
-                                        $PathCurrentFolder = substr($urlAfterRoot, 0, strlen($currentFolder));
-                                        ?>
-                                        <li {{ $PathCurrentFolder == $currentFolder ? 'class=active' : '' }}>
-                                            <a onclick="location.href='{{ route('analytics', 'country') }}'">
-                                                <span
-                                                    class="nav-text">{{ __('backend.visitorsAnalyticsByCountry') }}</span>
-                                            </a>
-                                        </li>
+{{--                                        <?php--}}
+{{--                                        $currentFolder = 'analytics/country'; // Put folder name here--}}
+{{--                                        $PathCurrentFolder = substr($urlAfterRoot, 0, strlen($currentFolder));--}}
+{{--                                        ?>--}}
+{{--                                        <li {{ $PathCurrentFolder == $currentFolder ? 'class=active' : '' }}>--}}
+{{--                                            <a onclick="location.href='{{ route('analytics', 'country') }}'">--}}
+{{--                                                <span--}}
+{{--                                                    class="nav-text">{{ __('backend.visitorsAnalyticsByCountry') }}</span>--}}
+{{--                                            </a>--}}
+{{--                                        </li>--}}
 
-                                        <?php
-                                        $currentFolder = 'analytics/city'; // Put folder name here
-                                        $PathCurrentFolder = substr($urlAfterRoot, 0, strlen($currentFolder));
-                                        ?>
-                                        <li {{ $PathCurrentFolder == $currentFolder ? 'class=active' : '' }}>
-                                            <a onclick="location.href='{{ route('analytics', 'city') }}'">
-                                                <span
-                                                    class="nav-text">{{ __('backend.visitorsAnalyticsByCity') }}</span>
-                                            </a>
-                                        </li>
+{{--                                        <?php--}}
+{{--                                        $currentFolder = 'analytics/city'; // Put folder name here--}}
+{{--                                        $PathCurrentFolder = substr($urlAfterRoot, 0, strlen($currentFolder));--}}
+{{--                                        ?>--}}
+{{--                                        <li {{ $PathCurrentFolder == $currentFolder ? 'class=active' : '' }}>--}}
+{{--                                            <a onclick="location.href='{{ route('analytics', 'city') }}'">--}}
+{{--                                                <span--}}
+{{--                                                    class="nav-text">{{ __('backend.visitorsAnalyticsByCity') }}</span>--}}
+{{--                                            </a>--}}
+{{--                                        </li>--}}
 
-                                        <?php
-                                        $currentFolder = 'analytics/os'; // Put folder name here
-                                        $PathCurrentFolder = substr($urlAfterRoot, 0, strlen($currentFolder));
-                                        ?>
-                                        <li {{ $PathCurrentFolder == $currentFolder ? 'class=active' : '' }}>
-                                            <a onclick="location.href='{{ route('analytics', 'os') }}'">
-                                                <span
-                                                    class="nav-text">{{ __('backend.visitorsAnalyticsByOperatingSystem') }}</span>
-                                            </a>
-                                        </li>
+{{--                                        <?php--}}
+{{--                                        $currentFolder = 'analytics/os'; // Put folder name here--}}
+{{--                                        $PathCurrentFolder = substr($urlAfterRoot, 0, strlen($currentFolder));--}}
+{{--                                        ?>--}}
+{{--                                        <li {{ $PathCurrentFolder == $currentFolder ? 'class=active' : '' }}>--}}
+{{--                                            <a onclick="location.href='{{ route('analytics', 'os') }}'">--}}
+{{--                                                <span--}}
+{{--                                                    class="nav-text">{{ __('backend.visitorsAnalyticsByOperatingSystem') }}</span>--}}
+{{--                                            </a>--}}
+{{--                                        </li>--}}
 
-                                        <?php
-                                        $currentFolder = 'analytics/browser'; // Put folder name here
-                                        $PathCurrentFolder = substr($urlAfterRoot, 0, strlen($currentFolder));
-                                        ?>
-                                        <li {{ $PathCurrentFolder == $currentFolder ? 'class=active' : '' }}>
-                                            <a onclick="location.href='{{ route('analytics', 'browser') }}'">
-                                                <span
-                                                    class="nav-text">{{ __('backend.visitorsAnalyticsByBrowser') }}</span>
-                                            </a>
-                                        </li>
+{{--                                        <?php--}}
+{{--                                        $currentFolder = 'analytics/browser'; // Put folder name here--}}
+{{--                                        $PathCurrentFolder = substr($urlAfterRoot, 0, strlen($currentFolder));--}}
+{{--                                        ?>--}}
+{{--                                        <li {{ $PathCurrentFolder == $currentFolder ? 'class=active' : '' }}>--}}
+{{--                                            <a onclick="location.href='{{ route('analytics', 'browser') }}'">--}}
+{{--                                                <span--}}
+{{--                                                    class="nav-text">{{ __('backend.visitorsAnalyticsByBrowser') }}</span>--}}
+{{--                                            </a>--}}
+{{--                                        </li>--}}
 
-                                        <?php
-                                        $currentFolder = 'analytics/referrer'; // Put folder name here
-                                        $PathCurrentFolder = substr($urlAfterRoot, 0, strlen($currentFolder));
-                                        ?>
-                                        <li {{ $PathCurrentFolder == $currentFolder ? 'class=active' : '' }}>
-                                            <a onclick="location.href='{{ route('analytics', 'referrer') }}'">
-                                                <span
-                                                    class="nav-text">{{ __('backend.visitorsAnalyticsByReachWay') }}</span>
-                                            </a>
-                                        </li>
-                                        <?php
-                                        $currentFolder = 'analytics/hostname'; // Put folder name here
-                                        $PathCurrentFolder = substr($urlAfterRoot, 0, strlen($currentFolder));
-                                        ?>
-                                        <li {{ $PathCurrentFolder == $currentFolder ? 'class=active' : '' }}>
-                                            <a onclick="location.href='{{ route('analytics', 'hostname') }}'">
-                                                <span
-                                                    class="nav-text">{{ __('backend.visitorsAnalyticsByHostName') }}</span>
-                                            </a>
-                                        </li>
-                                        <?php
-                                        $currentFolder = 'analytics/org'; // Put folder name here
-                                        $PathCurrentFolder = substr($urlAfterRoot, 0, strlen($currentFolder));
-                                        ?>
-                                        <li {{ $PathCurrentFolder == $currentFolder ? 'class=active' : '' }}>
-                                            <a onclick="location.href='{{ route('analytics', 'org') }}'">
-                                                <span
-                                                    class="nav-text">{{ __('backend.visitorsAnalyticsByOrganization') }}</span>
-                                            </a>
-                                        </li>
-                                        <?php
-                                        $currentFolder = 'visitors'; // Put folder name here
-                                        $PathCurrentFolder = substr($urlAfterRoot, 0, strlen($currentFolder));
-                                        ?>
-                                        <li {{ $PathCurrentFolder == $currentFolder ? 'class=active' : '' }}>
-                                            <a onclick="location.href='{{ route('visitors') }}'">
-                                                <span
-                                                    class="nav-text">{{ __('backend.visitorsAnalyticsVisitorsHistory') }}</span>
-                                            </a>
-                                        </li>
-                                        <?php
-                                        $currentFolder = 'ip'; // Put folder name here
-                                        $PathCurrentFolder = substr($urlAfterRoot, 0, strlen($currentFolder));
-                                        ?>
-                                        <li {{ $PathCurrentFolder == $currentFolder ? 'class=active' : '' }}>
-                                            <a href="{{ route('visitorsIP') }}">
-                                                <span
-                                                    class="nav-text">{{ __('backend.visitorsAnalyticsIPInquiry') }}</span>
-                                            </a>
-                                        </li>
+{{--                                        <?php--}}
+{{--                                        $currentFolder = 'analytics/referrer'; // Put folder name here--}}
+{{--                                        $PathCurrentFolder = substr($urlAfterRoot, 0, strlen($currentFolder));--}}
+{{--                                        ?>--}}
+{{--                                        <li {{ $PathCurrentFolder == $currentFolder ? 'class=active' : '' }}>--}}
+{{--                                            <a onclick="location.href='{{ route('analytics', 'referrer') }}'">--}}
+{{--                                                <span--}}
+{{--                                                    class="nav-text">{{ __('backend.visitorsAnalyticsByReachWay') }}</span>--}}
+{{--                                            </a>--}}
+{{--                                        </li>--}}
+{{--                                        <?php--}}
+{{--                                        $currentFolder = 'analytics/hostname'; // Put folder name here--}}
+{{--                                        $PathCurrentFolder = substr($urlAfterRoot, 0, strlen($currentFolder));--}}
+{{--                                        ?>--}}
+{{--                                        <li {{ $PathCurrentFolder == $currentFolder ? 'class=active' : '' }}>--}}
+{{--                                            <a onclick="location.href='{{ route('analytics', 'hostname') }}'">--}}
+{{--                                                <span--}}
+{{--                                                    class="nav-text">{{ __('backend.visitorsAnalyticsByHostName') }}</span>--}}
+{{--                                            </a>--}}
+{{--                                        </li>--}}
+{{--                                        <?php--}}
+{{--                                        $currentFolder = 'analytics/org'; // Put folder name here--}}
+{{--                                        $PathCurrentFolder = substr($urlAfterRoot, 0, strlen($currentFolder));--}}
+{{--                                        ?>--}}
+{{--                                        <li {{ $PathCurrentFolder == $currentFolder ? 'class=active' : '' }}>--}}
+{{--                                            <a onclick="location.href='{{ route('analytics', 'org') }}'">--}}
+{{--                                                <span--}}
+{{--                                                    class="nav-text">{{ __('backend.visitorsAnalyticsByOrganization') }}</span>--}}
+{{--                                            </a>--}}
+{{--                                        </li>--}}
+{{--                                        <?php--}}
+{{--                                        $currentFolder = 'visitors'; // Put folder name here--}}
+{{--                                        $PathCurrentFolder = substr($urlAfterRoot, 0, strlen($currentFolder));--}}
+{{--                                        ?>--}}
+{{--                                        <li {{ $PathCurrentFolder == $currentFolder ? 'class=active' : '' }}>--}}
+{{--                                            <a onclick="location.href='{{ route('visitors') }}'">--}}
+{{--                                                <span--}}
+{{--                                                    class="nav-text">{{ __('backend.visitorsAnalyticsVisitorsHistory') }}</span>--}}
+{{--                                            </a>--}}
+{{--                                        </li>--}}
+{{--                                        <?php--}}
+{{--                                        $currentFolder = 'ip'; // Put folder name here--}}
+{{--                                        $PathCurrentFolder = substr($urlAfterRoot, 0, strlen($currentFolder));--}}
+{{--                                        ?>--}}
+{{--                                        <li {{ $PathCurrentFolder == $currentFolder ? 'class=active' : '' }}>--}}
+{{--                                            <a href="{{ route('visitorsIP') }}">--}}
+{{--                                                <span--}}
+{{--                                                    class="nav-text">{{ __('backend.visitorsAnalyticsIPInquiry') }}</span>--}}
+{{--                                            </a>--}}
+{{--                                        </li>--}}
 
 
-                                    </ul>
-                                </li>
-                            @endif
-                        @endif
-                    @endif
-                    @if (Helper::GeneralWebmasterSettings('newsletter_status'))
-                        @if (@Auth::user()->permissionsGroup->newsletter_status)
-                            <?php
-                            $currentFolder = 'contacts'; // Put folder name here
-                            $PathCurrentFolder = substr($urlAfterRoot, 0, strlen($currentFolder));
-                            ?>
-                            <li {{ $PathCurrentFolder == $currentFolder ? 'class=active' : '' }}>
-                                <a href="{{ route('contacts') }}">
-                                    <span class="nav-icon">
-                                        <i class="material-icons">&#xe7ef;</i>
-                                    </span>
-                                    <span class="nav-text">{{ __('backend.newsletter') }}</span>
-                                </a>
-                            </li>
-                        @endif
-                    @endif
+{{--                                    </ul>--}}
+{{--                                </li>--}}
+{{--                            @endif--}}
+{{--                        @endif--}}
+{{--                    @endif--}}
+{{--                    @if (Helper::GeneralWebmasterSettings('newsletter_status'))--}}
+{{--                        @if (@Auth::user()->permissionsGroup->newsletter_status)--}}
+{{--                            <?php--}}
+{{--                            $currentFolder = 'contacts'; // Put folder name here--}}
+{{--                            $PathCurrentFolder = substr($urlAfterRoot, 0, strlen($currentFolder));--}}
+{{--                            ?>--}}
+{{--                            <li {{ $PathCurrentFolder == $currentFolder ? 'class=active' : '' }}>--}}
+{{--                                <a href="{{ route('contacts') }}">--}}
+{{--                                    <span class="nav-icon">--}}
+{{--                                        <i class="material-icons">&#xe7ef;</i>--}}
+{{--                                    </span>--}}
+{{--                                    <span class="nav-text">{{ __('backend.newsletter') }}</span>--}}
+{{--                                </a>--}}
+{{--                            </li>--}}
+{{--                        @endif--}}
+{{--                    @endif--}}
+{{--                    @if (Helper::GeneralWebmasterSettings('inbox_status'))--}}
+{{--                        @if (@Auth::user()->permissionsGroup->inbox_status)--}}
+{{--                            <?php--}}
+{{--                            $currentFolder = 'webmails'; // Put folder name here--}}
+{{--                            $PathCurrentFolder = substr($urlAfterRoot, 0, strlen($currentFolder));--}}
+{{--                            ?>--}}
+{{--                            <li {{ $PathCurrentFolder == $currentFolder ? 'class=active' : '' }}>--}}
+{{--                                <a href="{{ route('webmails') }}">--}}
+{{--                                    <span class="nav-icon">--}}
+{{--                                        <i class="material-icons">&#xe156;</i>--}}
+{{--                                    </span>--}}
+{{--                                    <span class="nav-text">{{ __('backend.siteInbox') }}--}}
+{{--                                        @if (@$webmailsNewCount > 0)--}}
+{{--                                            <badge class="label warn m-l-xs">{{ @$webmailsNewCount }}</badge>--}}
+{{--                                        @endif--}}
+{{--                                    </span>--}}
 
-                    @if (Helper::GeneralWebmasterSettings('inbox_status'))
-                        @if (@Auth::user()->permissionsGroup->inbox_status)
-                            <?php
-                            $currentFolder = 'webmails'; // Put folder name here
-                            $PathCurrentFolder = substr($urlAfterRoot, 0, strlen($currentFolder));
-                            ?>
-                            <li {{ $PathCurrentFolder == $currentFolder ? 'class=active' : '' }}>
-                                <a href="{{ route('webmails') }}">
-                                    <span class="nav-icon">
-                                        <i class="material-icons">&#xe156;</i>
-                                    </span>
-                                    <span class="nav-text">{{ __('backend.siteInbox') }}
-                                        @if (@$webmailsNewCount > 0)
-                                            <badge class="label warn m-l-xs">{{ @$webmailsNewCount }}</badge>
-                                        @endif
-                                    </span>
-
-                                </a>
-                            </li>
-                        @endif
-                    @endif
-
-                    @if (Helper::GeneralWebmasterSettings('calendar_status'))
-                        @if (@Auth::user()->permissionsGroup->calendar_status)
-                            <?php
-                            $currentFolder = 'calendar'; // Put folder name here
-                            $PathCurrentFolder = substr($urlAfterRoot, 0, strlen($currentFolder));
-                            ?>
-                            <li {{ $PathCurrentFolder == $currentFolder ? 'class=active' : '' }}>
-                                <a href="{{ route('calendar') }}"
-                                    onclick="location.href='{{ route('calendar') }}'">
-                                    <span class="nav-icon">
-                                        <i class="material-icons">&#xe5c3;</i>
-                                    </span>
-                                    <span class="nav-text">{{ __('backend.calendar') }}</span>
-                                </a>
-                            </li>
-                        @endif
-                    @endif
+{{--                                </a>--}}
+{{--                            </li>--}}
+{{--                        @endif--}}
+{{--                    @endif--}}
+{{--                    @if (Helper::GeneralWebmasterSettings('calendar_status'))--}}
+{{--                        @if (@Auth::user()->permissionsGroup->calendar_status)--}}
+{{--                            <?php--}}
+{{--                            $currentFolder = 'calendar'; // Put folder name here--}}
+{{--                            $PathCurrentFolder = substr($urlAfterRoot, 0, strlen($currentFolder));--}}
+{{--                            ?>--}}
+{{--                            <li {{ $PathCurrentFolder == $currentFolder ? 'class=active' : '' }}>--}}
+{{--                                <a href="{{ route('calendar') }}"--}}
+{{--                                    onclick="location.href='{{ route('calendar') }}'">--}}
+{{--                                    <span class="nav-icon">--}}
+{{--                                        <i class="material-icons">&#xe5c3;</i>--}}
+{{--                                    </span>--}}
+{{--                                    <span class="nav-text">{{ __('backend.calendar') }}</span>--}}
+{{--                                </a>--}}
+{{--                            </li>--}}
+{{--                        @endif--}}
+{{--                    @endif--}}
                     <li class="nav-header hidden-folded">
                         <small class="text-muted">{{ __('backend.siteData') }}</small>
                     </li>
