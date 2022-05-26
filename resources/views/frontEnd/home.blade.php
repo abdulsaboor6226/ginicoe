@@ -41,8 +41,8 @@
         if (count($TextBanners) == 3) {
             $col_width = 4;
         }
-        if (count($TextBanners) > 3) {
-            $col_width = 3;
+        if (count($TextBanners) > 4) {
+            $col_width = 4;
         }
         ?>
         <section class="content-row-no-bg p-b-0">

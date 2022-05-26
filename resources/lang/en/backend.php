@@ -402,7 +402,7 @@ return array(
     'forgotPassword' => 'Forgot password?',
     'signIn' => 'Sign in',
     'keepMeSignedIn' => 'Keep me signed in',
-    'signedInToControl' => 'Sign in to CONTROL',
+    'signedInToControl' => 'Sign in to the system',
     'control' => 'Ginicoe',
     'resetPassword' => 'Reset Password',
     'confirmPassword' => 'Confirm Password',
