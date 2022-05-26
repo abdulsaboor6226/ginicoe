@@ -45,6 +45,7 @@
                     <label for="password"
                            class="col-sm-2 form-control-label">{!!  __('backend.loginPassword') !!}
                     </label>
+
                     <div class="col-sm-10">
                         {!! Form::text('password','', array('placeholder' => '','class' => 'form-control','id'=>'password','required'=>'')) !!}
                     </div>

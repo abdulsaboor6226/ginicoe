@@ -13,7 +13,7 @@ use Illuminate\Config;
 use Illuminate\Http\Request;
 use Redirect;
 use Helper;
-
+use Illuminate\Validation\Rules\Password;
 class UsersController extends Controller
 {
 
@@ -78,12 +78,17 @@ class UsersController extends Controller
      */
     public function store(Request $request)
     {
-        //
         $this->validate($request, [
             'photo' => 'mimes:png,jpeg,jpg,gif,svg',
             'name' => 'required',
             'email' => 'required|email|unique:users',
-            'password' => 'required',
+            'password' => ['required', Password::min(8)
+                ->letters()
+                ->mixedCase()
+                ->numbers()
+                ->symbols()
+                ->uncompromised()
+            ],
             'permissions_id' => 'required'
         ]);
 
@@ -163,7 +168,6 @@ class UsersController extends Controller
         $User = User::find($id);
         if (!empty($User)) {
 
-
             $this->validate($request, [
                 'photo' => 'mimes:png,jpeg,jpg,gif,svg',
                 'name' => 'required',
@@ -190,6 +194,15 @@ class UsersController extends Controller
             $User->name = $request->name;
             $User->email = $request->email;
             if ($request->password != "") {
+                $this->validate($request, [
+                    'password' => ['required', Password::min(8)
+                        ->letters()
+                        ->mixedCase()
+                        ->numbers()
+                        ->symbols()
+                        ->uncompromised()
+                    ],
+                ]);
                 $User->password = bcrypt($request->password);
             }
             $User->permissions_id = $request->permissions_id;
