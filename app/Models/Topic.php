@@ -11,7 +11,7 @@ use App\Helpers\Helper;
 class Topic extends Model implements Feedable
 {
     use HasFactory;
-
+    protected $fillable = ['status','version'];
     public function toFeedItem(): FeedItem
     {
         $lang = @Helper::currentLanguage()->code;

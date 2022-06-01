@@ -342,7 +342,7 @@ if ($WebmasterSection->$title_var != "") {
                                             class="col-sm-2 form-control-label">{!!  __('backend.topicName') !!} {!! @Helper::languageName($ActiveLanguage) !!}
                                         </label>
                                         <div class="col-sm-10">
-                                            {!! Form::text('title_'.@$ActiveLanguage->code,$Topics->{'title_'.@$ActiveLanguage->code}, array('placeholder' => '','class' => 'form-control','required'=>'', 'dir'=>@$ActiveLanguage->direction)) !!}
+                                            {!! Form::text('title_'.@$ActiveLanguage->code,$Topics->{'title_'.@$ActiveLanguage->code}, array('placeholder' => '','class' => 'form-control','required'=>'','readonly'=>'', 'dir'=>@$ActiveLanguage->direction)) !!}
                                         </div>
                                     </div>
                                 @endif
@@ -1036,7 +1036,16 @@ if ($WebmasterSection->$title_var != "") {
                             @endif
                         @endif
 
-
+                        <div class="form-group row">
+                            <div class="form-check">
+                                <label for="link_status" class="col-sm-2 form-control-label">Version update</label>
+                                <div class="col-sm-10">
+                                    <div class="checkbox">
+                                        <input type="checkbox" name="version" class="form-check-input" id="exampleCheck1">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                         <div class="form-group row m-t-md">
                             <div class="offset-sm-2 col-sm-10">
                                 <button type="submit" class="btn btn-primary m-t"><i class="material-icons">

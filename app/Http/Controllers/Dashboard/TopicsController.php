@@ -19,6 +19,7 @@ use Auth;
 use File;
 use Helper;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Redirect;
 use Form;
 use URL;
@@ -76,6 +77,7 @@ class TopicsController extends Controller
                         } else {
                             $tids = TopicField::select("topic_id")->where("field_id", $customField->id)->where("field_value", 'like', '%' . $line_num . '%');
                         }
+
                         $Topics_count = Topic::where('webmaster_id', '=', $WebmasterSection->id)->wherein('id', $tids)->count();
                         $statics_row[$line_num] = $Topics_count;
                         $line_num++;
@@ -92,7 +94,6 @@ class TopicsController extends Controller
 
     public function list(Request $request)
     {
-
         $title_var = "title_" . @Helper::currentLanguage()->code;
         $title_var2 = "title_" . env('DEFAULT_LANGUAGE');
 
@@ -111,9 +112,9 @@ class TopicsController extends Controller
         $find_date = $request->input('find_date');
 
         if (@Auth::user()->permissionsGroup->view_status) {
-            $Topics = Topic::where('created_by', '=', Auth::user()->id)->where('webmaster_id', '=', $webmasterId);
+            $Topics = Topic::where('created_by', '=', Auth::user()->id)->where('webmaster_id', '=', $webmasterId)->where('status',true);
         } else {
-            $Topics = Topic::where('webmaster_id', '=', $webmasterId);
+            $Topics = Topic::where('webmaster_id', '=', $webmasterId)->where('status',true);
         }
 
         if ($q != "") {
@@ -470,7 +471,7 @@ class TopicsController extends Controller
      * @param int $webmasterId
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, $webmasterId)
+    public function store(Request $request, $webmasterId ,$id=null)
     {
         $WebmasterSection = WebmasterSection::find($webmasterId);
         if (!empty($WebmasterSection)) {
@@ -480,8 +481,7 @@ class TopicsController extends Controller
                 'audio_file' => 'mimes:mpga,wav,mp3', // mpga = mp3
                 'video_file' => 'mimes:mp4,ogv,webm'
             ]);
-
-
+            DB::beginTransaction();
             $next_nor_no = Topic::where('webmaster_id', '=', $webmasterId)->max('row_no');
             if ($next_nor_no < 1) {
                 $next_nor_no = 1;
@@ -577,7 +577,15 @@ class TopicsController extends Controller
             $Topic->visits = 0;
             $Topic->section_id = 0;
             $Topic->form_id = $request->page_form_id;
+            if ($request->version == "on"){
+                $topicStatuses = Topic::whereTitleEn($request->title_en)->get();
+                foreach ($topicStatuses as $topicStatus){
+                    $topicStatus->update(['status'=>0]);
+                }
+            }
+            $topic= Topic::findOrFail($id);
             $Topic->status = (@Auth::user()->permissionsGroup->active_status) ? 1 : 0;
+            $Topic->version = $topic->version+1;
 
             $Topic->save();
 
@@ -639,7 +647,7 @@ class TopicsController extends Controller
                     }
                 }
             }
-
+            DB::commit();
             // SEND Notification Email
             $this->send_notification($WebmasterSection, $Topic, "New");
 
@@ -661,7 +669,7 @@ class TopicsController extends Controller
      *
      * @param int $id
      * @param int $webmasterId
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
      */
     public function edit($webmasterId, $id)
     {
@@ -708,228 +716,240 @@ class TopicsController extends Controller
      */
     public function update(Request $request, $webmasterId, $id)
     {
-        $WebmasterSection = WebmasterSection::find($webmasterId);
-        if (!empty($WebmasterSection)) {
-            //
-            $Topic = Topic::find($id);
-            if (!empty($Topic)) {
+        if ($request->version == "on"){
+            $this->store($request,$webmasterId,$id);
+            return redirect()->action('Dashboard\TopicsController@index', $webmasterId);
+        }else {
+        DB::beginTransaction();
+            $WebmasterSection = WebmasterSection::find($webmasterId);
+            if (!empty($WebmasterSection)) {
+                //
+                $Topic = Topic::find($id);
+                if (!empty($Topic)) {
 
 
-                $this->validate($request, [
-                    'photo_file' => 'mimes:png,jpeg,jpg,gif,svg',
-                    'audio_file' => 'mimes:mpga,wav,mp3', // mpga = mp3
-                    'video_file' => 'mimes:mp4,ogv,webm'
-                ]);
+                    $this->validate($request, [
+                        'photo_file' => 'mimes:png,jpeg,jpg,gif,svg',
+                        'audio_file' => 'mimes:mpga,wav,mp3', // mpga = mp3
+                        'video_file' => 'mimes:mp4,ogv,webm'
+                    ]);
 
 
-                // Start of Upload Files
-                $formFileName = "photo_file";
-                $fileFinalName = "";
-                if ($request->$formFileName != "") {
-                    // Delete a Topic photo
-                    if ($Topic->$formFileName != "") {
-                        File::delete($this->uploadPath . $Topic->$formFileName);
+                    // Start of Upload Files
+                    $formFileName = "photo_file";
+                    $fileFinalName = "";
+                    if ($request->$formFileName != "") {
+                        // Delete a Topic photo
+                        if ($Topic->$formFileName != "") {
+                            File::delete($this->uploadPath . $Topic->$formFileName);
+                        }
+
+                        $fileFinalName = time() . rand(1111,
+                                9999) . '.' . $request->file($formFileName)->getClientOriginalExtension();
+                        $path = $this->uploadPath;
+                        $request->file($formFileName)->move($path, $fileFinalName);
                     }
 
-                    $fileFinalName = time() . rand(1111,
-                            9999) . '.' . $request->file($formFileName)->getClientOriginalExtension();
-                    $path = $this->uploadPath;
-                    $request->file($formFileName)->move($path, $fileFinalName);
-                }
 
-
-                $formFileName = "audio_file";
-                $audioFileFinalName = "";
-                if ($request->$formFileName != "") {
-                    // Delete file if there is a new one
-                    if ($Topic->$formFileName != "") {
-                        File::delete($this->uploadPath . $Topic->$formFileName);
-                    }
-
-                    $audioFileFinalName = time() . rand(1111,
-                            9999) . '.' . $request->file($formFileName)->getClientOriginalExtension();
-                    $path = $this->uploadPath;
-                    $request->file($formFileName)->move($path, $audioFileFinalName);
-                }
-
-                $formFileName = "attach_file";
-                $attachFileFinalName = "";
-                if ($request->$formFileName != "") {
-                    // Delete file if there is a new one
-                    if ($Topic->$formFileName != "") {
-                        File::delete($this->uploadPath . $Topic->$formFileName);
-                    }
-                    $attachFileFinalName = time() . rand(1111,
-                            9999) . '.' . $request->file($formFileName)->getClientOriginalExtension();
-                    $path = $this->uploadPath;
-                    $request->file($formFileName)->move($path, $attachFileFinalName);
-                }
-
-                if ($request->video_type == 3) {
-                    $videoFileFinalName = $request->embed_link;
-                } elseif ($request->video_type == 2) {
-                    $videoFileFinalName = $request->vimeo_link;
-                } elseif ($request->video_type == 1) {
-                    $videoFileFinalName = $request->youtube_link;
-                } else {
-                    $formFileName = "video_file";
-                    $videoFileFinalName = "";
+                    $formFileName = "audio_file";
+                    $audioFileFinalName = "";
                     if ($request->$formFileName != "") {
                         // Delete file if there is a new one
                         if ($Topic->$formFileName != "") {
                             File::delete($this->uploadPath . $Topic->$formFileName);
                         }
-                        $videoFileFinalName = time() . rand(1111,
+
+                        $audioFileFinalName = time() . rand(1111,
                                 9999) . '.' . $request->file($formFileName)->getClientOriginalExtension();
                         $path = $this->uploadPath;
-                        $request->file($formFileName)->move($path, $videoFileFinalName);
+                        $request->file($formFileName)->move($path, $audioFileFinalName);
                     }
 
-                }
-                // End of Upload Files
-                foreach (Helper::languagesList() as $ActiveLanguage) {
-                    if ($ActiveLanguage->box_status) {
-                        $Topic->{"title_" . $ActiveLanguage->code} = $request->{"title_" . $ActiveLanguage->code};
-                        $Topic->{"details_" . $ActiveLanguage->code} = $request->{"details_" . $ActiveLanguage->code};
-                    }
-                }
-                $Topic->date = Helper::dateForDB($request->date);
-                if (@$request->expire_date != "") {
-                    $Topic->expire_date = Helper::dateForDB(@$request->expire_date);
-                }
-
-                if ($request->photo_delete == 1) {
-                    // Delete photo_file
-                    if ($Topic->photo_file != "") {
-                        File::delete($this->uploadPath . $Topic->photo_file);
+                    $formFileName = "attach_file";
+                    $attachFileFinalName = "";
+                    if ($request->$formFileName != "") {
+                        // Delete file if there is a new one
+                        if ($Topic->$formFileName != "") {
+                            File::delete($this->uploadPath . $Topic->$formFileName);
+                        }
+                        $attachFileFinalName = time() . rand(1111,
+                                9999) . '.' . $request->file($formFileName)->getClientOriginalExtension();
+                        $path = $this->uploadPath;
+                        $request->file($formFileName)->move($path, $attachFileFinalName);
                     }
 
-                    $Topic->photo_file = "";
-                }
+                    if ($request->video_type == 3) {
+                        $videoFileFinalName = $request->embed_link;
+                    } elseif ($request->video_type == 2) {
+                        $videoFileFinalName = $request->vimeo_link;
+                    } elseif ($request->video_type == 1) {
+                        $videoFileFinalName = $request->youtube_link;
+                    } else {
+                        $formFileName = "video_file";
+                        $videoFileFinalName = "";
+                        if ($request->$formFileName != "") {
+                            // Delete file if there is a new one
+                            if ($Topic->$formFileName != "") {
+                                File::delete($this->uploadPath . $Topic->$formFileName);
+                            }
+                            $videoFileFinalName = time() . rand(1111,
+                                    9999) . '.' . $request->file($formFileName)->getClientOriginalExtension();
+                            $path = $this->uploadPath;
+                            $request->file($formFileName)->move($path, $videoFileFinalName);
+                        }
 
-                if ($fileFinalName != "") {
-                    $Topic->photo_file = $fileFinalName;
-                }
-                if ($audioFileFinalName != "") {
-                    $Topic->audio_file = $audioFileFinalName;
-                }
-
-                if ($request->attach_delete == 1) {
-                    // Delete attach_file
-                    if ($Topic->attach_file != "") {
-                        File::delete($this->uploadPath . $Topic->attach_file);
                     }
-
-                    $Topic->attach_file = "";
-                }
-
-                if ($attachFileFinalName != "") {
-                    $Topic->attach_file = $attachFileFinalName;
-                }
-                if ($videoFileFinalName != "") {
-                    $Topic->video_file = $videoFileFinalName;
-                }
-
-                $Topic->icon = $request->icon;
-                $Topic->video_type = $request->video_type;
-                if ($WebmasterSection->case_status) {
-                    $Topic->status = $request->status;
-                }
-                if (!@Auth::user()->permissionsGroup->active_status) {
-                    $Topic->status = 0;
-                }
-                $Topic->form_id = $request->page_form_id;
-                $Topic->updated_by = Auth::user()->id;
-                $Topic->save();
-
-                // Remove old categories
-                TopicCategory::where('topic_id', $Topic->id)->delete();
-                // Save new categories
-                if ($request->section_id != "" && $request->section_id != 0) {
-                    foreach ($request->section_id as $category) {
-                        if ($category > 0) {
-                            $TopicCategory = new TopicCategory;
-                            $TopicCategory->topic_id = $Topic->id;
-                            $TopicCategory->section_id = $category;
-                            $TopicCategory->save();
+                    // End of Upload Files
+                    foreach (Helper::languagesList() as $ActiveLanguage) {
+                        if ($ActiveLanguage->box_status) {
+                            $Topic->{"title_" . $ActiveLanguage->code} = $request->{"title_" . $ActiveLanguage->code};
+                            $Topic->{"details_" . $ActiveLanguage->code} = $request->{"details_" . $ActiveLanguage->code};
                         }
                     }
-                }
+                    $Topic->date = Helper::dateForDB($request->date);
+                    if (@$request->expire_date != "") {
+                        $Topic->expire_date = Helper::dateForDB(@$request->expire_date);
+                    }
 
-                // Save additional Fields
-                if (count($WebmasterSection->customFields) > 0) {
-                    foreach ($WebmasterSection->customFields as $customField) {
-                        // check permission
-                        $edit_permission_groups = [];
-                        if ($customField->edit_permission_groups != "") {
-                            $edit_permission_groups = explode(",", $customField->edit_permission_groups);
+                    if ($request->photo_delete == 1) {
+                        // Delete photo_file
+                        if ($Topic->photo_file != "") {
+                            File::delete($this->uploadPath . $Topic->photo_file);
                         }
-                        if (in_array(Auth::user()->permissions_id, $edit_permission_groups) || in_array(0, $edit_permission_groups) || $customField->edit_permission_groups == "") {
-                            // have permission & continue
 
-                            // Remove old Fields Values
-                            TopicField::where('topic_id', $Topic->id)->where('field_id', $customField->id)->delete();
+                        $Topic->photo_file = "";
+                    }
 
-                            $field_value = "";
-                            $field_value_var = "customField_" . $customField->id;
-                            $file_del_id = 'file_delete_' . $customField->id;
-                            $file_old_id = 'file_old_' . $customField->id;
+                    if ($fileFinalName != "") {
+                        $Topic->photo_file = $fileFinalName;
+                    }
+                    if ($audioFileFinalName != "") {
+                        $Topic->audio_file = $audioFileFinalName;
+                    }
 
-                            if ($customField->type == 8 || $customField->type == 9 || $customField->type == 10) {
-                                // upload file
-                                if ($request->$field_value_var != "") {
-                                    $uploadedFileFinalName = time() . rand(1111,
-                                            9999) . '.' . $request->file($field_value_var)->getClientOriginalExtension();
-                                    $path = $this->uploadPath;
-                                    $request->file($field_value_var)->move($path, $uploadedFileFinalName);
-                                    $field_value = $uploadedFileFinalName;
+                    if ($request->attach_delete == 1) {
+                        // Delete attach_file
+                        if ($Topic->attach_file != "") {
+                            File::delete($this->uploadPath . $Topic->attach_file);
+                        }
+
+                        $Topic->attach_file = "";
+                    }
+
+                    if ($attachFileFinalName != "") {
+                        $Topic->attach_file = $attachFileFinalName;
+                    }
+                    if ($videoFileFinalName != "") {
+                        $Topic->video_file = $videoFileFinalName;
+                    }
+
+                    $Topic->icon = $request->icon;
+                    $Topic->video_type = $request->video_type;
+                    if ($WebmasterSection->case_status) {
+                        if ($request->status == 1){
+                            $topicStatuses = Topic::whereTitleEn($request->title_en)->get();
+                            foreach ($topicStatuses as $topicStatus){
+                                $topicStatus->update(['status'=>0]);
+                            }
+                        }
+                        $Topic->status = $request->status;
+                    }
+                    if (!@Auth::user()->permissionsGroup->active_status) {
+                        $Topic->status = 0;
+                    }
+                    $Topic->form_id = $request->page_form_id;
+                    $Topic->updated_by = Auth::user()->id;
+                    $Topic->save();
+
+                    // Remove old categories
+                    TopicCategory::where('topic_id', $Topic->id)->delete();
+                    // Save new categories
+                    if ($request->section_id != "" && $request->section_id != 0) {
+                        foreach ($request->section_id as $category) {
+                            if ($category > 0) {
+                                $TopicCategory = new TopicCategory;
+                                $TopicCategory->topic_id = $Topic->id;
+                                $TopicCategory->section_id = $category;
+                                $TopicCategory->save();
+                            }
+                        }
+                    }
+
+                    // Save additional Fields
+                    if (count($WebmasterSection->customFields) > 0) {
+                        foreach ($WebmasterSection->customFields as $customField) {
+                            // check permission
+                            $edit_permission_groups = [];
+                            if ($customField->edit_permission_groups != "") {
+                                $edit_permission_groups = explode(",", $customField->edit_permission_groups);
+                            }
+                            if (in_array(Auth::user()->permissions_id, $edit_permission_groups) || in_array(0, $edit_permission_groups) || $customField->edit_permission_groups == "") {
+                                // have permission & continue
+
+                                // Remove old Fields Values
+                                TopicField::where('topic_id', $Topic->id)->where('field_id', $customField->id)->delete();
+
+                                $field_value = "";
+                                $field_value_var = "customField_" . $customField->id;
+                                $file_del_id = 'file_delete_' . $customField->id;
+                                $file_old_id = 'file_old_' . $customField->id;
+
+                                if ($customField->type == 8 || $customField->type == 9 || $customField->type == 10) {
+                                    // upload file
+                                    if ($request->$field_value_var != "") {
+                                        $uploadedFileFinalName = time() . rand(1111,
+                                                9999) . '.' . $request->file($field_value_var)->getClientOriginalExtension();
+                                        $path = $this->uploadPath;
+                                        $request->file($field_value_var)->move($path, $uploadedFileFinalName);
+                                        $field_value = $uploadedFileFinalName;
+                                    } else {
+                                        // if old file still
+                                        $field_value = $request->$file_old_id;
+                                    }
+                                    if ($request->$file_del_id) {
+                                        // if want to delete the file
+                                        File::delete($this->uploadPath . $request->$file_old_id);
+                                        $field_value = "";
+                                    }
+                                } elseif ($customField->type == 5) {
+                                    if ($request->$field_value_var != "") {
+                                        $field_value = Helper::dateForDB($request->$field_value_var, 1);
+                                    }
+                                } elseif ($customField->type == 4) {
+                                    if ($request->$field_value_var != "") {
+                                        $field_value = Helper::dateForDB($request->$field_value_var);
+                                    }
+                                } elseif ($customField->type == 7) {
+                                    // if multi check
+                                    if ($request->$field_value_var != "") {
+                                        $field_value = implode(", ", $request->$field_value_var);
+                                    }
                                 } else {
-                                    // if old file still
-                                    $field_value = $request->$file_old_id;
+                                    $field_value = $request->$field_value_var;
                                 }
-                                if ($request->$file_del_id) {
-                                    // if want to delete the file
-                                    File::delete($this->uploadPath . $request->$file_old_id);
-                                    $field_value = "";
+                                if ($field_value != "") {
+                                    $TopicField = new TopicField;
+                                    $TopicField->topic_id = $Topic->id;
+                                    $TopicField->field_id = $customField->id;
+                                    $TopicField->field_value = $field_value;
+                                    $TopicField->save();
                                 }
-                            } elseif ($customField->type == 5) {
-                                if ($request->$field_value_var != "") {
-                                    $field_value = Helper::dateForDB($request->$field_value_var,1);
-                                }
-                            } elseif ($customField->type == 4) {
-                                if ($request->$field_value_var != "") {
-                                    $field_value = Helper::dateForDB($request->$field_value_var);
-                                }
-                            } elseif ($customField->type == 7) {
-                                // if multi check
-                                if ($request->$field_value_var != "") {
-                                    $field_value = implode(", ", $request->$field_value_var);
-                                }
-                            } else {
-                                $field_value = $request->$field_value_var;
-                            }
-                            if ($field_value != "") {
-                                $TopicField = new TopicField;
-                                $TopicField->topic_id = $Topic->id;
-                                $TopicField->field_id = $customField->id;
-                                $TopicField->field_value = $field_value;
-                                $TopicField->save();
                             }
                         }
                     }
+                    DB::commit();
+                    // SEND Notification Email
+                    $this->send_notification($WebmasterSection, $Topic, "Update");
+
+
+                    return redirect()->action('Dashboard\TopicsController@edit', [$webmasterId, $id])->with('doneMessage',
+                        __('backend.saveDone'));
+                } else {
+                    return redirect()->action('Dashboard\TopicsController@index', $webmasterId);
                 }
-
-                // SEND Notification Email
-                $this->send_notification($WebmasterSection, $Topic, "Update");
-
-
-                return redirect()->action('Dashboard\TopicsController@edit', [$webmasterId, $id])->with('doneMessage',
-                    __('backend.saveDone'));
             } else {
-                return redirect()->action('Dashboard\TopicsController@index', $webmasterId);
+                return redirect()->route('NotFound');
             }
-        } else {
-            return redirect()->route('NotFound');
         }
     }
 

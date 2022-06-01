@@ -255,6 +255,7 @@ if ($WebmasterSection->$title_var != "") {
                                     } else {
                                         $cf_title = $customField->$cf_title_var2;
                                     }
+
                                     ?>
                                     <th class="text-center">{{ $cf_title }}</th>
                                 @endif

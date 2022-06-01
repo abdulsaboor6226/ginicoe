@@ -464,6 +464,9 @@ $mnu_title_var2 = 'title_' . env('DEFAULT_LANGUAGE');
                             </ul>
                         </li>
                     @endif
+                    <li class="nav-header hidden-folded">
+                        <small class="text-muted">{{ __('backend.settings') }}</small>
+                    </li>
                 </ul>
             </nav>
         </div>
