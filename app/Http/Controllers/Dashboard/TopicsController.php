@@ -582,11 +582,9 @@ class TopicsController extends Controller
                 foreach ($topicStatuses as $topicStatus){
                     $topicStatus->update(['status'=>0]);
                 }
+                $Topic->version = ($topicStatus->max('version')) + 1 ;
             }
-            $topic= Topic::findOrFail($id);
             $Topic->status = (@Auth::user()->permissionsGroup->active_status) ? 1 : 0;
-            $Topic->version = $topic->version+1;
-
             $Topic->save();
 
             if ($request->section_id != "" && $request->section_id != 0) {
@@ -695,9 +693,9 @@ class TopicsController extends Controller
 
                 $fatherSections = Section::where('webmaster_id', '=', $webmasterId)->where('father_id', '=',
                     '0')->orderby('row_no', 'asc')->get();
-
+                $topics = Topic::where('title_en',$Topics->title_en)->get();
                 return view("dashboard.topics.edit",
-                    compact("Topics", "GeneralWebmasterSections", "WebmasterSection", "fatherSections"));
+                    compact("Topics", "GeneralWebmasterSections", "WebmasterSection", "fatherSections",'topics'));
             } else {
                 return redirect()->action('Dashboard\TopicsController@index', $webmasterId);
             }

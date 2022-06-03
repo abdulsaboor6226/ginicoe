@@ -231,6 +231,7 @@ return array(
     'topicSEODesc' => 'Meta Description',
     'topicSEOKeywords' => 'Meta Keywords',
     'topicAdditionalPhotos' => 'Photos',
+    'topicAdditionalVersion' => 'Version',
     'topicGoogleMaps' => 'Google Maps',
     'topicDropFiles' => 'Drop photos here or click to upload',
     'topicDropFiles2' => 'You can upload many photos at the same time',

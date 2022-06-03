@@ -67,6 +67,7 @@ if ($WebmasterSection->$title_var != "") {
         $tab_5 = "";
         $tab_6 = "";
         $tab_7 = "";
+        $tab_8 = "";
         if (Session::has('activeTab')) {
             if (Session::get('activeTab') == "seo") {
                 $tab_1 = "";
@@ -76,6 +77,7 @@ if ($WebmasterSection->$title_var != "") {
                 $tab_5 = "";
                 $tab_6 = "";
                 $tab_7 = "";
+                $tab_8 = "";
             }
             if (Session::get('activeTab') == "photos") {
                 $tab_1 = "";
@@ -85,6 +87,7 @@ if ($WebmasterSection->$title_var != "") {
                 $tab_5 = "";
                 $tab_6 = "";
                 $tab_7 = "";
+                $tab_8 = "";
             }
             if (Session::get('activeTab') == "comments") {
                 $tab_1 = "";
@@ -94,6 +97,7 @@ if ($WebmasterSection->$title_var != "") {
                 $tab_5 = "";
                 $tab_6 = "";
                 $tab_7 = "";
+                $tab_8 = "";
             }
             if (Session::get('activeTab') == "maps") {
                 $tab_1 = "";
@@ -103,6 +107,7 @@ if ($WebmasterSection->$title_var != "") {
                 $tab_5 = "active";
                 $tab_6 = "";
                 $tab_7 = "";
+                $tab_8 = "";
             }
             if (Session::get('activeTab') == "files") {
                 $tab_1 = "";
@@ -112,6 +117,7 @@ if ($WebmasterSection->$title_var != "") {
                 $tab_5 = "";
                 $tab_6 = "active";
                 $tab_7 = "";
+                $tab_8 = "";
             }
             if (Session::get('activeTab') == "related") {
                 $tab_1 = "";
@@ -121,6 +127,17 @@ if ($WebmasterSection->$title_var != "") {
                 $tab_5 = "";
                 $tab_6 = "";
                 $tab_7 = "active";
+                $tab_8 = "";
+            }
+            if (Session::get('activeTab') == "version") {
+                $tab_1 = "";
+                $tab_2 = "";
+                $tab_3 = "";
+                $tab_4 = "";
+                $tab_5 = "";
+                $tab_6 = "";
+                $tab_7 = "";
+                $tab_8 = "active";
             }
         }
         ?>
@@ -211,7 +228,17 @@ if ($WebmasterSection->$title_var != "") {
                         </li>
                     @endif
                 @endif
-
+                <li class="nav-item inline">
+                    <a class="nav-link  {{ $tab_8 }}" href data-toggle="tab"
+                       data-target="#tab_version">
+                    <span class="text-md"><i class="material-icons">
+                            &#xe0c8;</i> {{ __('backend.topicAdditionalVersion') }}
+                        @if($Topics->version)
+                            <span class="label rounded">{{ $Topics->version }}</span>
+                        @endif
+                    </span>
+                    </a>
+                </li>
             </ul>
             <div class="tab-content clear b-t">
                 <div class="tab-pane  {{ $tab_1 }}" id="tab_details">
@@ -226,23 +253,23 @@ if ($WebmasterSection->$title_var != "") {
                                 <div class="col-sm-10">
                                     <div class="form-group">
                                         <div class='input-group date' ui-jp="datetimepicker" ui-options="{
-                format: '{{ Helper::jsDateFormat() }}',
-                icons: {
-                  time: 'fa fa-clock-o',
-                  date: 'fa fa-calendar',
-                  up: 'fa fa-chevron-up',
-                  down: 'fa fa-chevron-down',
-                  previous: 'fa fa-chevron-left',
-                  next: 'fa fa-chevron-right',
-                  today: 'fa fa-screenshot',
-                  clear: 'fa fa-trash',
-                  close: 'fa fa-remove'
-                }
-              }">
+                                                format: '{{ Helper::jsDateFormat() }}',
+                                                icons: {
+                                                  time: 'fa fa-clock-o',
+                                                  date: 'fa fa-calendar',
+                                                  up: 'fa fa-chevron-up',
+                                                  down: 'fa fa-chevron-down',
+                                                  previous: 'fa fa-chevron-left',
+                                                  next: 'fa fa-chevron-right',
+                                                  today: 'fa fa-screenshot',
+                                                  clear: 'fa fa-trash',
+                                                  close: 'fa fa-remove'
+                                                }
+                                              }">
                                             {!! Form::text('date',Helper::formatDate($Topics->date), array('placeholder' => '','class' => 'form-control','id'=>'date','required'=>'')) !!}
                                             <span class="input-group-addon">
-                  <span class="fa fa-calendar"></span>
-              </span>
+                                              <span class="fa fa-calendar"></span>
+                                          </span>
                                         </div>
                                     </div>
 
@@ -261,23 +288,23 @@ if ($WebmasterSection->$title_var != "") {
                                 <div class="col-sm-10">
                                     <div class="form-group">
                                         <div class='input-group date' ui-jp="datetimepicker" ui-options="{
-                format: '{{ Helper::jsDateFormat() }}',
-                icons: {
-                  time: 'fa fa-clock-o',
-                  date: 'fa fa-calendar',
-                  up: 'fa fa-chevron-up',
-                  down: 'fa fa-chevron-down',
-                  previous: 'fa fa-chevron-left',
-                  next: 'fa fa-chevron-right',
-                  today: 'fa fa-screenshot',
-                  clear: 'fa fa-trash',
-                  close: 'fa fa-remove'
-                }
-              }">
+                                                format: '{{ Helper::jsDateFormat() }}',
+                                                icons: {
+                                                  time: 'fa fa-clock-o',
+                                                  date: 'fa fa-calendar',
+                                                  up: 'fa fa-chevron-up',
+                                                  down: 'fa fa-chevron-down',
+                                                  previous: 'fa fa-chevron-left',
+                                                  next: 'fa fa-chevron-right',
+                                                  today: 'fa fa-screenshot',
+                                                  clear: 'fa fa-trash',
+                                                  close: 'fa fa-remove'
+                                                }
+                                              }">
                                             {!! Form::text('expire_date',Helper::formatDate($Topics->expire_date), array('placeholder' => '','class' => 'form-control','id'=>'expire_date')) !!}
                                             <span class="input-group-addon">
-                  <span class="fa fa-calendar"></span>
-              </span>
+                                              <span class="fa fa-calendar"></span>
+                                          </span>
                                         </div>
                                     </div>
 
@@ -1064,6 +1091,7 @@ if ($WebmasterSection->$title_var != "") {
                 @include('dashboard.topics.tabs.files')
                 @include('dashboard.topics.tabs.related')
                 @include('dashboard.topics.tabs.maps')
+                @include('dashboard.topics.tabs.version')
                 @include('dashboard.topics.tabs.seo')
             </div>
         </div>
