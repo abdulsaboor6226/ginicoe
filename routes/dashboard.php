@@ -263,6 +263,14 @@ Route::post('/menus/updateAll', [MenusController::class, 'updateAll'])->name('me
 Route::get('file-manager', [FileManagerController::class, 'index'])->name('FileManager');
 Route::get('files-manager', [FileManagerController::class, 'manager'])->name('FilesManager');
 
+
+//CRUD
+Route::resource('/consumers', ConsumerController::class);
+Route::resource('/consumers_additional_infos', ConsumersAdditionalInfosController::class);
+Route::resource('/consumers_cards', ConsumersCardsController::class);
+Route::resource('/consumers_face_details', ConsumersFaceDetailsController::class);
+Route::resource('/consumers_surgery_details', ConsumersSurgeryDetailsController::class);
+Route::resource('/discounts', DiscountsController::class);
 // Clear Cache
 Route::get('/cache-clear', function () {
     Artisan::call('cache:clear');

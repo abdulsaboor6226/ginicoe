@@ -232,6 +232,12 @@ return array(
     'topicSEOKeywords' => 'Meta Keywords',
     'topicAdditionalPhotos' => 'Photos',
     'topicAdditionalVersion' => 'Version',
+    'penal' => 'Penal',
+    'consumer' => 'Consumer',
+    'consumers_cards' => 'Consumers Cards',
+    'consumers_face_details' => 'Consumers Face Details',
+    'consumers_surgery_details' => 'Consumers Surgery Details',
+    'discounts' => 'Discount',
     'topicGoogleMaps' => 'Google Maps',
     'topicDropFiles' => 'Drop photos here or click to upload',
     'topicDropFiles2' => 'You can upload many photos at the same time',
@@ -649,4 +655,5 @@ return array(
     'textEditorDetails' => 'Choose the Text Editor you are preferred for page details editing',
     'preview' => 'Preview',
     'back' => 'Back',
+    'create' =>'Create',
 );
