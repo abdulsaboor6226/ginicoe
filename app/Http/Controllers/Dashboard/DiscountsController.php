@@ -110,8 +110,12 @@ class DiscountsController extends Controller
      * @param  \App\Models\Discounts  $discounts
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Discounts $discounts)
+    public function destroy($id)
     {
-        //
+        $discount = Discounts::findOrFail($id);
+        $discount= $discount->delete();
+        if ($discount){
+            return redirect()->route('discounts.index')->with('doneMessage','Successfully record Deleted');
+        }
     }
 }

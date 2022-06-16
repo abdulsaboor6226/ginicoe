@@ -137,8 +137,12 @@ class ConsumersSurgeryDetailsController extends Controller
      * @param  \App\Models\Consumers_surgery_details  $consumers_surgery_details
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Consumers_surgery_details $consumers_surgery_details)
+    public function destroy($id)
     {
-        //
+        $consumers_surgery_details = Consumers_surgery_details::findOrFail($id);
+        $consumers_surgery_details= $consumers_surgery_details->delete();
+        if ($consumers_surgery_details){
+            return redirect()->route('consumers_surgery_details.index')->with('doneMessage','Successfully record Deleted');
+        }
     }
 }

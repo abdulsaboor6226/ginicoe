@@ -73,10 +73,36 @@
                                             <i class="material-icons"></i>
                                         </a>
                                         @if (@Auth::user()->permissionsGroup->delete_status)
-                                            <button type="button" class="btn btn-sm warning" onclick="DeleteTopic('{{$consumers_face_detail->id}}')"
-                                                    data-toggle="tooltip" data-original-title=" Delete">
-                                                <i class="material-icons"></i>
+                                            <button class="btn btn-sm warning" data-toggle="modal"
+                                                    data-target="#m-{{ $consumers_face_detail->id }}" ui-toggle-class="bounce"
+                                                    ui-target="#animate">
+                                                <small><i class="material-icons">&#xe872;</i>
+                                                </small>
                                             </button>
+                                            <div id="m-{{ $consumers_face_detail->id }}" class="modal fade" data-backdrop="true">
+                                                <div class="modal-dialog" id="animate">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title">{{ __('backend.confirmation') }}</h5>
+                                                        </div>
+                                                        <div class="modal-body text-center p-lg">
+                                                            <p>
+                                                                {{ __('backend.confirmationDeleteMsg') }}
+                                                                <br>
+                                                            </p>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <form action="{{route('consumers_face_details.destroy',$consumers_face_detail->id)}}" method="post">
+                                                                @csrf
+                                                                @method('DELETE')
+                                                                <button type="button" class="btn dark-white p-x-md"
+                                                                        data-dismiss="modal">{{ __('backend.no') }}</button>
+                                                                <button class="btn danger p-x-md">{{ __('backend.yes') }}</button>
+                                                            </form>
+                                                        </div>
+                                                    </div><!-- /.modal-content -->
+                                                </div>
+                                            </div>
                                         @endif
                                     </div>
                                 </td>

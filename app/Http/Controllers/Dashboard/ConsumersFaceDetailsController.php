@@ -107,8 +107,12 @@ class ConsumersFaceDetailsController extends Controller
      * @param  \App\Models\Consumers_face_details  $consumers_face_details
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Consumers_face_details $consumers_face_details)
+    public function destroy($id)
     {
-        //
+        $consumers_face_details = Consumers_face_details::findOrFail($id);
+        $consumers_face_details= $consumers_face_details->delete();
+        if ($consumers_face_details){
+            return redirect()->route('consumers_face_details.index')->with('doneMessage','Successfully record Deleted');
+        }
     }
 }

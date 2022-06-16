@@ -112,8 +112,12 @@ class ConsumersCardsController extends Controller
      * @param  \App\Models\Consumers_cards  $consumers_cards
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Consumers_cards $consumers_cards)
+    public function destroy($id)
     {
-        //
+        $consumers_cards = Consumers_cards::findOrFail($id);
+        $consumers_cards= $consumers_cards->delete();
+        if ($consumers_cards){
+            return redirect()->route('consumers_cards.index')->with('doneMessage','Successfully record Deleted');
+        }
     }
 }
