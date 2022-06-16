@@ -28,7 +28,8 @@ class ConsumerController extends Controller
      */
     public function create()
     {
-        //
+        $GeneralWebmasterSections = WebmasterSection::where('status', '=', '1')->orderby('row_no', 'asc')->get();
+        return view('dashboard.discounts.create',compact('GeneralWebmasterSections'));
     }
 
     /**

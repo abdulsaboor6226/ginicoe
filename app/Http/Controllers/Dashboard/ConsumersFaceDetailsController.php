@@ -29,7 +29,8 @@ class ConsumersFaceDetailsController extends Controller
      */
     public function create()
     {
-        //
+        $GeneralWebmasterSections = WebmasterSection::where('status', '=', '1')->orderby('row_no', 'asc')->get();
+        return view('dashboard.consumers_face_details.create',compact('GeneralWebmasterSections'));
     }
 
     /**
@@ -40,7 +41,18 @@ class ConsumersFaceDetailsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request,[
+            'type'=> 'required',
+            'location'=> 'required',
+            'size'=> 'required',
+            'shape'=> 'required',
+            'color'=> 'required',
+        ]);
+        $consumers_face_details = Consumers_face_details::create($request->except('_token'));
+        if ($consumers_face_details)
+        {
+            return redirect()->route('consumers_face_details.index')->with('doneMessage',"Successfully record save");
+        }
     }
 
     /**
@@ -60,9 +72,11 @@ class ConsumersFaceDetailsController extends Controller
      * @param  \App\Models\Consumers_face_details  $consumers_face_details
      * @return \Illuminate\Http\Response
      */
-    public function edit(Consumers_face_details $consumers_face_details)
+    public function edit($id)
     {
-        //
+        $GeneralWebmasterSections = WebmasterSection::where('status', '=', '1')->orderby('row_no', 'asc')->get();
+        $consumers_face_details = Consumers_face_details::findOrFail($id);
+        return view('dashboard.consumers_face_details.edit',compact('GeneralWebmasterSections','consumers_face_details'));
     }
 
     /**
@@ -72,11 +86,21 @@ class ConsumersFaceDetailsController extends Controller
      * @param  \App\Models\Consumers_face_details  $consumers_face_details
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Consumers_face_details $consumers_face_details)
+    public function update(Request $request,$id)
     {
-        //
+        $this->validate($request,[
+            'type'=> 'required',
+            'location'=> 'required',
+            'size'=> 'required',
+            'shape'=> 'required',
+            'color'=> 'required',
+        ]);
+        $consumers_face_details = Consumers_face_details::whereId($id)->update($request->except('_token','_method'));
+        if ($consumers_face_details)
+        {
+            return redirect()->route('consumers_face_details.index')->with('doneMessage',"Successfully record updated");
+        }
     }
-
     /**
      * Remove the specified resource from storage.
      *

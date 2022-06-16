@@ -43,7 +43,7 @@
                                 colspan="1" aria-label="Options">Discount
                             </th>
                             <th class="text-center sorting_disabled" style="max-width: 150px; width: 150px;" rowspan="1"
-                                colspan="1" aria-label="Options">status
+                                colspan="1" aria-label="Options">User Status
                             </th>
                             <th class="text-center sorting_disabled" style="max-width: 150px; width: 150px;" rowspan="1"
                                 colspan="1" aria-label="Options">Action

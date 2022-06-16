@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Dashboard;
 use App\Http\Controllers\Controller;
 use App\Models\Consumer;
 use App\Models\Discounts;
+use App\Models\User;
 use App\Models\WebmasterSection;
 use Illuminate\Http\Request;
 
@@ -29,7 +30,9 @@ class DiscountsController extends Controller
      */
     public function create()
     {
-        //
+        $GeneralWebmasterSections = WebmasterSection::where('status', '=', '1')->orderby('row_no', 'asc')->get();
+        $users = User::all();
+        return view('dashboard.discounts.create',compact('GeneralWebmasterSections','users'));
     }
 
     /**
@@ -40,7 +43,17 @@ class DiscountsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request,[
+            'user_id'=> 'required',
+            'type'=> 'required',
+            'category'=> 'required',
+            'discount'=> 'required',
+        ]);
+        $discounts = Discounts::create($request->except('_token'));
+        if ($discounts)
+        {
+            return redirect()->route('discounts.index')->with('doneMessage',"Successfully record save");
+        }
     }
 
     /**
@@ -62,7 +75,10 @@ class DiscountsController extends Controller
      */
     public function edit($id)
     {
-        dd($id);
+        $GeneralWebmasterSections = WebmasterSection::where('status', '=', '1')->orderby('row_no', 'asc')->get();
+        $discounts = Discounts::findOrFail($id);
+        $users = User::all();
+        return view('dashboard.discounts.edit',compact('GeneralWebmasterSections','discounts','users'));
     }
 
     /**
@@ -72,10 +88,21 @@ class DiscountsController extends Controller
      * @param  \App\Models\Discounts  $discounts
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Discounts $discounts)
+    public function update(Request $request,$id)
     {
-        //
+        $this->validate($request,[
+            'user_id'=> 'required',
+            'type'=> 'required',
+            'category'=> 'required',
+            'discount'=> 'required',
+        ]);
+        $discounts = Discounts::whereId($id)->update($request->except('_token','_method'));
+        if ($discounts)
+        {
+            return redirect()->route('discounts.index')->with('doneMessage',"Successfully record updated");
+        }
     }
+
 
     /**
      * Remove the specified resource from storage.

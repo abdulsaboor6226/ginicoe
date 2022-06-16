@@ -29,7 +29,8 @@ class ConsumersSurgeryDetailsController extends Controller
      */
     public function create()
     {
-        //
+        $GeneralWebmasterSections = WebmasterSection::where('status', '=', '1')->orderby('row_no', 'asc')->get();
+        return view('dashboard.consumers_surgery_details.create',compact('GeneralWebmasterSections'));
     }
 
     /**
@@ -40,7 +41,32 @@ class ConsumersSurgeryDetailsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request,[
+            'surgery_location_on_face'=> 'required',
+            'surgery_date'=> 'required',
+            'surgeon_salutation'=> 'required',
+            'surgeon_first_name'=> 'required',
+            'surgeon_middle_name'=> 'nullable',
+            'surgeon_last_name'=> 'required',
+            'surgeon_contact_number'=> 'required',
+            'medical_practice_name'=> 'required',
+            'building_number'=> 'required',
+            'street'=> 'required',
+            'suite'=> 'required',
+            'address_1'=> 'required',
+            'address_2'=> 'nullable',
+            'urbanization_name'=> 'required',
+            'country'=> 'required',
+            'state'=> 'required',
+            'city'=> 'required',
+            'zip'=> 'required',
+            'area_code'=> 'required',
+        ]);
+        $consumers_surgery_details = Consumers_surgery_details::create($request->except('_token'));
+        if ($consumers_surgery_details)
+        {
+            return redirect()->route('consumers_surgery_details.index')->with('doneMessage',"Successfully record save");
+        }
     }
 
     /**
@@ -60,9 +86,11 @@ class ConsumersSurgeryDetailsController extends Controller
      * @param  \App\Models\Consumers_surgery_details  $consumers_surgery_details
      * @return \Illuminate\Http\Response
      */
-    public function edit(Consumers_surgery_details $consumers_surgery_details)
+    public function edit($id)
     {
-        //
+        $GeneralWebmasterSections = WebmasterSection::where('status', '=', '1')->orderby('row_no', 'asc')->get();
+        $consumers_surgery_details = Consumers_surgery_details::findOrFail($id);
+        return view('dashboard.consumers_surgery_details.edit',compact('GeneralWebmasterSections','consumers_surgery_details'));
     }
 
     /**
@@ -72,10 +100,36 @@ class ConsumersSurgeryDetailsController extends Controller
      * @param  \App\Models\Consumers_surgery_details  $consumers_surgery_details
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Consumers_surgery_details $consumers_surgery_details)
+    public function update(Request $request,$id)
     {
-        //
+        $this->validate($request,[
+            'surgery_location_on_face'=> 'required',
+            'surgery_date'=> 'required',
+            'surgeon_salutation'=> 'required',
+            'surgeon_first_name'=> 'required',
+            'surgeon_middle_name'=> 'nullable',
+            'surgeon_last_name'=> 'required',
+            'surgeon_contact_number'=> 'required',
+            'medical_practice_name'=> 'required',
+            'building_number'=> 'required',
+            'street'=> 'required',
+            'suite'=> 'required',
+            'address_1'=> 'required',
+            'address_2'=> 'nullable',
+            'urbanization_name'=> 'required',
+            'country'=> 'required',
+            'state'=> 'required',
+            'city'=> 'required',
+            'zip'=> 'required',
+            'area_code'=> 'required',
+        ]);
+        $consumers_surgery_details = Consumers_surgery_details::whereId($id)->update($request->except('_token','_method'));
+        if ($consumers_surgery_details)
+        {
+            return redirect()->route('consumers_surgery_details.index')->with('doneMessage',"Successfully record updated");
+        }
     }
+
 
     /**
      * Remove the specified resource from storage.

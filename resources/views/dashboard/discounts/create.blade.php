@@ -8,14 +8,13 @@
         <div class="padding">
             <div class="box">
                 <div class="box-body">
-                    <form action="{{route('discounts.update',$discounts->id)}}" method="POST">
+                    <form action="{{route('discounts.store')}}" method="POST">
                         @csrf
-                        @method('put')
                         <div class="form-group row">
                             <label class="col-sm-2 form-control-label">User</label>
                             <div class="col-sm-10">
                                 <div class="form-group">
-                                    <select class="form-control" value="{{old('user_id',$discounts->user_id)}}" name="user_id" id="exampleFormControlSelect1">
+                                    <select class="form-control" value="{{old('user_id')}}" name="user_id" id="exampleFormControlSelect1">
                                         <option value="">Select Option</option>
                                         @foreach($users as $user)
                                             <option value="{{$user->id}}">{{ucfirst($user->name)}} <b>{{$user->email}}</b></option>
@@ -28,7 +27,7 @@
                             <label class="col-sm-2 form-control-label">Type</label>
                             <div class="col-sm-10">
                                 <div class="form-group">
-                                    <input type="text" class="form-control" placeholder="extra" value="{{old('type',$discounts->type)}}" name="type">
+                                    <input type="text" class="form-control" placeholder="extra" value="{{old('type')}}" name="type">
                                 </div>
                             </div>
                         </div>
@@ -36,7 +35,7 @@
                             <label class="col-sm-2 form-control-label">Category</label>
                             <div class="col-sm-10">
                                 <div class="form-group">
-                                    <input type="text" class="form-control" placeholder="blankets" value="{{old('category',$discounts->category)}}" name="category">
+                                    <input type="text" class="form-control" placeholder="blankets" value="{{old('category')}}" name="category">
                                 </div>
                             </div>
                         </div>
@@ -44,7 +43,7 @@
                             <label class="col-sm-2 form-control-label">Discount</label>
                             <div class="col-sm-10">
                                 <div class="form-group">
-                                    <input type="number" class="form-control" placeholder="1" value="{{old('discount',$discounts->discount)}}" name="discount">
+                                    <input type="number" class="form-control" placeholder="1" value="{{old('discount')}}" name="discount">
                                 </div>
                             </div>
                         </div>
