@@ -46,7 +46,8 @@ class ConsumersCardsController extends Controller
             'card_number'=> 'required',
             'primary_card_holder_first_name'=> 'required',
             'primary_card_holder_last_name'=> 'required',
-            'bank','secondary_card_holder_relationship'=> 'required',
+            'bank'=>'required',
+            'secondary_card_holder_relationship'=> 'required',
             'secondary_card_holder_first_name'=> 'nullable',
             'secondary_card_holder_last_name'=> 'nullable'
             ]);
@@ -95,7 +96,8 @@ class ConsumersCardsController extends Controller
             'card_number'=> 'required',
             'primary_card_holder_first_name'=> 'required',
             'primary_card_holder_last_name'=> 'required',
-            'bank','secondary_card_holder_relationship'=> 'required',
+            'bank'=>'required',
+            'secondary_card_holder_relationship'=> 'required',
             'secondary_card_holder_first_name'=> 'nullable',
             'secondary_card_holder_last_name'=> 'nullable'
         ]);

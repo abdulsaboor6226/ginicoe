@@ -26,34 +26,29 @@
 
                         <tr role="row">
                             <th>#</th>
-                            <th class="sorting_desc" tabindex="0" aria-controls="topics_1" rowspan="1" colspan="1"
-                                style="width: 614px;" aria-sort="descending"
-                                aria-label="Title: activate to sort column ascending">Title
-                            </th>
-                            <th style="width:80px;" class="sorting" tabindex="0" aria-controls="topics_1" rowspan="1"
-                                colspan="1" aria-label="Visits: activate to sort column ascending">Version
-                            </th>
-                            <th style="width:80px;" class="sorting" tabindex="0" aria-controls="topics_1" rowspan="1"
-                                colspan="1" aria-label="Status: activate to sort column ascending">Status
-                            </th>
-                            <th class="text-center sorting_disabled" style="max-width: 150px; width: 150px;" rowspan="1"
-                                colspan="1" aria-label="Options">Options
-                            </th>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Contact</th>
+                            <th>City</th>
+                            <th>State</th>
+                            <th>Created At</th>
+                            <th>Action</th>
                         </tr>
                         </thead>
                         <tbody>
                         @foreach($consumers as $key => $consumer)
                             <tr class="row">
                                 <td>{{$key+1}}</td>
-                                <td class="sorting_1">
-                                    <div class="h6">{{$consumer->title_en}}</div>
+                                <td>
+                                    <small>{{$consumer->salutation}} {{$consumer->first_name}} {{$consumer->middle_name}} {{$consumer->last_name}}</small>
                                 </td>
                                 <td>
-                                    <div class="text-center">{{$consumer->version}}</div>
+                                    <div class="text-center">{{$consumer->primary_email}}</div>
                                 </td>
-                                <td>
-                                    <div class="text-center"><i class="fa fa-check {{$consumer->status == true ? "fa-check text-success" : "fa-times text-danger"}}  inline"></i></div>
-                                </td>
+                                <td>{{$consumer->primary_phone}}</td>
+                                <td>{{$consumer->current_us_city}}</td>
+                                <td>{{$consumer->current_us_state}}</td>
+                                <td>{{$consumer->current_us_zip}}</td>
                                 <td>
                                     <div class="text-center">
                                         <a class="btn btn-sm success" href="{{route("consumers.edit",$consumer->id)}}"

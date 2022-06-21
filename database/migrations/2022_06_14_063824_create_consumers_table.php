@@ -40,7 +40,7 @@ class CreateConsumersTable extends Migration
             $table->string('previous_us_area_code')->nullable();
             $table->string('primary_email')->unique();
             $table->bigInteger('primary_phone')->nullable();
-            $table->string('secondary_email')->unique();
+            $table->string('secondary_email')->unique()->nullable();
             $table->string('secondary_phone')->nullable();
             $table->string('emergency_salutation')->nullable();
             $table->string('emergency_first_name')->nullable();
@@ -53,7 +53,7 @@ class CreateConsumersTable extends Migration
             $table->string('emergency_us_state')->nullable();
             $table->string('emergency_us_zip')->nullable();
             $table->string('emergency_us_area_code')->nullable();
-            $table->string('emergency_email')->unique();
+            $table->string('emergency_email')->unique()->nullable();
             $table->tinyInteger('is_us_citizen')->default(1);
             $table->string('country_of_passport')->nullable();
             $table->string('passport_number')->nullable();
