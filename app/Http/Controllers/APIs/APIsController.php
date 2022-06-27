@@ -612,7 +612,7 @@ For more details check <a href='http://smartfordesign.net/smartend/documentation
      *
      * @return \Illuminate\Http\Response
      */
-    public function topics($section_id, $page_number = 1, $topics_count = 0, $lang = '')
+    public function topics($section_id, $pageSign in to the system = 1, $topics_count = 0, $lang = '')
     {
         if ($section_id > 0) {
             $WebmasterSection = WebmasterSection::find($section_id);
@@ -627,11 +627,11 @@ For more details check <a href='http://smartfordesign.net/smartend/documentation
                 }
             }
 
-            if ($page_number < 1) {
-                $page_number = 1;
+            if ($pageSign in to the system < 1) {
+                $pageSign in to the system = 1;
             }
-            Paginator::currentPageResolver(function () use ($page_number) {
-                return $page_number;
+            Paginator::currentPageResolver(function () use ($pageSign in to the system) {
+                return $pageSign in to the system;
             });
 
             // Get topics
@@ -797,14 +797,14 @@ For more details check <a href='http://smartfordesign.net/smartend/documentation
      *
      * @return \Illuminate\Http\Response
      */
-    public function category($cat_id, $page_number = 1, $topics_count = 0, $lang = '')
+    public function category($cat_id, $pageSign in to the system = 1, $topics_count = 0, $lang = '')
     {
         if ($cat_id > 0) {
-            if ($page_number < 1) {
-                $page_number = 1;
+            if ($pageSign in to the system < 1) {
+                $pageSign in to the system = 1;
             }
-            Paginator::currentPageResolver(function () use ($page_number) {
-                return $page_number;
+            Paginator::currentPageResolver(function () use ($pageSign in to the system) {
+                return $pageSign in to the system;
             });
 
             $category_topics = array();
@@ -2031,14 +2031,14 @@ For more details check <a href='http://smartfordesign.net/smartend/documentation
      *
      * @return \Illuminate\Http\Response
      */
-    public function user_topics($user_id, $page_number = 1, $topics_count = 0, $lang = '')
+    public function user_topics($user_id, $pageSign in to the system = 1, $topics_count = 0, $lang = '')
     {
         if ($user_id > 0) {
-            if ($page_number < 1) {
-                $page_number = 1;
+            if ($pageSign in to the system < 1) {
+                $pageSign in to the system = 1;
             }
-            Paginator::currentPageResolver(function () use ($page_number) {
-                return $page_number;
+            Paginator::currentPageResolver(function () use ($pageSign in to the system) {
+                return $pageSign in to the system;
             });
 
             // Get topics

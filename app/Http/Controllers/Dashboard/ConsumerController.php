@@ -3,7 +3,11 @@
 namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Controllers\Controller;
+use App\Models\AllCountry;
 use App\Models\Consumer;
+use App\Models\ConsumerCard;
+use App\Models\ConsumerFaceDetail;
+use App\Models\ConsumerFacialSurgery;
 use App\Models\WebmasterSection;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -19,7 +23,11 @@ class ConsumerController extends Controller
     {
         $GeneralWebmasterSections = WebmasterSection::where('status', '=', '1')->orderby('row_no', 'asc')->get();
         $consumers = Consumer::latest()->paginate(10);
-        return view('dashboard.consumers.index',compact('GeneralWebmasterSections','consumers'));
+        $counties = AllCountry::all();
+        $consumers_cards = ConsumerCard::latest()->paginate(10);
+        $consumers_face_details = ConsumerFaceDetail::latest()->paginate(10);
+        $consumers_surgery_details = ConsumerFacialSurgery::latest()->paginate(10);
+        return view('dashboard.consumers.index',compact('GeneralWebmasterSections','consumers','consumers_cards','consumers_face_details','consumers_surgery_details','counties'));
     }
 
     /**
@@ -56,7 +64,7 @@ class ConsumerController extends Controller
             'current_us_state'=> 'required',
             'current_us_zip'=> 'required',
             'current_us_area_code'=> 'nullable',
-            'current_us_lived_for_more_than_two_years'=> 'required'
+            'current_us_lived_for_more_than_two_years'=> 'nullable'
         ]);
         $consumers = Consumer::create($request->except('_token'));
         if ($consumers)
@@ -87,7 +95,10 @@ class ConsumerController extends Controller
         $GeneralWebmasterSections = WebmasterSection::where('status', '=', '1')->orderby('row_no', 'asc')->get();
         $consumer = Consumer::findOrFail($id);
         $tabName = $tabName !=null ? $tabName :'primary_info';
-        return view('dashboard.consumers.edit',compact('GeneralWebmasterSections','consumer','tabName'));
+        $consumers_cards = ConsumerCard::latest()->paginate(10);
+        $consumers_face_details = ConsumerFaceDetail::latest()->paginate(10);
+        $consumers_surgery_details = ConsumerFacialSurgery::latest()->paginate(10);
+        return view('dashboard.consumers.edit',compact('GeneralWebmasterSections','tabName','consumer','consumers_cards','consumers_face_details','consumers_surgery_details'));
     }
 
     /**
@@ -139,7 +150,7 @@ class ConsumerController extends Controller
             'current_us_state'=> 'required',
             'current_us_zip'=> 'required',
             'current_us_area_code'=> 'nullable',
-            'current_us_lived_for_more_than_two_years'=> 'required'
+            'current_us_lived_for_more_than_two_years'=> 'accepted'
         ]);
     }
 
@@ -149,7 +160,7 @@ class ConsumerController extends Controller
     protected function secondary_info_validation($request): array
     {
         return $this->validate($request,[
-            'social_security_number'=> 'required',
+            'social_securitySign in to the system'=> 'required',
             'credit_privacy'=> 'required',
             'mask'=> 'nullable',
             'previous_us_address_1'=> 'required',

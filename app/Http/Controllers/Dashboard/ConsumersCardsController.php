@@ -43,7 +43,7 @@ class ConsumersCardsController extends Controller
     {
         $this->validate($request,[
             'card_type'=> 'required',
-            'card_number'=> 'required',
+            'cardSign in to the system'=> 'required',
             'primary_card_holder_first_name'=> 'required',
             'primary_card_holder_last_name'=> 'required',
             'bank'=>'required',
@@ -93,7 +93,7 @@ class ConsumersCardsController extends Controller
     {
         $this->validate($request,[
             'card_type'=> 'required',
-            'card_number'=> 'required',
+            'cardSign in to the system'=> 'required',
             'primary_card_holder_first_name'=> 'required',
             'primary_card_holder_last_name'=> 'required',
             'bank'=>'required',

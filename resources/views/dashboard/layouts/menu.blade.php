@@ -467,43 +467,16 @@ $mnu_title_var2 = 'title_' . env('DEFAULT_LANGUAGE');
                     <li class="nav-header hidden-folded">
                         <small class="text-muted">{{ __('backend.penal') }}</small>
                     </li>
+                    <li class="nav-header hidden-folded">
+                        <small class="text-muted">{{ __('backend.main') }}</small>
+                    </li>
                     <li>
-                        <a>
-                            <span class="nav-caret">
-                                <i class="fa fa-caret-down"></i>
-                            </span>
-                            <span class="nav-icon">
-                                <i class="material-icons">&#xE8E8;</i>
-                            </span>
+                        <a href="{{ route('consumers.index') }}">
+                        <span class="nav-icon">
+                            <i class="material-icons">&#xE8E8;</i>
+                        </span>
                             <span class="nav-text">{{ __('backend.consumer') }}</span>
                         </a>
-                        <ul class="nav-sub">
-                            <li class="active">
-                                <a href="{{ route('consumers.index') }}">
-                                    <span class="nav-text">{{ __('backend.consumer') }}</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="{{ route('consumers_cards.index') }}">
-                                    <span class="nav-text">{{ __('backend.consumers_cards') }}</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="{{ route('consumers_face_details.index') }}">
-                                    <span class="nav-text">{{ __('backend.consumers_face_details') }}</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="{{ route('consumers_surgery_details.index') }}">
-                                    <span class="nav-text">{{ __('backend.consumers_surgery_details') }}</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="{{ route('discounts.index') }}">
-                                    <span class="nav-text">{{ __('backend.discounts') }}</span>
-                                </a>
-                            </li>
-                        </ul>
                     </li>
                 </ul>
             </nav>

@@ -5,24 +5,31 @@
 @endpush
 @section('content')
     <div class="padding p-b-0">
+        <h3 class="text-primary">Create Consumer</h3>
         <div class="padding">
             <div class="box">
                 <div class="box-body">
                     <form action="{{route('consumers.store')}}" method="POST">
                         @csrf
                         <div class="form-group row">
-                            <label class="col-sm-2 form-control-label">Salutation</label>
+                            <label class="col-sm-2 form-control-label">Salutation <span class="text-danger">*</span></label>
                             <div class="col-sm-10">
                                 <div class="form-group">
-                                    <input type="text" class="form-control" placeholder="Mr., Mrs." value="{{old('salutation')}}" name="salutation">
+                                    <select class="form-control" required name="salutation">
+                                        <option value="">Select Option</option>
+                                        <option value="Mr">Mr</option>
+                                        <option value="Mrs">Mrs</option>
+                                        <option value="Jr">Jr</option>
+                                        <option value="Sr">Sr</option>
+                                    </select>
                                 </div>
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="col-sm-2 form-control-label">First Name</label>
+                            <label class="col-sm-2 form-control-label">First Name <span class="text-danger">*</span> </label>
                             <div class="col-sm-10">
                                 <div class="form-group">
-                                    <input type="text" class="form-control" value="{{old('first_name')}}" placeholder="xyz.." name="first_name">
+                                    <input type="text" class="form-control" value="{{old('first_name')}}" placeholder="xyz.." required name="first_name">
                                 </div>
                             </div>
                         </div>
@@ -35,98 +42,98 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="col-sm-2 form-control-label">Last_ Name</label>
+                            <label class="col-sm-2 form-control-label">Last Name <span class="text-danger">*</span> </label>
                             <div class="col-sm-10">
                                 <div class="form-group">
-                                    <input type="text" class="form-control" value="{{old('last_name')}}" placeholder="xyz" name="last_name">
+                                    <input type="text" class="form-control" value="{{old('last_name')}}" placeholder="xyz" required name="last_name">
                                 </div>
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="col-sm-2 form-control-label">Birthday</label>
+                            <label class="col-sm-2 form-control-label">Birthday <span class="text-danger">*</span> </label>
                             <div class="col-sm-10">
                                 <div class="form-group">
-                                    <input type="date" class="form-control" placeholder="xyz" value="{{old('birthday')}}"  name="birthday">
+                                    <input type="date" class="form-control" placeholder="xyz" value="{{old('birthday')}}"  required name="birthday">
                                 </div>
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="col-sm-2 form-control-label">Primary Email</label>
+                            <label class="col-sm-2 form-control-label">Primary Email <span class="text-danger">*</span> </label>
                             <div class="col-sm-10">
                                 <div class="form-group">
-                                    <input type="text" class="form-control" value="{{old('primary_email')}}" placeholder="xyz@example.com" name="primary_email">
+                                    <input type="email" class="form-control" value="{{old('primary_email')}}" placeholder="xyz@example.com" required name="primary_email">
                                 </div>
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="col-sm-2 form-control-label">Primary Phone</label>
+                            <label class="col-sm-2 form-control-label">Primary Phone <span class="text-danger">*</span> </label>
                             <div class="col-sm-10">
                                 <div class="form-group">
-                                    <input type="number" class="form-control" value="{{old('primary_phone')}}" placeholder="123456789" name="primary_phone">
+                                    <input type="number" class="form-control" value="{{old('primary_phone')}}" placeholder="123456789" required name="primary_phone">
                                 </div>
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="col-sm-2 form-control-label">Address 1</label>
+                            <label class="col-sm-2 form-control-label">Address 1 <span class="text-danger">*</span> </label>
                             <div class="col-sm-10">
                                 <div class="form-group">
-                                    <input type="text" class="form-control" placeholder="Address" value="{{old('current_us_address_1')}}" name="current_us_address_1">
+                                    <input type="text" class="form-control" placeholder="Address" value="{{old('current_us_address_1')}}" required name="current_us_address_1">
                                 </div>
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="col-sm-2 form-control-label">Address 2</label>
+                            <label class="col-sm-2 form-control-label">Address 2 </label>
                             <div class="col-sm-10">
                                 <div class="form-group">
-                                    <input type="text" class="form-control" value="{{old('current_us_address_2')}}" placeholder="Address" name="current_us_address_2">
+                                    <textarea name="current_us_address_2" class="form-control">{{old('current_us_address_2')}}</textarea>
                                 </div>
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="col-sm-2 form-control-label">Current Us Urbanization Name</label>
+                            <label class="col-sm-2 form-control-label">Current US Urbanization Name </label>
                             <div class="col-sm-10">
                                 <div class="form-group">
-                                    <input type="text" class="form-control" value="{{old('current_us_urbanization_name')}}" placeholder="xyz.." name="current_us_urbanization_name">
+                                    <input type="text" class="form-control" value="{{old('current_us_urbanization_name')}}" placeholder="xyz.." required name="current_us_urbanization_name">
                                 </div>
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="col-sm-2 form-control-label">Current Us City</label>
+                            <label class="col-sm-2 form-control-label">Current US City <span class="text-danger">*</span> </label>
                             <div class="col-sm-10">
                                 <div class="form-group">
-                                    <input type="text" class="form-control" value="{{old('current_us_city')}}" placeholder="London" name="current_us_city">
+                                    <input type="text" class="form-control" value="{{old('current_us_city')}}" placeholder="London" required name="current_us_city">
                                 </div>
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="col-sm-2 form-control-label">Current Us State</label>
+                            <label class="col-sm-2 form-control-label">Current US State <span class="text-danger">*</span> </label>
                             <div class="col-sm-10">
                                 <div class="form-group">
-                                    <input type="text" class="form-control" placeholder="xyz" value="{{old('current_us_state')}}"  name="current_us_state">
+                                    <input type="text" class="form-control" placeholder="xyz" value="{{old('current_us_state')}}"  required name="current_us_state">
                                 </div>
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="col-sm-2 form-control-label">Current Us Zip</label>
+                            <label class="col-sm-2 form-control-label">Current US Zip <span class="text-danger">*</span> </label>
                             <div class="col-sm-10">
                                 <div class="form-group">
-                                    <input type="text" class="form-control" value="{{old('current_us_zip')}}" placeholder="12345" name="current_us_zip">
+                                    <input type="text" class="form-control" value="{{old('current_us_zip')}}" placeholder="12345" required name="current_us_zip">
                                 </div>
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="col-sm-2 form-control-label">Current Us Area Code</label>
+                            <label class="col-sm-2 form-control-label">Current US Area Code <span class="text-danger">*</span> </label>
                             <div class="col-sm-10">
                                 <div class="form-group">
-                                    <input type="text" class="form-control" value="{{old('current_us_area_code')}}" placeholder="12345" name="current_us_area_code">
+                                    <input type="text" class="form-control" value="{{old('current_us_area_code')}}" placeholder="12345" required name="current_us_area_code">
                                 </div>
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="col-sm-2 form-control-label">Current Us Lived For More Than Two Years</label>
+                            <label class="col-sm-2 form-control-label">Current US Lived For More Than Two Years</label>
                             <div class="col-sm-10">
-                                <div class="form-group">
-                                    <input type="text" class="form-control" value="{{old('current_us_lived_for_more_than_two_years')}}" placeholder="" name="current_us_lived_for_more_than_two_years">
+                                <div class="form-group" style="margin: 13px 0 0 20px;">
+                                    <input type="checkbox" name="current_us_lived_for_more_than_two_years" value="{{old('current_us_lived_for_more_than_two_years')}}" class="form-check-input">
                                 </div>
                             </div>
                         </div>
