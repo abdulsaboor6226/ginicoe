@@ -29,7 +29,7 @@ class CreateConsumersTable extends Migration
             $table->string('current_us_state')->nullable();
             $table->string('current_us_zip')->nullable();
             $table->string('current_us_area_code')->nullable();
-            $table->tinyInteger('current_us_lived_for_more_than_two_years')->default(1);
+            $table->tinyInteger('current_us_lived_for_more_than_two_years')->default(0);
             $table->unsignedBigInteger('birth_country_id_fk')->nullable();
             $table->string('birth_state')->nullable();
             $table->string('birth_city')->nullable();
@@ -59,8 +59,8 @@ class CreateConsumersTable extends Migration
             $table->string('emergency_us_zip')->nullable();
             $table->string('emergency_us_area_code')->nullable();
             $table->string('emergency_email')->unique()->nullable();
-            $table->tinyInteger('is_us_citizen')->default(1);
-            $table->double('ginicoe_id')->nullable();
+            $table->tinyInteger('is_us_citizen')->default(0);
+            $table->string('ginicoe_id')->nullable();
             $table->string('allow_law_enforcement_to_know_your_disability')->nullable();
             $table->string('disability_description')->nullable();
             $table->string('medication')->nullable();
