@@ -68,9 +68,9 @@ class ConsumerDrivingLicenceController extends Controller
      * @param  \App\Models\ConsumerDrivingLicence  $consumerDrivingLicence
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, ConsumerDrivingLicence $consumerDrivingLicence)
+    public function update(Request $request,$id)
     {
-        //
+        dd($request->all(),$id);
     }
 
     /**

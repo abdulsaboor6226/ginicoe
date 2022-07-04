@@ -266,6 +266,7 @@ Route::get('files-manager', [FileManagerController::class, 'manager'])->name('Fi
 
 //CRUD
 Route::resource('/consumers', ConsumerController::class);
+Route::resource('/driving-licence', ConsumerController::class);
 Route::resource('/consumers_cards', ConsumersCardsController::class);
 Route::resource('/consumers_face_details', ConsumersFaceDetailsController::class);
 Route::resource('/consumers_surgery_details', ConsumersSurgeryDetailsController::class);

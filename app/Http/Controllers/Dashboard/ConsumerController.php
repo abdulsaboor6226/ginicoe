@@ -93,7 +93,7 @@ class ConsumerController extends Controller
      *
      * @param \Illuminate\Http\Request $request
      * @param \App\Models\Consumer $consumer
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Http\Response
      * @throws \Illuminate\Validation\ValidationException
      */
     public function update(Request $request,$id)
@@ -131,7 +131,12 @@ class ConsumerController extends Controller
         $consumer = Consumer::whereId($id)->update($request->except('_token','_method','main_tab','sub_tab'));
         if ($consumer)
         {
-            return $this->edit($id,$main_tab,$sub_tab);
+            if($request->main_tab=='primary_info' && $request->sub_tab=='professional_info'){
+                return redirect()->route('consumers.index')->with('doneMessage',"Successfully record save");
+            }
+            else{
+                return $this->edit($id,$main_tab,$sub_tab);
+            }
         }
     }
 
@@ -146,7 +151,7 @@ class ConsumerController extends Controller
             'middle_name'=> 'nullable',
             'last_name'=> 'required',
             'birthday'=> 'required',
-            'primary_email'=> 'required',
+            'primary_email'=> 'required|email|unique:consumers,primary_email',
             'primary_phone'=> 'required',
             'current_us_urbanization_name'=> 'nullable',
             'current_us_address_1'=> 'required',
@@ -197,7 +202,7 @@ class ConsumerController extends Controller
         return $this->validate($request,[
             'emergency_salutation'=> 'required',
             'emergency_phone'=> 'required',
-            'emergency_email'=> 'nullable',
+            'emergency_email'=> 'required_if|email|unique:consumers,primary_email',
             'emergency_first_name'=> 'required',
             'emergency_middle_name'=> 'nullable',
             'emergency_last_name'=> 'nullable',
@@ -218,7 +223,7 @@ class ConsumerController extends Controller
     {
         return $this->validate($request,[
             'secondary_phone'=> 'required',
-            'secondary_email'=> 'required',
+            'secondary_email'=> 'required|email|unique:consumers,primary_email',
             'previous_us_address_1'=> 'required',
             'previous_us_address_2'=> 'nullable',
             'previous_us_state'=> 'required',

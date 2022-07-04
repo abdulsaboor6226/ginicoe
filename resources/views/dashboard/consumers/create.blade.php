@@ -141,7 +141,7 @@
                             <label class="col-sm-2 form-control-label">Current US Lived For More Than Two Years</label>
                             <div class="col-sm-4">
                                 <div class="form-group" style="margin: 13px 0 0 20px;">
-                                    <input type="checkbox" name="current_us_lived_for_more_than_two_years" value="{{old('current_us_lived_for_more_than_two_years')}}" class="form-check-input">
+                                    <input type="checkbox" name="current_us_lived_for_more_than_two_years" value="{{old('current_us_lived_for_more_than_two_years',1)}}" class="form-check-input">
                                 </div>
                             </div>
                         </div>
