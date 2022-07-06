@@ -36,7 +36,16 @@ class ConsumerFireArmController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->consumerFireArm_validation($request);
+        $sub_tab = 'non_US_employment';
+        foreach ($request->data as  $value){
+            $consumerFireArm = ConsumerFireArm::create($value);
+        }
+        if ($consumerFireArm)
+        {
+            return redirect()->route('consumers.edit',['id' =>$consumerFireArm->consumer_id_fk, 'main_tab'=> $request->main_tab,'sub_tab'=>$sub_tab])->with('doneMessage',"Successfully record save");
+        }
+
     }
 
     /**
@@ -68,9 +77,23 @@ class ConsumerFireArmController extends Controller
      * @param  \App\Models\ConsumerFireArm  $consumerFireArm
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, ConsumerFireArm $consumerFireArm)
+    public function update(Request $request,$id)
     {
-        //
+        $this->consumerFireArm_validation($request);
+        $sub_tab = 'non_US_employment';
+        foreach ($request->data as  $value){
+            if ($value['fire_arms_id_pk']== 0)
+            {
+                $consumerFireArm = ConsumerFireArm::create($value);
+            }
+            else{
+                $consumerFireArm = ConsumerFireArm::findOrFail($value['fire_arms_id_pk'])->update($value);
+            }
+        }
+        if ($consumerFireArm)
+        {
+            return redirect()->route('consumers.edit',['id' =>$consumerFireArm->consumer_id_fk, 'main_tab'=> $request->main_tab,'sub_tab'=>$sub_tab])->with('doneMessage',"Successfully record Save");
+        }
     }
 
     /**
@@ -82,5 +105,12 @@ class ConsumerFireArmController extends Controller
     public function destroy(ConsumerFireArm $consumerFireArm)
     {
         //
+    }
+    public function consumerFireArm_validation($request){
+        return $this->validate($request,[
+            'fire_arm_country_id_fk'=> 'data.*.fire_arm_country_id_fk',
+            'fire_arm_state'=> 'data.*.fire_arm_state',
+            'fire_arm_id'=> 'data.*.fire_arm_id',
+        ]);
     }
 }

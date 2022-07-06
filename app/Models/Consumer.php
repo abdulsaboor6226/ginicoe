@@ -24,6 +24,46 @@ class Consumer extends Model
         self::creating(function ($model) {
             $model->ginicoe_id = Str::uuid()->toString();
         });
-
     }
+    public function driving_licence(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(ConsumerDrivingLicence::class,'consumer_id_fk');
+    }
+    public function aviation(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(ConsumerAviationLicence::class,'consumer_id_fk');
+    }
+    public function fire_arms(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(ConsumerFireArm::class,'consumer_id_fk');
+    }
+    public function fishing(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(ConsumerFishingLicence::class,'consumer_id_fk');
+    }
+    public function hunting(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(ConsumerDrivingLicence::class,'consumer_id_fk');
+    }
+    public function medicaids(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(ConsumerMedicaid::class,'consumer_id_fk');
+    }
+    public function medicares(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(ConsumerMedicare::class,'consumer_id_fk');
+    }
+    public function non_US_employment(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(ConsumerNonUSEmployment::class,'consumer_id_fk');
+    }
+    public function passport(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(ConsumerPassport::class,'consumer_id_fk');
+    }
+    public function twins(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(ConsumerTwinsDetail::class,'consumer_id_fk');
+    }
+
 }

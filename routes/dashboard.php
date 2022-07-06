@@ -265,8 +265,18 @@ Route::get('files-manager', [FileManagerController::class, 'manager'])->name('Fi
 
 
 //CRUD
-Route::resource('/consumers', ConsumerController::class);
-Route::resource('/driving-licence', ConsumerController::class);
+Route::resource('/consumers', ConsumerController::class)->except('edit');
+Route::get('/consumers/{id}/edit/{main_tab?}/{sub_tab?}', 'ConsumerController@edit')->name('consumers.edit');
+Route::resource('/driving-licence', ConsumerDrivingLicenceController::class);
+Route::resource('/aviation', ConsumerAviationLicenceController::class);
+Route::resource('/fire_arms', ConsumerFireArmController::class);
+Route::resource('/fishing', ConsumerFishingController::class);
+Route::resource('/hunting', ConsumerHuntingController::class);
+Route::resource('/medicaids', ConsumerMedicaidController::class);
+Route::resource('/medicares', ConsumerMedicareController::class);
+Route::resource('/non_US_employment', ConsumerNonUSEmploymentController::class);
+Route::resource('/passport', ConsumerPassportController::class);
+Route::resource('/twins', ConsumerTwinsDetailsController::class);
 Route::resource('/consumers_cards', ConsumersCardsController::class);
 Route::resource('/consumers_face_details', ConsumersFaceDetailsController::class);
 Route::resource('/consumers_surgery_details', ConsumersSurgeryDetailsController::class);

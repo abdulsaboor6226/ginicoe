@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Controllers\Controller;
+use App\Models\ConsumerTwinsDetail;
 use App\Models\ConsumerTwinsDetails;
 use Illuminate\Http\Request;
 
@@ -36,9 +37,16 @@ class ConsumerTwinsDetailsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->consumerTwinsDetail_validation($request);
+        $sub_tab = 'hunting';
+        foreach ($request->data as  $value){
+            $consumerTwinsDetail = ConsumerTwinsDetail::create($value);
+        }
+        if ($consumerTwinsDetail)
+        {
+            return redirect()->route('consumers.edit',['id' =>$consumerTwinsDetail->consumer_id_fk, 'main_tab'=> $request->main_tab,'sub_tab'=>$sub_tab])->with('doneMessage',"Successfully record save");
+        }
     }
-
     /**
      * Display the specified resource.
      *
@@ -68,9 +76,23 @@ class ConsumerTwinsDetailsController extends Controller
      * @param  \App\Models\ConsumerTwinsDetails  $consumerTwinsDetails
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, ConsumerTwinsDetails $consumerTwinsDetails)
+    public function update(Request $request,$id)
     {
-        //
+        $this->consumerTwinsDetail_validation($request);
+        $sub_tab= 'hunting';
+        foreach ($request->data as  $value){
+            if ($value['twins_detail_id_pk']== 0)
+            {
+                $consumerTwinsDetail = ConsumerTwinsDetail::create($value);
+            }
+            else{
+                $consumerTwinsDetail = ConsumerTwinsDetail::findOrFail($value['twins_detail_id_pk'])->update($value);
+            }
+        }
+        if ($consumerTwinsDetail)
+        {
+            return redirect()->route('consumers.edit',['id' =>$consumerTwinsDetail->consumer_id_fk, 'main_tab'=> $request->main_tab,'sub_tab'=>$sub_tab])->with('doneMessage',"Successfully record Save");
+        }
     }
 
     /**
@@ -82,5 +104,12 @@ class ConsumerTwinsDetailsController extends Controller
     public function destroy(ConsumerTwinsDetails $consumerTwinsDetails)
     {
         //
+    }
+    public function consumerTwinsDetail_validation($request){
+        return $this->validate($request,[
+            'fire_arm_country_id_fk'=> 'data.*.fire_arm_country_id_fk',
+            'fire_arm_state'=> 'data.*.fire_arm_state',
+            'fire_arm_id'=> 'data.*.fire_arm_id',
+        ]);
     }
 }

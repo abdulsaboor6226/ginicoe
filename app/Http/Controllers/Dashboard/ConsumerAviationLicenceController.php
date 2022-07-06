@@ -36,7 +36,15 @@ class ConsumerAviationLicenceController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->consumerAviationLicence_validation($request);
+        $sub_tab = 'fire_arms';
+        foreach ($request->data as  $value){
+            $consumerAviationLicence = ConsumerAviationLicence::create($value);
+        }
+        if ($consumerAviationLicence)
+        {
+            return redirect()->route('consumers.edit',['id' =>$consumerAviationLicence->consumer_id_fk, 'main_tab'=> $request->main_tab,'sub_tab'=>$sub_tab])->with('doneMessage',"Successfully record save");
+        }
     }
 
     /**
@@ -68,9 +76,23 @@ class ConsumerAviationLicenceController extends Controller
      * @param  \App\Models\ConsumerAviationLicence  $consumerAviationLicence
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, ConsumerAviationLicence $consumerAviationLicence)
+    public function update(Request $request,$id)
     {
-        //
+        $this->consumerAviationLicence_validation($request);
+        $sub_tab = 'fire_arms';
+        foreach ($request->data as  $value){
+            if ($value['aviation_id_pk']== 0)
+            {
+                $consumerAviationLicence = ConsumerAviationLicence::create($value);
+            }
+            else{
+                $consumerAviationLicence = ConsumerAviationLicence::findOrFail($value['aviation_id_pk'])->update($value);
+            }
+        }
+        if ($consumerAviationLicence)
+        {
+            return redirect()->route('consumers.edit',['id' =>$consumerAviationLicence->consumer_id_fk, 'main_tab'=> $request->main_tab,'sub_tab'=>$sub_tab])->with('doneMessage',"Successfully record Save");
+        }
     }
 
     /**
@@ -82,5 +104,12 @@ class ConsumerAviationLicenceController extends Controller
     public function destroy(ConsumerAviationLicence $consumerAviationLicence)
     {
         //
+    }
+    public function consumerAviationLicence_validation($request){
+        return $this->validate($request,[
+            'fire_arm_country_id_fk'=> 'data.*.fire_arm_country_id_fk',
+            'fire_arm_state'=> 'data.*.fire_arm_state',
+            'fire_arm_id'=> 'data.*.fire_arm_id',
+        ]);
     }
 }

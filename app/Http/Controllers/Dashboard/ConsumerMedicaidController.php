@@ -36,7 +36,15 @@ class ConsumerMedicaidController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->consumerMedicaid_validation($request);
+        $sub_tab = 'medicares';
+        foreach ($request->data as  $value){
+            $consumerMedicaid = ConsumerMedicaid::create($value);
+        }
+        if ($consumerMedicaid)
+        {
+            return redirect()->route('consumers.edit',['id' =>$consumerMedicaid->consumer_id_fk, 'main_tab'=> $request->main_tab,'sub_tab'=>$sub_tab])->with('doneMessage',"Successfully record save");
+        }
     }
 
     /**
@@ -68,9 +76,23 @@ class ConsumerMedicaidController extends Controller
      * @param  \App\Models\ConsumerMedicaid  $consumerMedicaid
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, ConsumerMedicaid $consumerMedicaid)
+    public function update(Request $request,$id)
     {
-        //
+        $this->consumerMedicaid_validation($request);
+        $sub_tab = 'medicares';
+        foreach ($request->data as  $value){
+            if ($value['medicaid_id_pk']== 0)
+            {
+                $consumerMedicaid = ConsumerMedicaid::create($value);
+            }
+            else{
+                $consumerMedicaid = ConsumerMedicaid::findOrFail($value['medicaid_id_pk'])->update($value);
+            }
+        }
+        if ($consumerMedicaid)
+        {
+            return redirect()->route('consumers.edit',['id' =>$consumerMedicaid->consumer_id_fk, 'main_tab'=> $request->main_tab,'sub_tab'=>$sub_tab])->with('doneMessage',"Successfully record Save");
+        }
     }
 
     /**
@@ -82,5 +104,12 @@ class ConsumerMedicaidController extends Controller
     public function destroy(ConsumerMedicaid $consumerMedicaid)
     {
         //
+    }
+    public function consumerMedicaid_validation($request){
+        return $this->validate($request,[
+            'fire_arm_country_id_fk'=> 'data.*.fire_arm_country_id_fk',
+            'fire_arm_state'=> 'data.*.fire_arm_state',
+            'fire_arm_id'=> 'data.*.fire_arm_id',
+        ]);
     }
 }
