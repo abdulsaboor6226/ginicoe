@@ -43,7 +43,7 @@ class Consumer extends Model
     }
     public function hunting(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
-        return $this->hasMany(ConsumerDrivingLicence::class,'consumer_id_fk');
+        return $this->hasMany(ConsumerHuntingLicence::class,'consumer_id_fk');
     }
     public function medicaids(): \Illuminate\Database\Eloquent\Relations\HasMany
     {

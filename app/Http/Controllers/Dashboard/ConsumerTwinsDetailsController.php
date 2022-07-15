@@ -33,7 +33,7 @@ class ConsumerTwinsDetailsController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function store(Request $request)
     {
@@ -42,9 +42,12 @@ class ConsumerTwinsDetailsController extends Controller
         foreach ($request->data as  $value){
             $consumerTwinsDetail = ConsumerTwinsDetail::create($value);
         }
-        if ($consumerTwinsDetail)
+        if (!$consumerTwinsDetail)
         {
-            return redirect()->route('consumers.edit',['id' =>$consumerTwinsDetail->consumer_id_fk, 'main_tab'=> $request->main_tab,'sub_tab'=>$sub_tab])->with('doneMessage',"Successfully record save");
+            return redirect()->back()->with('errorMessage', 'Oop! Something Went wrong');
+        }
+        else{
+            return redirect()->route('consumers.edit',['id' =>$consumerTwinsDetail->consumer_id_fk, 'main_tab'=> $request->main_tab,'sub_tab'=>$sub_tab])->with('doneMessage',"Successfully record Save");
         }
     }
     /**
@@ -72,9 +75,10 @@ class ConsumerTwinsDetailsController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\ConsumerTwinsDetails  $consumerTwinsDetails
-     * @return \Illuminate\Http\Response
+     * @param \Illuminate\Http\Request $request
+     * @param \App\Models\ConsumerTwinsDetails $consumerTwinsDetails
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Http\Response
+     * @throws \Illuminate\Validation\ValidationException
      */
     public function update(Request $request,$id)
     {
@@ -89,9 +93,12 @@ class ConsumerTwinsDetailsController extends Controller
                 $consumerTwinsDetail = ConsumerTwinsDetail::findOrFail($value['twins_detail_id_pk'])->update($value);
             }
         }
-        if ($consumerTwinsDetail)
+        if (!$consumerTwinsDetail)
         {
-            return redirect()->route('consumers.edit',['id' =>$consumerTwinsDetail->consumer_id_fk, 'main_tab'=> $request->main_tab,'sub_tab'=>$sub_tab])->with('doneMessage',"Successfully record Save");
+            return redirect()->back()->with('errorMessage', 'Oop! Something Went wrong');
+        }
+        else{
+            return redirect()->route('consumers.edit',['id' =>$request->consumer_id_fk, 'main_tab'=> $request->main_tab,'sub_tab'=>$sub_tab])->with('doneMessage',"Successfully record Save");
         }
     }
 
@@ -105,11 +112,20 @@ class ConsumerTwinsDetailsController extends Controller
     {
         //
     }
-    public function consumerTwinsDetail_validation($request){
+
+    /**
+     * @throws \Illuminate\Validation\ValidationException
+     */
+    public function consumerTwinsDetail_validation($request): array
+    {
         return $this->validate($request,[
-            'fire_arm_country_id_fk'=> 'data.*.fire_arm_country_id_fk',
-            'fire_arm_state'=> 'data.*.fire_arm_state',
-            'fire_arm_id'=> 'data.*.fire_arm_id',
+            'data.*.living_twin_salutation' => 'required',
+            'data.*.living_twin_first_name' => 'required',
+            'data.*.living_twin_middle_name' => 'nullable',
+            'data.*.living_twin_last_name' => 'required',
+            'data.*.twin_classification' => 'required',
+            'data.*.difference_with_the_twin' => 'required',
+            'data.*.twin_gender' => 'required',
         ]);
     }
 }

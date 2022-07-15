@@ -9,10 +9,10 @@
             <div class="form-group">
                 <select class="form-control" required name="salutation">
                     <option value="">Select Option</option>
-                    <option {{ $consumer->salutation ==  'Mr' ? 'selected' : ""}} value="{{$consumer->salutation}}">Mr</option>
-                    <option {{ $consumer->salutation ==  'Mrs' ? 'selected' : ""}} value="{{$consumer->salutation}}">Mrs</option>
-                    <option {{ $consumer->salutation ==  'Jr' ? 'selected' : ""}} value="{{$consumer->salutation}}">Jr</option>
-                    <option {{ $consumer->salutation ==  'Sr' ? 'selected' : ""}} value="{{$consumer->salutation}}">Sr</option>
+                    <option {{ $consumer->salutation ==  'Mr' ? 'selected' : ""}} value="Mr">Mr</option>
+                    <option {{ $consumer->salutation ==  'Mrs' ? 'selected' : ""}} value="Mrs">Mrs</option>
+                    <option {{ $consumer->salutation ==  'Jr' ? 'selected' : ""}} value="Jr">Jr</option>
+                    <option {{ $consumer->salutation ==  'Sr' ? 'selected' : ""}} value="Sr">Sr</option>
                 </select>
             </div>
         </div>

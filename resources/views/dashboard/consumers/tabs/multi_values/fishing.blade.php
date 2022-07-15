@@ -1,115 +1,140 @@
-<form action="{{route('consumers.update',$consumer->id)}}" method="POST">
-    @csrf
-    @method('put')
-    <input type="hidden" name="main_tab" value="primary_info">
-    <input type="hidden" name="sub_tab" value="professional_info">
+@if($consumer->fishing->isEmpty())
+    <form action="{{route('fishing.store')}}" method="POST" >
+        @csrf
+        <input type="hidden" name="main_tab" value="multi_values_form_data">
+        <input type="hidden" name="sub_tab" value="fishing">
+        <input type="hidden" name="data[0][fishing_id_pk]" value="0">
+        <input type="hidden" name="data[0][consumer_id_fk]" value="{{$consumer->id}}">
+        <table class="table table-bordered" id="dynamicAddRemove_fishing">
+            <tr>
+                <div class="form-group row">
+                    <label class="col-sm-2 form-control-label">Fishing License Country<span class="text-danger">*</span> </label>
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <select class="form-control" required  name="data[0][fishing_country_id_fk]">
+                                <option value="">Select Option</option>
+                                @foreach($countries as $country)
+                                    <option value="{{$country->id}}">{{$country->name}} - {{$country->code}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                    <label class="col-sm-2 form-control-label">Fishing Licensing State <span class="text-danger">*</span> </label>
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <input type="text" class="form-control" value="{{old('fishing_state')}}" placeholder="London" required name="data[0][fishing_state]">
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-2 form-control-label">Fishing License ID <span class="text-danger">*</span> </label>
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <input type="text" class="form-control" value="{{old('fishing_license_id')}}" placeholder="XX-12-1234" required name="data[0][fishing_license_id]">
+                        </div>
+                    </div>
+                </div>
+                <td style="float: right;" ><button type="button" name="add" id="add_more_fishing" class="btn btn-success"><span class="fa fa-plus-square-o"> </span> Add More</button></td>
+            </tr>
+        </table>
+        <button type="submit" class="btn btn-success">Save</button>
+    </form>
+@else
 
-    <div class="form-group row">
-        <label class="col-sm-2 form-control-label"> Net Worth <span class="text-danger">*</span> </label>
-        <div class="col-sm-4">
-            <div class="form-group">
-                <input type="text" class="form-control" value="{{old('net_worth',$consumer->net_worth)}}" placeholder="15 A/W" required name="net_worth">
-            </div>
-        </div>
-        <label class="col-sm-2 form-control-label"> Occupation</label>
-        <div class="col-sm-4">
-            <div class="form-group">
-                <input type="text" class="form-control" value="{{old('occupation',$consumer->occupation)}}" placeholder="Gulfam Street" required name="occupation">
-            </div>
-        </div>
-    </div>
-    <div class="form-group row">
-        <label class="col-sm-2 form-control-label"> State ID<span class="text-danger">*</span> </label>
-        <div class="col-sm-4">
-            <div class="form-group">
-                <input type="text" class="form-control" value="{{old('state_id',$consumer->state_id)}}" placeholder="15 A/W" required name="state_id">
-            </div>
-        </div>
-        <label class="col-sm-2 form-control-label"> US Military Branch</label>
-        <div class="col-sm-4">
-            <div class="form-group">
-                <input type="text" class="form-control" value="{{old('us_military_branch',$consumer->us_military_branch)}}" placeholder="Gulfam Street" required name="us_military_branch">
-            </div>
-        </div>
-    </div>
-    <div class="form-group row">
-        <label class="col-sm-2 form-control-label">  US Military<span class="text-danger">*</span> </label>
-        <div class="col-sm-4">
-            <div class="form-group">
-                <input type="text" class="form-control" placeholder="xyz.." value="{{old('us_military',$consumer->us_military)}}" required name="us_military">
-            </div>
-        </div>
-        <label class="col-sm-2 form-control-label"> US Employee Badge</label>
-        <div class="col-sm-4">
-            <div class="form-group">
-                <input type="text" class="form-control" placeholder="xyz.." value="{{old('us_employee_badge',$consumer->us_employee_badge)}}" required name="us_employee_badge">
-            </div>
-        </div>
-    </div>
-    <div class="form-group row">
-        <label class="col-sm-2 form-control-label"> US Govt Badge Country <span class="text-danger">*</span> </label>
-        <div class="col-sm-4">
-            <div class="form-group">
-                <input type="text" class="form-control" value="{{old('us_govt_badge_country_id_fk',$consumer->us_govt_badge_country_id_fk)}}" placeholder="63100" required name="us_govt_badge_country_id_fk">
-            </div>
-        </div>
-        <label class="col-sm-2 form-control-label">  US Govt Badge State<span class="text-danger">*</span> </label>
-        <div class="col-sm-4">
-            <div class="form-group">
-                <input type="email" class="form-control" value="{{old('us_govt_badge_state',$consumer->us_govt_badge_state)}}"  required name="us_govt_badge_state">
-            </div>
-        </div>
-    </div>
-    <div class="form-group row">
-        <label class="col-sm-2 form-control-label">  US Govt Badge ID<span class="text-danger">*</span> </label>
-        <div class="col-sm-4">
-            <div class="form-group">
-                <input type="text" class="form-control" value="{{old('us_govt_badge_id',$consumer->us_govt_badge_id)}}" placeholder="63100" required name="us_govt_badge_id">
-            </div>
-        </div>
-        <label class="col-sm-2 form-control-label">  US Agency Description<span class="text-danger">*</span> </label>
-        <div class="col-sm-4">
-            <div class="form-group">
-                <input type="email" class="form-control" value="{{old('us_agency_description',$consumer->us_agency_description)}}"  required name="us_agency_description">
-            </div>
-        </div>
-    </div>
-    <div class="form-group row">
-        <label class="col-sm-2 form-control-label"> Foreign Agency Description<span class="text-danger">*</span> </label>
-        <div class="col-sm-4">
-            <div class="form-group">
-                <input type="text" class="form-control" value="{{old('foreign_agency_description',$consumer->foreign_agency_description)}}" placeholder="63100" required name="foreign_agency_description">
-            </div>
-        </div>
-        <label class="col-sm-2 form-control-label"> Indian Affairs Card Number<span class="text-danger">*</span> </label>
-        <div class="col-sm-4">
-            <div class="form-group">
-                <input type="email" class="form-control" value="{{old('bureau_of_indian_affairs_card_number',$consumer->bureau_of_indian_affairs_card_number)}}"  required name="bureau_of_indian_affairs_card_number">
-            </div>
-        </div>
-    </div>
-    <div class="form-group row">
-        <label class="col-sm-2 form-control-label"> Tribal Treaty Card Number<span class="text-danger">*</span> </label>
-        <div class="col-sm-4">
-            <div class="form-group">
-                <input type="text" class="form-control" value="{{old('tribal_treaty_card_number',$consumer->tribal_treaty_card_number)}}" placeholder="63100" name="tribal_treaty_card_number">
-            </div>
-        </div>
-        <label class="col-sm-2 form-control-label"> Tribal ID<span class="text-danger">*</span> </label>
-        <div class="col-sm-4">
-            <div class="form-group">
-                <input type="email" class="form-control" value="{{old('tribal_id',$consumer->tribal_id)}}"  required name="tribal_id">
-            </div>
-        </div>
-    </div>
-    <div class="form-group row">
-        <label class="col-sm-2 form-control-label"> Have Living Siblings<span class="text-danger">*</span> </label>
-        <div class="col-sm-4">
-            <div class="form-group">
-                <input type="text" class="form-control" placeholder="xyz" value="{{old('have_living_siblings',$consumer->have_living_siblings)}}"  required name="have_living_siblings">
-            </div>
-        </div>
-    </div>
-    <button  class="btn btn-primary">Submit & Next</button>
-</form>
+    @foreach($consumer->fishing as $key => $fishing)
+        <form action="{{route('fishing.update',$fishing->id)}}" method="POST" >
+            @csrf
+            @method('put')
+            <input type="hidden" name="main_tab" value="multi_values_form_data">
+            <input type="hidden" name="sub_tab" value="fishing">
+            <input type="hidden" name="consumer_id_fk" value="{{$consumer->id}}">
+            <input type="hidden" name="data[{{$key}}][fishing_id_pk]" value="{{$fishing->id}}">
+            <input type="hidden" name="data[{{$key}}][consumer_id_fk]" value="{{$consumer->id}}">
+            <table class="table table-bordered" id="dynamicAddRemove_fishing">
+                <tr>
+                    <div class="form-group row">
+                        <label class="col-sm-2 form-control-label">Fishing License Country<span class="text-danger">*</span> </label>
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <select class="form-control" required  name="data[{{$key}}][fishing_country_id_fk]">
+                                    <option value="">Select Option</option>
+                                    @foreach($countries as $country)
+                                        <option {{ $country->id == $fishing->fishing_country_id_fk  ? 'selected' : ""}} value="{{$country->id}}">{{$country->name}} - {{$country->code}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        <label class="col-sm-2 form-control-label">Fishing Licensing State <span class="text-danger">*</span> </label>
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <input type="text" class="form-control" value="{{old('fishing_state',$fishing->fishing_state)}}" placeholder="London" required name="data[{{$key}}][fishing_state]">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 form-control-label">Fishing License ID <span class="text-danger">*</span> </label>
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <input type="text" class="form-control" value="{{old('fishing_license_id',$fishing->fishing_license_id)}}" placeholder="XX-12-1234" required name="data[{{$key}}][fishing_license_id]">
+                            </div>
+                        </div>
+                    </div>
+                </tr>
+            </table>
+            @endforeach
+            <button type="button" style="float: right;" name="add" id="add_more_fishing" class="btn btn-success"><span class="fa fa-plus-square-o"> </span> Add More</button>
+            <button type="submit" class="btn btn-success">Save</button>
+        </form>
+        @endif
 
+        <script type="text/javascript">
+            var i = 0;
+            $("#add_more_fishing").click(function(){
+                ++i;
+                var fieldHTML = '<tr>';
+                fieldHTML+= '<td>';
+                fieldHTML+= '<input type="hidden" name="data['+i+'][consumer_id_fk]" value="{{$consumer->id}}">';
+                fieldHTML+= '<input type="hidden" name="data['+i+'][fishing_id_pk]" value="0">';
+                fieldHTML+= '<div class="form-group row">';
+                fieldHTML+= '<label class="col-sm-2 form-control-label">Fishing License Country<span class="text-danger">*';
+                fieldHTML+= '</span>';
+                fieldHTML+= '</label>';
+                fieldHTML+= '<div class="col-sm-4">';
+                fieldHTML+= '<div class="form-group">';
+                fieldHTML+= '<select class="form-control" required  name="data['+i+'][fishing_country_id_fk]">';
+                fieldHTML+= '<option value="">Select Option';
+                fieldHTML+= '</option> @foreach($countries as $country)';
+                fieldHTML+= '<option value="{{$country->id}}">{{$country->name}} - {{$country->code}}';
+                fieldHTML+= '</option> @endforeach';
+                fieldHTML+= '</select>';
+                fieldHTML+= '</div>';
+                fieldHTML+= '</div>';
+                fieldHTML+= '<label class="col-sm-2 form-control-label">Fishing Licensing State <span class="text-danger">*';
+                fieldHTML+= '</span>';
+                fieldHTML+= '</label>';
+                fieldHTML+= '<div class="col-sm-4">';
+                fieldHTML+= '<div class="form-group">';
+                fieldHTML+= '<input type="text" class="form-control" value="{{old('fishing_state')}}" placeholder="London" required name="data['+i+'][fishing_state]">';
+                fieldHTML+= '</div>';
+                fieldHTML+= '</div>';
+                fieldHTML+= '</div>';
+                fieldHTML+= '<div class="form-group row">';
+                fieldHTML+= '<label class="col-sm-2 form-control-label">Fishing License ID <span class="text-danger">*';
+                fieldHTML+= '</span>';
+                fieldHTML+= '</label>';
+                fieldHTML+= '<div class="col-sm-4">';
+                fieldHTML+= '<div class="form-group">';
+                fieldHTML+= '<input type="text" class="form-control" value="{{old('fishing_license_id')}}" placeholder="XX-12-1234" required name="data['+i+'][fishing_license_id]">';
+                fieldHTML+= '</div>';
+                fieldHTML+= '</div>';
+                fieldHTML+= '</div>';
+                fieldHTML+= '<button style="float: right;" type="button" class="btn btn-danger remove-tr">Remove</button>';
+                fieldHTML+= '</td>';
+                fieldHTML+= '</tr>';
+                $("#dynamicAddRemove_fishing").append(fieldHTML);
+            });
+
+            $(document).on('click', '.remove-tr', function(){
+                $(this).parents('tr').remove();
+            });
+        </script>

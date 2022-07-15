@@ -1,140 +1,139 @@
-<form action="{{route('consumers.update',$consumer->id)}}" method="POST">
-    @csrf
-    @method('put')
-    <input type="hidden" name="main_tab" value="primary_info">
-    <input type="hidden" name="sub_tab" value="personal_info">
-    <div class="form-group row">
-        <label class="col-sm-2 form-control-label">Salutation <span class="text-danger">*</span></label>
-        <div class="col-sm-4">
-            <div class="form-group">
-                <select class="form-control" required name="salutation">
-                    <option value="">Select Option</option>
-                    <option {{ $consumer->salutation ==  'Mr' ? 'selected' : ""}} value="{{$consumer->salutation}}">Mr</option>
-                    <option {{ $consumer->salutation ==  'Mrs' ? 'selected' : ""}} value="{{$consumer->salutation}}">Mrs</option>
-                    <option {{ $consumer->salutation ==  'Jr' ? 'selected' : ""}} value="{{$consumer->salutation}}">Jr</option>
-                    <option {{ $consumer->salutation ==  'Sr' ? 'selected' : ""}} value="{{$consumer->salutation}}">Sr</option>
-                </select>
-            </div>
-        </div>
-        <label class="col-sm-2 form-control-label">First Name <span class="text-danger">*</span> </label>
-        <div class="col-sm-4">
-            <div class="form-group">
-                <input type="text" class="form-control" value="{{old('first_name',$consumer->first_name)}}" placeholder="xyz.." required name="first_name">
-            </div>
-        </div>
-    </div>
-    <div class="form-group row">
-        <label class="col-sm-2 form-control-label">Middle Name</label>
-        <div class="col-sm-4">
-            <div class="form-group">
-                <input type="text" class="form-control" value="{{old('middle_name',$consumer->middle_name)}}" placeholder="xyz..." name="middle_name">
-            </div>
-        </div>
-        <label class="col-sm-2 form-control-label">Last Name <span class="text-danger">*</span> </label>
-        <div class="col-sm-4">
-            <div class="form-group">
-                <input type="text" class="form-control" value="{{old('last_name',$consumer->last_name)}}" placeholder="xyz" required name="last_name">
-            </div>
-        </div>
-    </div>
-    <div class="form-group row">
-        <label class="col-sm-2 form-control-label">Birthday <span class="text-danger">*</span> </label>
-        <div class="col-sm-4">
-            <div class="form-group">
-                <input type="date" class="form-control" placeholder="xyz" value="{{old('birthday',$consumer->birthday)}}"  required name="birthday">
-            </div>
-        </div>
-        <label class="col-sm-2 form-control-label">Primary Email <span class="text-danger">*</span> </label>
-        <div class="col-sm-4">
-            <div class="form-group">
-                <input type="email" class="form-control" value="{{old('primary_email',$consumer->primary_email)}}" placeholder="xyz@example.com" required name="primary_email">
-            </div>
-        </div>
-    </div>
-    <div class="form-group row">
-        <label class="col-sm-2 form-control-label">Primary Phone <span class="text-danger">*</span> </label>
-        <div class="col-sm-4">
-            <div class="form-group">
-                <input type="tel" class="form-control" value="{{old('primary_phone',$consumer->primary_phone)}}" placeholder="123456789" required name="primary_phone">
-            </div>
-        </div>
-        <label class="col-sm-2 form-control-label">Current US Urbanization Name </label>
-        <div class="col-sm-4">
-            <div class="form-group">
-                <input type="text" class="form-control" value="{{old('current_us_urbanization_name',$consumer->current_us_urbanization_name)}}" placeholder="xyz.." name="current_us_urbanization_name">
-            </div>
-        </div>
-    </div>
-    <div class="form-group row">
-        <label class="col-sm-2 form-control-label">Address 1 <span class="text-danger">*</span> </label>
-        <div class="col-sm-4">
-            <div class="form-group">
-                <input type="text" class="form-control" placeholder="Address" value="{{old('current_us_address_1',$consumer->current_us_address_1)}}" required name="current_us_address_1">
-            </div>
-        </div>
-        <label class="col-sm-2 form-control-label">Address 2 </label>
-        <div class="col-sm-4">
-            <div class="form-group">
-                <textarea name="current_us_address_2" class="form-control">{{old('current_us_address_2')}}</textarea>
-            </div>
-        </div>
-    </div>
-    <div class="form-group row">
-        <label class="col-sm-2 form-control-label">Current US City <span class="text-danger">*</span> </label>
-        <div class="col-sm-4">
-            <div class="form-group">
-                <input type="text" class="form-control" value="{{old('current_us_city',$consumer->current_us_city)}}" placeholder="London" required name="current_us_city">
-            </div>
-        </div>
-        <label class="col-sm-2 form-control-label">Current US State <span class="text-danger">*</span> </label>
-        <div class="col-sm-4">
-            <div class="form-group">
-                <input type="text" class="form-control" placeholder="xyz" value="{{old('current_us_state',$consumer->current_us_state)}}"  required name="current_us_state">
-            </div>
-        </div>
-    </div>
-    <div class="form-group row">
-        <label class="col-sm-2 form-control-label">Current US Zip <span class="text-danger">*</span> </label>
-        <div class="col-sm-4">
-            <div class="form-group">
-                <input type="text" class="form-control" value="{{old('current_us_zip',$consumer->current_us_zip)}}" placeholder="12345" required name="current_us_zip">
-            </div>
-        </div>
-        <label class="col-sm-2 form-control-label">Current US Area Code <span class="text-danger">*</span> </label>
-        <div class="col-sm-4">
-            <div class="form-group">
-                <input type="text" class="form-control" value="{{old('current_us_area_code',$consumer->current_us_area_code)}}" placeholder="12345" required name="current_us_area_code">
-            </div>
-        </div>
-    </div>
-    <div class="form-group row">
-        <label class="col-sm-2 form-control-label">Social Security </label>
-        <div class="col-sm-4">
-            <div class="form-group">
-                <input type="text" class="form-control" value="{{old('social_security',$consumer->social_security)}}"  name="social_security">
-            </div>
-        </div>
-        <label class="col-sm-2 form-control-label">Credit Privacy </label>
-        <div class="col-sm-4">
-            <div class="form-group">
-                <input type="text" class="form-control" value="{{old('credit_privacy',$consumer->credit_privacy)}}" name="credit_privacy">
-            </div>
-        </div>
-    </div>
-    <div class="form-group row">
-        <label class="col-sm-2 form-control-label">Mask </label>
-        <div class="col-sm-4">
-            <div class="form-group">
-                <input type="text" class="form-control" value="{{old('mask',$consumer->mask)}}"  name="mask">
-            </div>
-        </div>
-        <label class="col-sm-2 form-control-label">Current US Lived For More Than Two Years</label>
-        <div class="col-sm-4">
-            <div class="form-group" style="margin: 13px 0 0 20px;">
-                <input type="checkbox" {{$consumer->current_us_lived_for_more_than_two_years == 1 ? "checked": " "}} name="current_us_lived_for_more_than_two_years" value="{{old('current_us_lived_for_more_than_two_years',$consumer->current_us_lived_for_more_than_two_years)}}" class="form-check-input">
-            </div>
-        </div>
-    </div>
-    <button  class="btn btn-primary">Submit & Next</button>
-</form>
+@if($consumer->hunting->isEmpty())
+    <form action="{{route('hunting.store')}}" method="POST" >
+        @csrf
+        <input type="hidden" name="main_tab" value="multi_values_form_data">
+        <input type="hidden" name="sub_tab" value="hunting">
+        <input type="hidden" name="data[0][hunting_licence_id_pk]" value="0">
+        <input type="hidden" name="data[0][consumer_id_fk]" value="{{$consumer->id}}">
+        <table class="table table-bordered" id="dynamicAddRemove_hunting">
+            <tr>
+                <div class="form-group row">
+                    <label class="col-sm-2 form-control-label">Hunting License Country<span class="text-danger">*</span> </label>
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <select class="form-control" required  name="data[0][hunting_country_id_fk]">
+                                <option value="">Select Option</option>
+                                @foreach($countries as $country)
+                                    <option value="{{$country->id}}">{{$country->name}} - {{$country->code}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                    <label class="col-sm-2 form-control-label">Hunting Licensing State <span class="text-danger">*</span> </label>
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <input type="text" class="form-control" value="{{old('hunting_state')}}" placeholder="London" required name="data[0][hunting_state]">
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-2 form-control-label">Hunting License ID <span class="text-danger">*</span> </label>
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <input type="text" class="form-control" value="{{old('hunting_license_id')}}" placeholder="XX-12-1234" required name="data[0][hunting_license_id]">
+                        </div>
+                    </div>
+                </div>
+                <td style="float: right;" ><button type="button" name="add" id="add_more_hunting" class="btn btn-success"><span class="fa fa-plus-square-o"> </span> Add More</button></td>
+            </tr>
+        </table>
+        <button type="submit" class="btn btn-success">Save</button>
+    </form>
+@else
+    @foreach($consumer->hunting as $key => $hunting)
+        <form action="{{route('hunting.update',$hunting->id)}}" method="POST" >
+            @csrf
+            @method('put')
+            <input type="hidden" name="main_tab" value="multi_values_form_data">
+            <input type="hidden" name="sub_tab" value="hunting">
+            <input type="hidden" name="consumer_id_fk" value="{{$consumer->id}}">
+            <input type="hidden" name="data[{{$key}}][hunting_licence_id_pk]" value="{{$hunting->id}}">
+            <input type="hidden" name="data[{{$key}}][consumer_id_fk]" value="{{$consumer->id}}">
+            <table class="table table-bordered" id="dynamicAddRemove_hunting">
+                <tr>
+                    <div class="form-group row">
+                        <label class="col-sm-2 form-control-label">Hunting License Country<span class="text-danger">*</span> </label>
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <select class="form-control" required  name="data[{{$key}}][hunting_country_id_fk]">
+                                    <option value="">Select Option</option>
+                                    @foreach($countries as $country)
+                                        <option {{ $country->id == $hunting->hunting_country_id_fk  ? 'selected' : ""}} value="{{$country->id}}">{{$country->name}} - {{$country->code}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        <label class="col-sm-2 form-control-label">Hunting Licensing State <span class="text-danger">*</span> </label>
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <input type="text" class="form-control" value="{{old('hunting_state',$hunting->hunting_state)}}" placeholder="London" required name="data[{{$key}}][hunting_state]">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 form-control-label">Hunting License ID <span class="text-danger">*</span> </label>
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <input type="text" class="form-control" value="{{old('hunting_license_id',$hunting->hunting_license_id)}}" placeholder="XX-12-1234" required name="data[{{$key}}][hunting_license_id]">
+                            </div>
+                        </div>
+                    </div>
+                </tr>
+            </table>
+            @endforeach
+            <button type="button" style="float: right;" name="add" id="add_more_hunting" class="btn btn-success"><span class="fa fa-plus-square-o"> </span> Add More</button>
+            <button type="submit" class="btn btn-success">Save</button>
+        </form>
+        @endif
 
+        <script type="text/javascript">
+            var i = 0;
+            $("#add_more_hunting").click(function(){
+                ++i;
+                var fieldHTML = '<tr>';
+                fieldHTML+= '<td>';
+                fieldHTML+= '<input type="hidden" name="data['+i+'][consumer_id_fk]" value="{{$consumer->id}}">';
+                fieldHTML+= '<input type="hidden" name="data['+i+'][hunting_licence_id_pk]" value="0">';
+                fieldHTML+= '<div class="form-group row">';
+                fieldHTML+= '<label class="col-sm-2 form-control-label">Hunting License Country<span class="text-danger">*';
+                fieldHTML+= '</span>';
+                fieldHTML+= '</label>';
+                fieldHTML+= '<div class="col-sm-4">';
+                fieldHTML+= '<div class="form-group">';
+                fieldHTML+= '<select class="form-control" required  name="data['+i+'][hunting_country_id_fk]">';
+                fieldHTML+= '<option value="">Select Option';
+                fieldHTML+= '</option> @foreach($countries as $country)';
+                fieldHTML+= '<option value="{{$country->id}}">{{$country->name}} - {{$country->code}}';
+                fieldHTML+= '</option> @endforeach';
+                fieldHTML+= '</select>';
+                fieldHTML+= '</div>';
+                fieldHTML+= '</div>';
+                fieldHTML+= '<label class="col-sm-2 form-control-label">Hunting Licensing State <span class="text-danger">*';
+                fieldHTML+= '</span>';
+                fieldHTML+= '</label>';
+                fieldHTML+= '<div class="col-sm-4">';
+                fieldHTML+= '<div class="form-group">';
+                fieldHTML+= '<input type="text" class="form-control" value="{{old('hunting_state')}}" placeholder="London" required name="data['+i+'][hunting_state]">';
+                fieldHTML+= '</div>';
+                fieldHTML+= '</div>';
+                fieldHTML+= '</div>';
+                fieldHTML+= '<div class="form-group row">';
+                fieldHTML+= '<label class="col-sm-2 form-control-label">Hunting License ID <span class="text-danger">*';
+                fieldHTML+= '</span>';
+                fieldHTML+= '</label>';
+                fieldHTML+= '<div class="col-sm-4">';
+                fieldHTML+= '<div class="form-group">';
+                fieldHTML+= '<input type="text" class="form-control" value="{{old('hunting_license_id')}}" placeholder="XX-12-1234" required name="data['+i+'][hunting_license_id]">';
+                fieldHTML+= '</div>';
+                fieldHTML+= '</div>';
+                fieldHTML+= '</div>';
+                fieldHTML+= '<button style="float: right;" type="button" class="btn btn-danger remove-tr">Remove</button>';
+                fieldHTML+= '</td>';
+                fieldHTML+= '</tr>';
+                $("#dynamicAddRemove_hunting").append(fieldHTML);
+            });
+
+            $(document).on('click', '.remove-tr', function(){
+                $(this).parents('tr').remove();
+            });
+        </script>

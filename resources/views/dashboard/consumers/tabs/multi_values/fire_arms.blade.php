@@ -3,6 +3,7 @@
         @csrf
         <input type="hidden" name="main_tab" value="multi_values_form_data">
         <input type="hidden" name="sub_tab" value="fire_arms">
+        <input type="hidden" name="consumer_id_fk" value="{{$consumer->id}}">
         <input type="hidden" name="data[0][fire_arms_id_pk]" value="0">
         <input type="hidden" name="data[0][consumer_id_fk]" value="{{$consumer->id}}">
         <table class="table table-bordered" id="dynamicAddRemove_fire_arms">
@@ -14,7 +15,7 @@
                             <select class="form-control" required  name="data[0][fire_arm_country_id_fk]">
                                 <option value="">Select Option</option>
                                 @foreach($countries as $country)
-                                    <option {{ $country->id ==  $consumer->fire_arm_country_id_fk ? 'selected' : ""}} value="{{$country->id}}">{{$country->name}} - {{$country->code}}</option>
+                                    <option value="{{$country->id}}">{{$country->name}} - {{$country->code}}</option>
                                 @endforeach
                             </select>
                         </div>

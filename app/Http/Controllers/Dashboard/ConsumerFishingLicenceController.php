@@ -31,8 +31,9 @@ class ConsumerFishingLicenceController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     * @throws \Illuminate\Validation\ValidationException
      */
     public function store(Request $request)
     {
@@ -41,9 +42,12 @@ class ConsumerFishingLicenceController extends Controller
         foreach ($request->data as  $value){
             $consumerFishingLicence = ConsumerFishingLicence::create($value);
         }
-        if ($consumerFishingLicence)
+        if (!$consumerFishingLicence)
         {
-            return redirect()->route('consumers.edit',['id' =>$consumerFishingLicence->consumer_id_fk, 'main_tab'=> $request->main_tab,'sub_tab'=>$sub_tab])->with('doneMessage',"Successfully record save");
+            return redirect()->back()->with('errorMessage', 'Oop! Something Went wrong');
+        }
+        else{
+            return redirect()->route('consumers.edit',['id' =>$consumerFishingLicence->consumer_id_fk, 'main_tab'=> $request->main_tab,'sub_tab'=>$sub_tab])->with('doneMessage',"Successfully record Save");
         }
 
     }
@@ -73,9 +77,10 @@ class ConsumerFishingLicenceController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\ConsumerFishingLicence  $consumerFishingLicence
-     * @return \Illuminate\Http\Response
+     * @param \Illuminate\Http\Request $request
+     * @param \App\Models\ConsumerFishingLicence $consumerFishingLicence
+     * @return \Illuminate\Http\RedirectResponse
+     * @throws \Illuminate\Validation\ValidationException
      */
     public function update(Request $request,$id)
     {
@@ -90,9 +95,12 @@ class ConsumerFishingLicenceController extends Controller
                 $consumerFishingLicence = ConsumerFishingLicence::findOrFail($value['fishing_licence_id_pk'])->update($value);
             }
         }
-        if ($consumerFishingLicence)
+        if (!$consumerFishingLicence)
         {
-            return redirect()->route('consumers.edit',['id' =>$consumerFishingLicence->consumer_id_fk, 'main_tab'=> $request->main_tab,'sub_tab'=>$sub_tab])->with('doneMessage',"Successfully record Save");
+            return redirect()->back()->with('errorMessage', 'Oop! Something Went wrong');
+        }
+        else{
+            return redirect()->route('consumers.edit',['id' =>$request->consumer_id_fk, 'main_tab'=> $request->main_tab,'sub_tab'=>$sub_tab])->with('doneMessage',"Successfully record Save");
         }
     }
 
@@ -106,11 +114,16 @@ class ConsumerFishingLicenceController extends Controller
     {
         //
     }
-    public function consumerFishingLicence_validation($request){
+
+    /**
+     * @throws \Illuminate\Validation\ValidationException
+     */
+    public function consumerFishingLicence_validation($request): array
+    {
         return $this->validate($request,[
-            'fire_arm_country_id_fk'=> 'data.*.fire_arm_country_id_fk',
-            'fire_arm_state'=> 'data.*.fire_arm_state',
-            'fire_arm_id'=> 'data.*.fire_arm_id',
+            'data.*.fishing_country_id_fk'  => 'required',
+            'data.*.fishing_state'  => 'required',
+            'data.*.fishing_license_id'  => 'required',
         ]);
     }
 }

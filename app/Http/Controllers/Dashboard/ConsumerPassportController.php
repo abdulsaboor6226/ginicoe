@@ -31,8 +31,9 @@ class ConsumerPassportController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     * @throws \Illuminate\Validation\ValidationException
      */
     public function store(Request $request)
     {
@@ -41,9 +42,12 @@ class ConsumerPassportController extends Controller
         foreach ($request->data as  $value){
             $consumerPassport = ConsumerPassport::create($value);
         }
-        if ($consumerPassport)
+        if (!$consumerPassport)
         {
-            return redirect()->route('consumers.edit',['id' =>$consumerPassport->consumer_id_fk, 'main_tab'=> $request->main_tab,'sub_tab'=>$sub_tab])->with('doneMessage',"Successfully record save");
+            return redirect()->back()->with('errorMessage', 'Oop! Something Went wrong');
+        }
+        else{
+            return redirect()->route('consumers.edit',['id' =>$consumerPassport->consumer_id_fk, 'main_tab'=> $request->main_tab,'sub_tab'=>$sub_tab])->with('doneMessage',"Successfully record Save");
         }
     }
 
@@ -72,9 +76,10 @@ class ConsumerPassportController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\ConsumerPassport  $consumerPassport
-     * @return \Illuminate\Http\Response
+     * @param \Illuminate\Http\Request $request
+     * @param \App\Models\ConsumerPassport $consumerPassport
+     * @return \Illuminate\Http\RedirectResponse
+     * @throws \Illuminate\Validation\ValidationException
      */
     public function update(Request $request,$id)
     {
@@ -89,9 +94,12 @@ class ConsumerPassportController extends Controller
                 $consumerPassport = ConsumerPassport::findOrFail($value['passport_id_pk'])->update($value);
             }
         }
-        if ($consumerPassport)
+        if (!$consumerPassport)
         {
-            return redirect()->route('consumers.edit',['id' =>$consumerPassport->consumer_id_fk, 'main_tab'=> $request->main_tab,'sub_tab'=>$sub_tab])->with('doneMessage',"Successfully record Save");
+            return redirect()->back()->with('errorMessage', 'Oop! Something Went wrong');
+        }
+        else{
+            return redirect()->route('consumers.edit',['id' =>$request->consumer_id_fk, 'main_tab'=> $request->main_tab,'sub_tab'=>$sub_tab])->with('doneMessage',"Successfully record Save");
         }
     }
 
@@ -105,11 +113,17 @@ class ConsumerPassportController extends Controller
     {
         //
     }
-    public function consumerPassport_validation($request){
+
+    /**
+     * @throws \Illuminate\Validation\ValidationException
+     */
+    public function consumerPassport_validation($request): array
+    {
         return $this->validate($request,[
-            'fire_arm_country_id_fk'=> 'data.*.fire_arm_country_id_fk',
-            'fire_arm_state'=> 'data.*.fire_arm_state',
-            'fire_arm_id'=> 'data.*.fire_arm_id',
+            'data.*.passport_country_id_fk' => 'required',
+            'data.*.passport_number' => 'required',
+            'data.*.passport_issuance_date' => 'required|date',
+            'data.*.passport_expiration_date' => 'required|date|after:data.*.passport_issuance_date',
         ]);
     }
 }

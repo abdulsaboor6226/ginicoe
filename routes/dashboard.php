@@ -270,8 +270,8 @@ Route::get('/consumers/{id}/edit/{main_tab?}/{sub_tab?}', 'ConsumerController@ed
 Route::resource('/driving-licence', ConsumerDrivingLicenceController::class);
 Route::resource('/aviation', ConsumerAviationLicenceController::class);
 Route::resource('/fire_arms', ConsumerFireArmController::class);
-Route::resource('/fishing', ConsumerFishingController::class);
-Route::resource('/hunting', ConsumerHuntingController::class);
+Route::resource('/fishing', ConsumerFishingLicenceController::class);
+Route::resource('/hunting', ConsumerHuntingLicenceController::class);
 Route::resource('/medicaids', ConsumerMedicaidController::class);
 Route::resource('/medicares', ConsumerMedicareController::class);
 Route::resource('/non_US_employment', ConsumerNonUSEmploymentController::class);

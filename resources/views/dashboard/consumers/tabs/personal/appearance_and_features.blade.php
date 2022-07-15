@@ -56,7 +56,7 @@
         <label class="col-sm-2 form-control-label">Hair Color <span class="text-danger">*</span> </label>
         <div class="col-sm-4">
             <div class="form-group">
-                <input type="email" class="form-control" value="{{old('hair_color',$consumer->hair_color)}}"  required name="hair_color">
+                <input type="text" class="form-control" value="{{old('hair_color',$consumer->hair_color)}}"  required name="hair_color">
             </div>
         </div>
     </div>
@@ -70,7 +70,7 @@
         <label class="col-sm-2 form-control-label">Facial Hair <span class="text-danger">*</span> </label>
         <div class="col-sm-4">
             <div class="form-group">
-                <input type="email" class="form-control" value="{{old('facial_hair',$consumer->facial_hair)}}" name="facial_hair">
+                <input type="text" class="form-control" value="{{old('facial_hair',$consumer->facial_hair)}}" name="facial_hair">
             </div>
         </div>
     </div>
@@ -84,7 +84,7 @@
         <label class="col-sm-2 form-control-label">Prescribed Glasses </label>
         <div class="col-sm-4">
             <div class="form-group">
-                <input type="email" class="form-control" value="{{old('prescribed_glasses',$consumer->prescribed_glasses)}}" name="prescribed_glasses">
+                <input type="text" class="form-control" value="{{old('prescribed_glasses',$consumer->prescribed_glasses)}}" name="prescribed_glasses">
             </div>
         </div>
     </div>
@@ -98,7 +98,7 @@
         <label class="col-sm-2 form-control-label">Enforcement To Know Your Disability </label>
         <div class="col-sm-4">
             <div class="form-group">
-                <input type="email" class="form-control" value="{{old('allow_law_enforcement_to_know_your_disability',$consumer->allow_law_enforcement_to_know_your_disability)}}" name="allow_law_enforcement_to_know_your_disability">
+                <input type="text" class="form-control" value="{{old('allow_law_enforcement_to_know_your_disability',$consumer->allow_law_enforcement_to_know_your_disability)}}" name="allow_law_enforcement_to_know_your_disability">
             </div>
         </div>
     </div>

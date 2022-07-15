@@ -32,7 +32,7 @@ class ConsumerNonUSEmploymentController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function store(Request $request)
     {
@@ -40,9 +40,13 @@ class ConsumerNonUSEmploymentController extends Controller
         foreach ($request->data as  $value){
             $consumerNonUSEmployment = ConsumerNonUSEmployment::create($value);
         }
-        if ($consumerNonUSEmployment)
+        if (!$consumerNonUSEmployment)
         {
-            return redirect()->route('consumers.edit',['id' =>$consumerNonUSEmployment->consumer_id_fk, 'main_tab'=> $request->main_tab,'sub_tab'=>$request->sub_tab])->with('doneMessage',"Successfully record save");
+            return redirect()->back()->with('errorMessage', 'Oop! Something Went wrong');
+        }
+        else{
+            return redirect()->route('consumers.index')->with('doneMessage',"Successfully record save");
+//            return redirect()->route('consumers.edit',['id' =>$consumerNonUSEmployment->consumer_id_fk, 'main_tab'=> $request->main_tab,'sub_tab'=>$sub_tab])->with('doneMessage',"Successfully record Save");
         }
     }
 
@@ -71,25 +75,30 @@ class ConsumerNonUSEmploymentController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\ConsumerNonUSEmployment  $consumerNonUSEmployment
-     * @return \Illuminate\Http\Response
+     * @param \Illuminate\Http\Request $request
+     * @param \App\Models\ConsumerNonUSEmployment $consumerNonUSEmployment
+     * @return \Illuminate\Http\RedirectResponse
+     * @throws \Illuminate\Validation\ValidationException
      */
     public function update(Request $request,$id)
     {
         $this->consumerNonUSEmployment_validation($request);
         foreach ($request->data as  $value){
-            if ($value['consumerNonUSEmployment_id_pk']== 0)
+            if ($value['non_US_employment_id_pk'] == 0)
             {
                 $consumerNonUSEmployment = ConsumerNonUSEmployment::create($value);
             }
             else{
-                $consumerNonUSEmployment = ConsumerNonUSEmployment::findOrFail($value['consumerNonUSEmployment_id_pk'])->update($value);
+                $consumerNonUSEmployment = ConsumerNonUSEmployment::findOrFail($value['non_US_employment_id_pk'])->update($value);
             }
         }
-        if ($consumerNonUSEmployment)
+        if (!$consumerNonUSEmployment)
         {
-            return redirect()->route('consumers.edit',['id' =>$consumerNonUSEmployment->consumer_id_fk, 'main_tab'=> $request->main_tab,'sub_tab'=>$request->sub_tab])->with('doneMessage',"Successfully record Save");
+            return redirect()->back()->with('errorMessage', 'Oop! Something Went wrong');
+        }
+        else{
+                return redirect()->route('consumers.index')->with('doneMessage',"Successfully record save");
+//            return redirect()->route('consumers.edit',['id' =>$request->consumer_id_fk, 'main_tab'=> $request->main_tab,'sub_tab'=>$sub_tab])->with('doneMessage',"Successfully record Save");
         }
     }
 
@@ -103,11 +112,16 @@ class ConsumerNonUSEmploymentController extends Controller
     {
         //
     }
-    public function consumerNonUSEmployment_validation($request){
+
+    /**
+     * @throws \Illuminate\Validation\ValidationException
+     */
+    public function consumerNonUSEmployment_validation($request): array
+    {
         return $this->validate($request,[
-            'fire_arm_country_id_fk'=> 'data.*.fire_arm_country_id_fk',
-            'fire_arm_state'=> 'data.*.fire_arm_state',
-            'fire_arm_id'=> 'data.*.fire_arm_id',
+            'data.*.non_us_govt_badge_country_id_fk' => 'required',
+            'data.*.non_us_govt_badge_state' => 'required',
+            'data.*.non_us_govt_badge_id' => 'required',
         ]);
     }
 }

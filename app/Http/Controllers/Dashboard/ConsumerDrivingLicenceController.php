@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\ConsumerDrivingLicence;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use function GuzzleHttp\Promise\all;
 
 class ConsumerDrivingLicenceController extends Controller
 {
@@ -32,8 +33,9 @@ class ConsumerDrivingLicenceController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\RedirectResponse
+     * @throws \Illuminate\Validation\ValidationException
      */
     public function store(Request $request)
     {
@@ -42,9 +44,12 @@ class ConsumerDrivingLicenceController extends Controller
         foreach ($request->data as  $value){
             $consumersDrivingLicence = ConsumerDrivingLicence::create($value);
         }
-        if ($consumersDrivingLicence)
+        if (!$consumersDrivingLicence)
         {
-            return redirect()->route('consumers.edit',['id' =>$consumersDrivingLicence->consumer_id_fk, 'main_tab'=> $request->main_tab,'sub_tab'=>$sub_tab])->with('doneMessage',"Successfully record save");
+            return redirect()->back()->with('errorMessage', 'Oop! Something Went wrong');
+        }
+        else{
+            return redirect()->route('consumers.edit',['id' =>$consumersDrivingLicence->consumer_id_fk, 'main_tab'=> $request->main_tab,'sub_tab'=>$sub_tab])->with('doneMessage',"Successfully record Save");
         }
     }
 
@@ -73,14 +78,15 @@ class ConsumerDrivingLicenceController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\ConsumerDrivingLicence  $consumerDrivingLicence
-     * @return \Illuminate\Http\Response
+     * @param \Illuminate\Http\Request $request
+     * @param \App\Models\ConsumerDrivingLicence $consumerDrivingLicence
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Http\Response
+     * @throws \Illuminate\Validation\ValidationException
      */
     public function update(Request $request,$id)
     {
         $this->consumersDrivingLicence_validation($request);
-            $sub_tab = 'passport';
+        $sub_tab = 'passport';
         foreach ($request->data as  $value){
             if ($value['driving_licence_id_pk']== 0)
             {
@@ -90,9 +96,12 @@ class ConsumerDrivingLicenceController extends Controller
                 $consumersDrivingLicence = ConsumerDrivingLicence::findOrFail($value['driving_licence_id_pk'])->update($value);
             }
         }
-        if ($consumersDrivingLicence)
+        if (!$consumersDrivingLicence)
         {
-            return redirect()->route('consumers.edit',['id' =>$consumersDrivingLicence->consumer_id_fk, 'main_tab'=> $request->main_tab,'sub_tab'=>$sub_tab])->with('doneMessage',"Successfully record Save");
+            return redirect()->back()->with('errorMessage', 'Oop! Something Went wrong');
+        }
+        else{
+            return redirect()->route('consumers.edit',['id' =>$request->consumer_id_fk, 'main_tab'=> $request->main_tab,'sub_tab'=>$sub_tab])->with('doneMessage',"Successfully record Save");
         }
     }
 
@@ -107,11 +116,15 @@ class ConsumerDrivingLicenceController extends Controller
         //
     }
 
-    public function consumersDrivingLicence_validation($request){
-       return $this->validate($request,[
-            'driving_license_country_id_fk'=> 'data.*.driving_license_country_id_fk',
-            'driving_licensing_state'=> 'data.*.driving_licensing_state',
-            'driving_licensing_id'=> 'data.*.driving_licensing_id',
+    /**
+     * @throws \Illuminate\Validation\ValidationException
+     */
+    public function consumersDrivingLicence_validation($request): array
+    {
+        return $this->validate($request,[
+            'data.*.driving_license_country_id_fk' => 'required',
+            'data.*.driving_licensing_state' => 'required',
+            'data.*.driving_license_id' => 'required',
         ]);
     }
 }

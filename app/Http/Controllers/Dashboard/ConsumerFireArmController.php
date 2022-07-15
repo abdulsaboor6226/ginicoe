@@ -32,7 +32,7 @@ class ConsumerFireArmController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function store(Request $request)
     {
@@ -41,11 +41,13 @@ class ConsumerFireArmController extends Controller
         foreach ($request->data as  $value){
             $consumerFireArm = ConsumerFireArm::create($value);
         }
-        if ($consumerFireArm)
+        if (!$consumerFireArm)
         {
-            return redirect()->route('consumers.edit',['id' =>$consumerFireArm->consumer_id_fk, 'main_tab'=> $request->main_tab,'sub_tab'=>$sub_tab])->with('doneMessage',"Successfully record save");
+            return redirect()->back()->with('errorMessage', 'Oop! Something Went wrong');
         }
-
+        else{
+            return redirect()->route('consumers.edit',['id' =>$consumerFireArm->consumer_id_fk, 'main_tab'=> $request->main_tab,'sub_tab'=>$sub_tab])->with('doneMessage',"Successfully record Save");
+        }
     }
 
     /**
@@ -73,9 +75,10 @@ class ConsumerFireArmController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\ConsumerFireArm  $consumerFireArm
-     * @return \Illuminate\Http\Response
+     * @param \Illuminate\Http\Request $request
+     * @param \App\Models\ConsumerFireArm $consumerFireArm
+     * @return \Illuminate\Http\RedirectResponse
+     * @throws \Illuminate\Validation\ValidationException
      */
     public function update(Request $request,$id)
     {
@@ -90,9 +93,12 @@ class ConsumerFireArmController extends Controller
                 $consumerFireArm = ConsumerFireArm::findOrFail($value['fire_arms_id_pk'])->update($value);
             }
         }
-        if ($consumerFireArm)
+        if (!$consumerFireArm)
         {
-            return redirect()->route('consumers.edit',['id' =>$consumerFireArm->consumer_id_fk, 'main_tab'=> $request->main_tab,'sub_tab'=>$sub_tab])->with('doneMessage',"Successfully record Save");
+            return redirect()->back()->with('errorMessage', 'Oop! Something Went wrong');
+        }
+        else{
+            return redirect()->route('consumers.edit',['id' =>$request->consumer_id_fk, 'main_tab'=> $request->main_tab,'sub_tab'=>$sub_tab])->with('doneMessage',"Successfully record Save");
         }
     }
 
@@ -106,11 +112,16 @@ class ConsumerFireArmController extends Controller
     {
         //
     }
-    public function consumerFireArm_validation($request){
+
+    /**
+     * @throws \Illuminate\Validation\ValidationException
+     */
+    public function consumerFireArm_validation($request): array
+    {
         return $this->validate($request,[
-            'fire_arm_country_id_fk'=> 'data.*.fire_arm_country_id_fk',
-            'fire_arm_state'=> 'data.*.fire_arm_state',
-            'fire_arm_id'=> 'data.*.fire_arm_id',
+            'data.*.fire_arm_country_id_fk' => 'required',
+            'data.*.fire_arm_state' => 'required',
+            'data.*.fire_arm_id' => 'required',
         ]);
     }
 }

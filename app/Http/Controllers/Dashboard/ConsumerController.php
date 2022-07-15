@@ -45,15 +45,18 @@ class ConsumerController extends Controller
      * Store a newly created resource in storage.
      *
      * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      * @throws \Illuminate\Validation\ValidationException
      */
     public function store(Request $request)
     {
-        $this->personal_info_validation($request);
+        $id ="";
+        $this->personal_info_validation($request,$id);
         $consumers = Consumer::create($request->except('_token','main_tab','sub_tab'));
-        if ($consumers)
-        {
+        if (!$consumers) {
+            return redirect()->back()->with('errorMessage', 'Oop! Something Went wrong');
+        }
+        else{
             return redirect()->route('consumers.edit',$consumers->id)->with('doneMessage',"Successfully record save");
         }
     }
@@ -99,7 +102,7 @@ class ConsumerController extends Controller
     public function update(Request $request,$id)
     {
         if($request->main_tab=='primary_info' && $request->sub_tab=='personal_info'){
-            $this->personal_info_validation($request);
+            $this->personal_info_validation($request,$id);
             $main_tab = 'primary_info';
             $sub_tab = 'birth_detail';
         }
@@ -109,12 +112,12 @@ class ConsumerController extends Controller
             $sub_tab = 'emergency_info';
         }
         if($request->main_tab=='primary_info' && $request->sub_tab=='emergency_info'){
-            $this->emergency_info_validation($request);
+            $this->emergency_info_validation($request,$id);
             $main_tab = 'primary_info';
             $sub_tab = 'secondary_info';
         }
         if($request->main_tab=='primary_info' && $request->sub_tab=='secondary_info'){
-            $this->secondary_info_validation($request);
+            $this->secondary_info_validation($request,$id);
             $main_tab = 'primary_info';
             $sub_tab = 'appearance_and_features';
         }
@@ -138,12 +141,15 @@ class ConsumerController extends Controller
                 return $this->edit($id,$main_tab,$sub_tab);
             }
         }
+        else{
+            return redirect()->back()->with('errorMessage','SomeThing went wrong');
+        }
     }
 
     /**
      * @throws \Illuminate\Validation\ValidationException
      */
-    protected function personal_info_validation($request): array
+    protected function personal_info_validation($request,$id): array
     {
         return $this->validate($request,[
             'salutation'=> 'required',
@@ -151,7 +157,7 @@ class ConsumerController extends Controller
             'middle_name'=> 'nullable',
             'last_name'=> 'required',
             'birthday'=> 'required',
-            'primary_email'=> 'required|email|unique:consumers,primary_email',
+            'primary_email'=> 'required|email|unique:consumers,primary_email,'.$id,
             'primary_phone'=> 'required',
             'current_us_urbanization_name'=> 'nullable',
             'current_us_address_1'=> 'required',
@@ -197,12 +203,12 @@ class ConsumerController extends Controller
     /**
      * @throws \Illuminate\Validation\ValidationException
      */
-    protected function emergency_info_validation($request): array
+    protected function emergency_info_validation($request,$id): array
     {
         return $this->validate($request,[
             'emergency_salutation'=> 'required',
             'emergency_phone'=> 'required',
-            'emergency_email'=> 'required_if|email|unique:consumers,primary_email',
+            'emergency_email'=> 'required|email|unique:consumers,emergency_email,'.$id,
             'emergency_first_name'=> 'required',
             'emergency_middle_name'=> 'nullable',
             'emergency_last_name'=> 'nullable',
@@ -219,11 +225,11 @@ class ConsumerController extends Controller
     /**
      * @throws \Illuminate\Validation\ValidationException
      */
-    protected function secondary_info_validation($request): array
+    protected function secondary_info_validation($request,$id): array
     {
         return $this->validate($request,[
             'secondary_phone'=> 'required',
-            'secondary_email'=> 'required|email|unique:consumers,primary_email',
+            'secondary_email'=> 'required|email|unique:consumers,secondary_email,'.$id,
             'previous_us_address_1'=> 'required',
             'previous_us_address_2'=> 'nullable',
             'previous_us_state'=> 'required',

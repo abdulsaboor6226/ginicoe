@@ -47,6 +47,7 @@
             @method('put')
             <input type="hidden" name="main_tab" value="multi_values_form_data">
             <input type="hidden" name="sub_tab" value="driving_licence">
+            <input type="hidden" name="consumer_id_fk" value="{{$consumer->id}}">
             <input type="hidden" name="data[{{$key}}][driving_licence_id_pk]" value="{{$driving_licence->id}}">
             <input type="hidden" name="data[{{$key}}][consumer_id_fk]" value="{{$consumer->id}}">
             <table class="table table-bordered" id="dynamicAddRemove_driving_licence">
