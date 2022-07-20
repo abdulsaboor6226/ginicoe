@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateConsumersCardsTable extends Migration
+class CreateConsumerCardsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,9 @@ class CreateConsumersCardsTable extends Migration
      */
     public function up()
     {
-        Schema::create('consumers_cards', function (Blueprint $table) {
+        Schema::create('consumer_cards', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('consumer_id');
+            $table->unsignedBigInteger('consumer_id_fk');
             $table->string('card_type');
             $table->string('card_number');
             $table->string('primary_card_holder_first_name');
@@ -25,6 +25,7 @@ class CreateConsumersCardsTable extends Migration
             $table->string('secondary_card_holder_first_name');
             $table->string('secondary_card_holder_last_name');
             $table->timestamps();
+            $table->foreign('consumer_id_fk')->references('id')->on('consumers')->onDelete('cascade');
         });
     }
 
@@ -35,6 +36,6 @@ class CreateConsumersCardsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('consumers_cards');
+        Schema::dropIfExists('consumer_cards');
     }
 }

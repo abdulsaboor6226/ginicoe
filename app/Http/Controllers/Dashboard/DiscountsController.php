@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Controllers\Controller;
 use App\Models\Consumer;
-use App\Models\Discounts;
+use App\Models\Discountz;
 use App\Models\User;
 use App\Models\WebmasterSection;
 use Illuminate\Http\Request;
@@ -19,7 +19,7 @@ class DiscountsController extends Controller
     public function index()
     {
         $GeneralWebmasterSections = WebmasterSection::where('status', '=', '1')->orderby('row_no', 'asc')->get();
-        $discounts = Discounts::with('user')->latest()->paginate(10);
+        $discounts = Discountz::with('user')->latest()->paginate(10);
         return view('dashboard.discounts.index',compact('GeneralWebmasterSections','discounts'));
     }
 

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateConsumersSurgeryDetailsTable extends Migration
+class CreateConsumerFacialSurgeriesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,9 @@ class CreateConsumersSurgeryDetailsTable extends Migration
      */
     public function up()
     {
-        Schema::create('consumers_surgery_details', function (Blueprint $table) {
+        Schema::create('consumer_facial_surgeries', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('consumer_id');
+            $table->unsignedBigInteger('consumer_id_fk');
             $table->string('surgery_location_on_face')->nullable();
             $table->date('surgery_date');
             $table->string('surgeon_salutation')->nullable();
@@ -30,12 +30,13 @@ class CreateConsumersSurgeryDetailsTable extends Migration
             $table->string('address_1')->nullable();
             $table->string('address_2')->nullable();
             $table->string('urbanization_name')->nullable();
-            $table->string('country')->nullable();
+            $table->string('country_id_fk')->nullable();
             $table->string('state')->nullable();
             $table->string('city')->nullable();
             $table->string('zip')->nullable();
             $table->string('area_code')->nullable();
             $table->timestamps();
+            $table->foreign('consumer_id_fk')->references('id')->on('consumers')->onDelete('cascade');
         });
     }
 
@@ -46,6 +47,6 @@ class CreateConsumersSurgeryDetailsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('consumers_surgery_details');
+        Schema::dropIfExists('consumer_facial_surgeries');
     }
 }
