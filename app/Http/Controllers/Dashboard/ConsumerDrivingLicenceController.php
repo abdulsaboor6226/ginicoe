@@ -109,11 +109,21 @@ class ConsumerDrivingLicenceController extends Controller
      * Remove the specified resource from storage.
      *
      * @param  \App\Models\ConsumerDrivingLicence  $consumerDrivingLicence
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function destroy(ConsumerDrivingLicence $consumerDrivingLicence)
+    public function destroy($id)
     {
-        //
+        $consumerDrivingLicence = ConsumerDrivingLicence::findOrFail($id);
+        $consumerDrivingLicenceDel= $consumerDrivingLicence->delete();
+        $main_tab = 'multi_values_form_data';
+        $sub_tab = 'driving_licence';
+        if (!$consumerDrivingLicenceDel)
+        {
+            return redirect()->back()->with('errorMessage', 'Oop! Something Went wrong');
+        }
+        else{
+            return redirect()->route('consumers.edit',['id' =>$consumerDrivingLicence->consumer_id_fk, 'main_tab'=> $main_tab,'sub_tab'=>$sub_tab])->with('doneMessage',"Successfully record Deleted");
+        }
     }
 
     /**

@@ -20,6 +20,7 @@ class CreateConsumerHuntingLicencesTable extends Migration
             $table->string('hunting_state');
             $table->string('hunting_license_id');
             $table->timestamps();
+            $table->foreign('consumer_id_fk')->references('id')->on('consumers')->onDelete('cascade');
         });
     }
 

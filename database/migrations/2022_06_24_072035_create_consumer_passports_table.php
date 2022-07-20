@@ -21,6 +21,7 @@ class CreateConsumerPassportsTable extends Migration
             $table->date('passport_issuance_date');
             $table->date('passport_expiration_date');
             $table->timestamps();
+            $table->foreign('consumer_id_fk')->references('id')->on('consumers')->onDelete('cascade');
         });
     }
 

@@ -108,9 +108,19 @@ class ConsumerFireArmController extends Controller
      * @param  \App\Models\ConsumerFireArm  $consumerFireArm
      * @return \Illuminate\Http\Response
      */
-    public function destroy(ConsumerFireArm $consumerFireArm)
+    public function destroy($id)
     {
-        //
+        $consumerFireArms = ConsumerFireArm::findOrFail($id);
+        $consumerFireArmsDel= $consumerFireArms->delete();
+        $main_tab = 'multi_values_form_data';
+        $sub_tab = 'fire_arms';
+        if (!$consumerFireArmsDel)
+        {
+            return redirect()->back()->with('errorMessage', 'Oop! Something Went wrong');
+        }
+        else{
+            return redirect()->route('consumers.edit',['id' =>$consumerFireArms->consumer_id_fk, 'main_tab'=> $main_tab,'sub_tab'=>$sub_tab])->with('doneMessage',"Successfully record Deleted");
+        }
     }
 
     /**

@@ -36,6 +36,7 @@ class CreateConsumerFacialSurgeriesTable extends Migration
             $table->string('zip')->nullable();
             $table->string('area_code')->nullable();
             $table->timestamps();
+            $table->foreign('consumer_id_fk')->references('id')->on('consumers')->onDelete('cascade');
         });
     }
 

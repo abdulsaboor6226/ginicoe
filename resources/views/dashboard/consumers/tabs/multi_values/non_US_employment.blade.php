@@ -80,6 +80,7 @@
                         </div>
                     </div>
                 </tr>
+                <a style="float: right;" class="btn btn-danger" onclick="updateStatus('{{route('non_US_employment.destroy',$non_US_employment->id)}}')" data-toggle="modal" data-target="#m">X</a>
             </table>
             @endforeach
             <button type="button" style="float: right;" name="add" id="add_more_non_US_employment" class="btn btn-success"><span class="fa fa-plus-square-o"> </span> Add More</button>
@@ -128,7 +129,7 @@
                 fieldHTML+= '</div>';
                 fieldHTML+= '</div>';
                 fieldHTML+= '</div>';
-                fieldHTML+= '<button style="float: right;" type="button" class="btn btn-danger remove-tr">Remove</button>';
+                fieldHTML+= '<button style="float: right;" type="button" class="btn btn-danger remove-tr">X</button>';
                 fieldHTML+= '</td>';
                 fieldHTML+= '</tr>';
                 $("#dynamicAddRemove_non_US_employment").append(fieldHTML);

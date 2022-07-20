@@ -106,11 +106,21 @@ class ConsumerNonUSEmploymentController extends Controller
      * Remove the specified resource from storage.
      *
      * @param  \App\Models\ConsumerNonUSEmployment  $consumerNonUSEmployment
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function destroy(ConsumerNonUSEmployment $consumerNonUSEmployment)
+    public function destroy($id)
     {
-        //
+        $consumerNonUSEmployment = ConsumerNonUSEmployment::findOrFail($id);
+        $consumerNonUSEmploymentDel= $consumerNonUSEmployment->delete();
+        $main_tab = 'multi_values_form_data';
+        $sub_tab = 'non_US_employment';
+        if (!$consumerNonUSEmploymentDel)
+        {
+            return redirect()->back()->with('errorMessage', 'Oop! Something Went wrong');
+        }
+        else{
+            return redirect()->route('consumers.edit',['id' =>$consumerNonUSEmployment->consumer_id_fk, 'main_tab'=> $main_tab,'sub_tab'=>$sub_tab])->with('doneMessage',"Successfully record Deleted");
+        }
     }
 
     /**

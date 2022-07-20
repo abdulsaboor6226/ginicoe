@@ -74,7 +74,7 @@
             @csrf
             @method('put')
             <input type="hidden" name="main_tab" value="multi_values_form_data">
-            <input type="hidden" name="sub_tab" value="driving_licence">
+            <input type="hidden" name="sub_tab" value="twins">
             <input type="hidden" name="consumer_id_fk" value="{{$consumer->id}}">
             <input type="hidden" name="data[{{$key}}][twins_detail_id_pk]" value="{{$twins->id}}">
             <input type="hidden" name="data[{{$key}}][consumer_id_fk]" value="{{$consumer->id}}">
@@ -137,6 +137,7 @@
                         </div>
                     </div>
                 </tr>
+                <a style="float: right;" class="btn btn-danger" onclick="updateStatus('{{route('twins.destroy',$twins->id)}}')" data-toggle="modal" data-target="#m">X</a>
             </table>
             @endforeach
             <button type="button" style="float: right;" name="add" id="add_more_twins" class="btn btn-success"><span class="fa fa-plus-square-o"> </span> Add More</button>
@@ -226,7 +227,7 @@
                 fieldHTML+= '</div>';
                 fieldHTML+= '</div>';
                 fieldHTML+= '</div>';
-                fieldHTML+= '<button style="float: right;" type="button" class="btn btn-danger remove-tr">Remove</button>';
+                fieldHTML+= '<button style="float: right;" type="button" class="btn btn-danger remove-tr">X</button>';
                 fieldHTML+= '</td>';
                 fieldHTML+= '</tr>';
                 $("#dynamicAddRemove_twins").append(fieldHTML);

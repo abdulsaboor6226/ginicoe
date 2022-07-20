@@ -105,11 +105,21 @@ class ConsumerMedicaidController extends Controller
      * Remove the specified resource from storage.
      *
      * @param  \App\Models\ConsumerMedicaid  $consumerMedicaid
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function destroy(ConsumerMedicaid $consumerMedicaid)
+    public function destroy($id)
     {
-        //
+        $consumerMedicaid = ConsumerMedicaid::findOrFail($id);
+        $consumerMedicaidDel= $consumerMedicaid->delete();
+        $main_tab = 'multi_values_form_data';
+        $sub_tab = 'medicaids';
+        if (!$consumerMedicaidDel)
+        {
+            return redirect()->back()->with('errorMessage', 'Oop! Something Went wrong');
+        }
+        else{
+            return redirect()->route('consumers.edit',['id' =>$consumerMedicaid->consumer_id_fk, 'main_tab'=> $main_tab,'sub_tab'=>$sub_tab])->with('doneMessage',"Successfully record Deleted");
+        }
     }
     public function consumerMedicaid_validation($request): array
     {

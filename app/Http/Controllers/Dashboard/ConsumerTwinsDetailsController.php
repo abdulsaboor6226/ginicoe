@@ -108,9 +108,19 @@ class ConsumerTwinsDetailsController extends Controller
      * @param  \App\Models\ConsumerTwinsDetails  $consumerTwinsDetails
      * @return \Illuminate\Http\Response
      */
-    public function destroy(ConsumerTwinsDetails $consumerTwinsDetails)
+    public function destroy($id)
     {
-        //
+        $consumerTwinsDetails = ConsumerTwinsDetail::findOrFail($id);
+        $consumerTwinsDetailsDel= $consumerTwinsDetails->delete();
+        $main_tab = 'multi_values_form_data';
+        $sub_tab = 'twins';
+        if (!$consumerTwinsDetailsDel)
+        {
+            return redirect()->back()->with('errorMessage', 'Oop! Something Went wrong');
+        }
+        else{
+            return redirect()->route('consumers.edit',['id' =>$consumerTwinsDetails->consumer_id_fk, 'main_tab'=> $main_tab,'sub_tab'=>$sub_tab])->with('doneMessage',"Successfully record Deleted");
+        }
     }
 
     /**

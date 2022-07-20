@@ -20,6 +20,7 @@ class CreateConsumerMedicaidsTable extends Migration
             $table->string('medicaid_state');
             $table->string('medicaid_id');
             $table->timestamps();
+            $table->foreign('consumer_id_fk')->references('id')->on('consumers')->onDelete('cascade');
         });
     }
 

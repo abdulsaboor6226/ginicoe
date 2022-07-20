@@ -20,6 +20,7 @@ class CreateConsumerDiscountsTable extends Migration
             $table->string('category');
             $table->float('discount');
             $table->timestamps();
+            $table->foreign('consumer_id_fk')->references('id')->on('consumers')->onDelete('cascade');
         });
     }
 

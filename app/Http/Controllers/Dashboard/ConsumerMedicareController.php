@@ -108,9 +108,19 @@ class ConsumerMedicareController extends Controller
      * @param  \App\Models\ConsumerMedicare  $consumerMedicare
      * @return \Illuminate\Http\Response
      */
-    public function destroy(ConsumerMedicare $consumerMedicare)
+    public function destroy($id)
     {
-        //
+        $consumerMedicare = ConsumerMedicare::findOrFail($id);
+        $consumerMedicareDel= $consumerMedicare->delete();
+        $main_tab = 'multi_values_form_data';
+        $sub_tab = 'medicares';
+        if (!$consumerMedicareDel)
+        {
+            return redirect()->back()->with('errorMessage', 'Oop! Something Went wrong');
+        }
+        else{
+            return redirect()->route('consumers.edit',['id' =>$consumerMedicare->consumer_id_fk, 'main_tab'=> $main_tab,'sub_tab'=>$sub_tab])->with('doneMessage',"Successfully record Deleted");
+        }
     }
 
     /**

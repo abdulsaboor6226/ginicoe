@@ -22,6 +22,7 @@ class CreateConsumerFaceDetailsTable extends Migration
             $table->string('shape');
             $table->string('color');
             $table->timestamps();
+            $table->foreign('consumer_id_fk')->references('id')->on('consumers')->onDelete('cascade');
         });
     }
 

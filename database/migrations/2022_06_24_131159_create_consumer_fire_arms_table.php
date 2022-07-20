@@ -20,6 +20,7 @@ class CreateConsumerFireArmsTable extends Migration
             $table->string('fire_arm_state');
             $table->string('fire_arm_id');
             $table->timestamps();
+            $table->foreign('consumer_id_fk')->references('id')->on('consumers')->onDelete('cascade');
         });
     }
 

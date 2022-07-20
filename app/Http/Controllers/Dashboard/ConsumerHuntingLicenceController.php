@@ -107,11 +107,21 @@ class ConsumerHuntingLicenceController extends Controller
      * Remove the specified resource from storage.
      *
      * @param  \App\Models\ConsumerHuntingLicence  $consumerHuntingLicence
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function destroy(ConsumerHuntingLicence $consumerHuntingLicence)
+    public function destroy($id)
     {
-        //
+        $consumerHuntingLicence = ConsumerHuntingLicence::findOrFail($id);
+        $consumerHuntingLicenceDel= $consumerHuntingLicence->delete();
+        $main_tab = 'multi_values_form_data';
+        $sub_tab = 'Hunting_licence';
+        if (!$consumerHuntingLicenceDel)
+        {
+            return redirect()->back()->with('errorMessage', 'Oop! Something Went wrong');
+        }
+        else{
+            return redirect()->route('consumers.edit',['id' =>$consumerHuntingLicence->consumer_id_fk, 'main_tab'=> $main_tab,'sub_tab'=>$sub_tab])->with('doneMessage',"Successfully record Deleted");
+        }
     }
 
     /**

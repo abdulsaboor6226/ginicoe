@@ -25,6 +25,7 @@ class CreateConsumerCardsTable extends Migration
             $table->string('secondary_card_holder_first_name');
             $table->string('secondary_card_holder_last_name');
             $table->timestamps();
+            $table->foreign('consumer_id_fk')->references('id')->on('consumers')->onDelete('cascade');
         });
     }
 

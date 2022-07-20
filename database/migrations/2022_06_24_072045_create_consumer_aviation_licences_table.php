@@ -20,6 +20,7 @@ class CreateConsumerAviationLicencesTable extends Migration
             $table->string('pilot_license_state');
             $table->string('pilot_license_id');
             $table->timestamps();
+            $table->foreign('consumer_id_fk')->references('id')->on('consumers')->onDelete('cascade');
         });
     }
 

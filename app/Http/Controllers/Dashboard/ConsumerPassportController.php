@@ -109,9 +109,19 @@ class ConsumerPassportController extends Controller
      * @param  \App\Models\ConsumerPassport  $consumerPassport
      * @return \Illuminate\Http\Response
      */
-    public function destroy(ConsumerPassport $consumerPassport)
+    public function destroy($id)
     {
-        //
+        $consumerPassport = ConsumerPassport::findOrFail($id);
+        $consumerPassportDel= $consumerPassport->delete();
+        $main_tab = 'multi_values_form_data';
+        $sub_tab = 'passport';
+        if (!$consumerPassportDel)
+        {
+            return redirect()->back()->with('errorMessage', 'Oop! Something Went wrong');
+        }
+        else{
+            return redirect()->route('consumers.edit',['id' =>$consumerPassport->consumer_id_fk, 'main_tab'=> $main_tab,'sub_tab'=>$sub_tab])->with('doneMessage',"Successfully record Deleted");
+        }
     }
 
     /**

@@ -20,6 +20,7 @@ class CreateConsumerNonUSEmploymentsTable extends Migration
             $table->string('non_us_govt_badge_state');
             $table->string('non_us_govt_badge_id');
             $table->timestamps();
+            $table->foreign('consumer_id_fk')->references('id')->on('consumers')->onDelete('cascade');
         });
     }
 

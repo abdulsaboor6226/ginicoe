@@ -110,9 +110,19 @@ class ConsumerFishingLicenceController extends Controller
      * @param  \App\Models\ConsumerFishingLicence  $consumerFishingLicence
      * @return \Illuminate\Http\Response
      */
-    public function destroy(ConsumerFishingLicence $consumerFishingLicence)
+    public function destroy($id)
     {
-        //
+        $consumerFishingLicence = ConsumerFishingLicence::findOrFail($id);
+        $consumerFishingLicenceDel= $consumerFishingLicence->delete();
+        $main_tab = 'multi_values_form_data';
+        $sub_tab = 'fishing';
+        if (!$consumerFishingLicenceDel)
+        {
+            return redirect()->back()->with('errorMessage', 'Oop! Something Went wrong');
+        }
+        else{
+            return redirect()->route('consumers.edit',['id' =>$consumerFishingLicence->consumer_id_fk, 'main_tab'=> $main_tab,'sub_tab'=>$sub_tab])->with('doneMessage',"Successfully record Deleted");
+        }
     }
 
     /**

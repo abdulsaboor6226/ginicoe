@@ -20,6 +20,7 @@ class CreateConsumerFishingLicencesTable extends Migration
             $table->string('fishing_state');
             $table->string('fishing_license_id');
             $table->timestamps();
+            $table->foreign('consumer_id_fk')->references('id')->on('consumers')->onDelete('cascade');
         });
     }
 

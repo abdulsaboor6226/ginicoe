@@ -69,7 +69,7 @@ class ConsumerController extends Controller
      */
     public function show(Consumer $consumer)
     {
-        //
+        dd(1);
     }
 
     /**
@@ -298,8 +298,7 @@ class ConsumerController extends Controller
      */
     public function destroy($id)
     {
-        $consumer = Consumer::findOrFail($id);
-        $consumer= $consumer->delete();
+        $consumer = Consumer::findOrFail($id)->delete();
         if ($consumer){
             return redirect()->route('consumers.index')->with('doneMessage','Successfully record Deleted');
         }

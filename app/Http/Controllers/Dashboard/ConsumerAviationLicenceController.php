@@ -101,9 +101,19 @@ class ConsumerAviationLicenceController extends Controller
      * @param  \App\Models\ConsumerAviationLicence  $consumerAviationLicence
      * @return \Illuminate\Http\Response
      */
-    public function destroy(ConsumerAviationLicence $consumerAviationLicence)
+    public function destroy($id)
     {
-        //
+        $consumerAviationLicence = ConsumerAviationLicence::findOrFail($id);
+        $consumerAviationLicenceDel= $consumerAviationLicence->delete();
+        $main_tab = 'multi_values_form_data';
+        $sub_tab = 'aviation';
+        if (!$consumerAviationLicenceDel)
+        {
+            return redirect()->back()->with('errorMessage', 'Oop! Something Went wrong');
+        }
+        else{
+            return redirect()->route('consumers.edit',['id' =>$consumerAviationLicence->consumer_id_fk, 'main_tab'=> $main_tab,'sub_tab'=>$sub_tab])->with('doneMessage',"Successfully record Deleted");
+        }
     }
     public function consumerAviationLicence_validation($request){
         return $this->validate($request,[

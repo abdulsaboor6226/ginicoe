@@ -15,7 +15,7 @@ class CreateConsumerTwinsDetailsTable extends Migration
     {
         Schema::create('consumer_twins_details', function (Blueprint $table) {
             $table->id();
-            $table->string('consumer_id_fk');
+            $table->unsignedBigInteger('consumer_id_fk');
             $table->string('living_twin_salutation');
             $table->string('living_twin_first_name');
             $table->string('living_twin_middle_name');
@@ -24,6 +24,7 @@ class CreateConsumerTwinsDetailsTable extends Migration
             $table->string('difference_with_the_twin');
             $table->string('twin_gender');
             $table->timestamps();
+            $table->foreign('consumer_id_fk')->references('id')->on('consumers')->onDelete('cascade');
         });
     }
 
