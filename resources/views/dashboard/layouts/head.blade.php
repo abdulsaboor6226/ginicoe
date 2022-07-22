@@ -27,10 +27,12 @@
 <link rel="stylesheet" href="{{ asset('assets/dashboard/css/app.css') }}" type="text/css"/>
 <link rel="stylesheet" href="{{ asset('assets/dashboard/css/font.css') }}" type="text/css"/>
 <link rel="stylesheet" href="{{ asset('assets/dashboard/css/topic.css') }}" type="text/css"/>
+<link rel="stylesheet" href="{{ asset('assets/dashboard/js/dropify/dropify.css') }}" type="text/css"/>
 
 @if( @Helper::currentLanguage()->direction=="rtl")
     <link rel="stylesheet" href="{{ asset('assets/dashboard/css/bootstrap-rtl/dist/bootstrap-rtl.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/dashboard/css/app.rtl.css') }}">
 @endif
 @stack('after-styles')
+
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>

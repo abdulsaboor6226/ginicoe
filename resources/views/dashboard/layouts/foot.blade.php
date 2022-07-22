@@ -31,6 +31,10 @@
 
 
 <script src="{{ asset('assets/dashboard/js/scripts/app.js') }}" defer></script>
+<script src="{{ asset('assets/dashboard/js/dropify/dropify.min.js') }}"></script>
 
+<script>
+    $('.dropify').dropify();
+</script>
 {!! Helper::SaveVisitorInfo("Dashboard &raquo; ".trim($__env->yieldContent('title'))) !!}
 @stack('after-scripts')

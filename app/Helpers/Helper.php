@@ -22,10 +22,14 @@ use Illuminate\Support\Carbon;
 use Illuminate\Support\Str;
 use Auth;
 use GeoIP;
+use Storage;
 
 class Helper
 {
-
+    public function getImage($value)
+    {
+        return url('/core'.Storage::url('app/'.$value));
+    }
     static function GeneralWebmasterSettings($var)
     {
         $_Loader_WebmasterSettings = \Session::get('_Loader_WebmasterSettings');

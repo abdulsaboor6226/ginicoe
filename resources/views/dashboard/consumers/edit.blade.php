@@ -17,6 +17,9 @@
                             <li class="nav-item {{ empty($main_tab) || $main_tab == 'multi_values_form_data' ? 'active' : '' }}">
                                 <a class="nav-link" href="#multi_values_form_data" data-toggle="tab" aria-expanded="false">Multi Value Data</a>
                             </li>
+                            <li class="nav-item {{ empty($main_tab) || $main_tab == 'consumer_images' ? 'active' : '' }}">
+                                <a class="nav-link" href="#consumer_images" data-toggle="tab" aria-expanded="false">Consumers Images</a>
+                            </li>
                             <li class="nav-item {{ empty($main_tab) || $main_tab == 'consumers_cards' ? 'active' : '' }}">
                                 <a class="nav-link" href="#consumers_cards" data-toggle="tab" aria-expanded="false">Consumers Cards</a>
                             </li>
@@ -34,6 +37,9 @@
                         </div>
                         <div class="tab-pane animated fadeIn text-muted {{ empty($main_tab) || $main_tab == 'multi_values_form_data' ? 'active' : '' }}" id="multi_values_form_data" aria-expanded="true">
                             @include('dashboard.consumers.tabs.multi_values_form_data')
+                        </div>
+                        <div class="tab-pane animated fadeIn text-muted {{ empty($main_tab) || $main_tab == 'consumer_images' ? 'active' : '' }}" id="consumer_images" aria-expanded="true">
+                            @include('dashboard.consumers.tabs.consumer_images')
                         </div>
                         <div class="tab-pane animated fadeIn text-muted {{ empty($main_tab) || $main_tab == 'consumers_cards' ? 'active' : '' }}" id="consumers_cards" aria-expanded="true">
                             @include('dashboard.consumers.tabs.consumer_cards_index')
