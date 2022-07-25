@@ -277,6 +277,7 @@ Route::resource('/medicares', ConsumerMedicareController::class);
 Route::resource('/non_US_employment', ConsumerNonUSEmploymentController::class);
 Route::resource('/passport', ConsumerPassportController::class);
 Route::resource('/twins', ConsumerTwinsDetailsController::class);
+Route::resource('/consumers_images', ConsumerImageController::class);
 Route::resource('/consumers_cards', ConsumersCardsController::class);
 Route::resource('/consumers_face_details', ConsumersFaceDetailsController::class);
 Route::resource('/consumers_surgery_details', ConsumersSurgeryDetailsController::class);
