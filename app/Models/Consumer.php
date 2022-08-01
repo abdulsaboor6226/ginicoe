@@ -65,8 +65,8 @@ class Consumer extends Model
     {
         return $this->hasMany(ConsumerTwinsDetail::class,'consumer_id_fk');
     }
-    public function image(): \Illuminate\Database\Eloquent\Relations\HasOne
+    public function image(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
-        return $this->hasOne(ConsumerImage::class,'consumer_id_fk');
+        return $this->hasMany(ConsumerImage::class,'consumer_id_fk');
     }
 }
