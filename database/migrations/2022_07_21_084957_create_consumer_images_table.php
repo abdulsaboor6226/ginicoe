@@ -16,13 +16,10 @@ class CreateConsumerImagesTable extends Migration
         Schema::create('consumer_images', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('consumer_id_fk');
-            $table->longText('front_image_url');
-            $table->longText('right_side_image_url');
-            $table->longText('left_side_image_url');
-            $table->longText('with_glasses_image_url')->nullable();
-            $table->longText('with_mask_image_url')->nullable();
-            $table->longText('with_face_tattoo_image_url')->nullable();
-            $table->longText('with_piercing_image_url')->nullable();
+            $table->longText('file_type');
+            $table->longText('image_content_type');
+            $table->longText('extension');
+            $table->longText('url');
             $table->timestamps();
             $table->foreign('consumer_id_fk')->references('id')->on('consumers')->onDelete('cascade');
         });
