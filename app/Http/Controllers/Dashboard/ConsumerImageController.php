@@ -40,27 +40,40 @@ class ConsumerImageController extends Controller
     public function store(Request $request)
     {
         $this->validate($request,[
-            'front'=>'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            'right_side'=>'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            'left_side'=>'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            'with_glasses'=>'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            'with_mask'=>'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            'with_face_tattoo'=>'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            'with_piercing'=>'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'front.*'=>'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'right_side.*'=>'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'left_side.*'=>'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'with_glasses.*'=>'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'with_mask.*'=>'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'with_face_tattoo.*'=>'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'with_piercing.*'=>'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'video.*'=>'nullable|mimes:mp4,ogx,oga,ogv,ogg,webm|max:8192',
+            'compress_file.*'=>'nullable|file|mimes:zip,rar|max:5120',
         ]);
+
+        DB::beginTransaction();
         $path = public_path('storage/Consumer-images/'.$request->consumer_id_fk);
         if (! File::exists($path)) {
             File::makeDirectory($path);
+            File::makeDirectory($path."/video");
+            File::makeDirectory($path."/compress_file");
         }
         $storePath ='public/Consumer-images/'.$request->consumer_id_fk;
-        $request['front_image_url'] = $request->front->store($storePath) ;
-        $request['right_side_image_url'] = $request->right_side->store($storePath) ;
-        $request['left_side_image_url'] = $request->left_side->store($storePath) ;
-        $request['with_glasses_image_url'] = $request->with_glasses == null ? "":  $request->with_glasses->store($storePath);
-        $request['with_mask_image_url'] = $request->with_mask == null ? "":  $request->with_mask->store($storePath);
-        $request['with_face_tattoo_image_url'] = $request->with_face_tattoo == null ? "":  $request->with_face_tattoo->store($storePath);
-        $request['with_piercing_image_url'] = $request->with_piercing == null ? "":  $request->with_piercing->store($storePath);
-        $consumerImage = ConsumerImage::create($request->except('_token','front','right_side','left_side','with_glasses','with_mask','with_face_tattoo','with_piercing',));
+        foreach ($request->except('_token','main_tab','consumer_id_fk') as $key => $value ){
+            foreach ($value as $item){
+                $data['consumer_id_fk'] = $request->consumer_id_fk;
+                $data['file_type'] =$item->getMimeType();
+                $data['image_content_type'] = $key;
+                $data['extension'] = $item->extension();
+                if ($key == 'video'||$key == 'compress_file'){
+                    $data['url'] = $item->store($storePath.'/'.$key);
+                }else{
+                    $data['url'] = $item->store($storePath);
+                }
+                $consumerImage = ConsumerImage::create($data);
+            }
+        }
+        DB::commit();
         if (!$consumerImage)
         {
             return redirect()->back()->with('errorMessage', 'Oop! Something Went wrong');
@@ -104,17 +117,21 @@ class ConsumerImageController extends Controller
     {
         $image = ConsumerImage::findOrfail($id);
         $this->validate($request,[
-            'front'=>'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            'right_side'=>'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            'left_side'=>'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            'with_glasses'=>'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            'with_mask'=>'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            'with_face_tattoo'=>'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            'with_piercing'=>'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'front.*'=>'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'right_side.*'=>'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'left_side.*'=>'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'with_glasses.*'=>'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'with_mask.*'=>'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'with_face_tattoo.*'=>'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'with_piercing.*'=>'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'video.*'=>'nullable|video|mimes:mp4,ogx,oga,ogv,ogg,webm|max:8192',
+            'compress_file.*'=>'nullable|file|mimes:zip,rar|size:5120',
         ]);
         $path = public_path('storage/Consumer-images/'.$request->consumer_id_fk);
         if (! File::exists($path)) {
             File::makeDirectory($path);
+            File::makeDirectory($path."/video");
+            File::makeDirectory($path."/compress");
         }
         $storePath ='public/Consumer-images/'.$request->consumer_id_fk;
         $request['front_image_url'] = $request->front ==null ? $image->front_image_url :$request->front->store($storePath) ;
@@ -124,7 +141,9 @@ class ConsumerImageController extends Controller
         $request['with_mask_image_url'] = $request->with_mask == null ? $image->with_mask_image_url:  $request->with_mask->store($storePath);
         $request['with_face_tattoo_image_url'] = $request->with_face_tattoo == null ? $image->with_face_tattoo_image_url:  $request->with_face_tattoo->store($storePath);
         $request['with_piercing_image_url'] = $request->with_piercing == null ? $image->with_piercing_image_url:  $request->with_piercing->store($storePath);
-        $consumerImage = $image->update($request->except('_token','front','right_side','left_side','with_glasses','with_mask','with_face_tattoo','with_piercing'    ));
+        $request['video_url'] = $request->video == null ? $image->video_url:  $request->video->store($storePath);
+        $request['compress_file_url'] = $request->compress_file == null ? $image->compress_file_url:  $request->with_piercing->store($storePath);
+        $consumerImage = $image->update($request->except('_token','front','right_side','left_side','with_glasses','with_mask','with_face_tattoo','with_piercing','video','compress_file'));
         if (!$consumerImage)
         {
             return redirect()->back()->with('errorMessage', 'Oop! Something Went wrong');
