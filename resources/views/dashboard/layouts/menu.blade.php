@@ -224,10 +224,11 @@ $mnu_title_var2 = 'title_' . env('DEFAULT_LANGUAGE');
 {{--                            </li>--}}
 {{--                        @endif--}}
 {{--                    @endif--}}
-                    <li class="nav-header hidden-folded">
-                        <small class="text-muted">{{ __('backend.siteData') }}</small>
-                    </li>
-
+                    @if(@Auth()->user()->permissions_id !=3)
+                        <li class="nav-header hidden-folded">
+                            <small class="text-muted">{{ __('backend.siteData') }}</small>
+                        </li>
+                    @endif
                     <?php
                     $data_sections_arr = explode(',', Auth::user()->permissionsGroup->data_sections);
                     ?>
@@ -466,9 +467,6 @@ $mnu_title_var2 = 'title_' . env('DEFAULT_LANGUAGE');
                     @endif
                     <li class="nav-header hidden-folded">
                         <small class="text-muted">{{ __('backend.penal') }}</small>
-                    </li>
-                    <li class="nav-header hidden-folded">
-                        <small class="text-muted">{{ __('backend.main') }}</small>
                     </li>
                     <li>
                         <a href="{{ route('consumers.index') }}">
