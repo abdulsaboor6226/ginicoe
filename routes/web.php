@@ -28,9 +28,9 @@ Route::get('/locale/{lang}', [LanguageController::class, 'locale'])->middleware(
 Route::get('/login', function () {
     return redirect('/');
 });
-Route::get('/register', function () {
-    return redirect('/');
-});
+//Route::get('/register', function () {
+//    return redirect('/');
+//});
 
 // RSS Feed Routes
 if (env("RSS_STATUS", 0)) {

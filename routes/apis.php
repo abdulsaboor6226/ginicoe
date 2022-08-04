@@ -13,8 +13,8 @@ Route::get('/banners/{group_id}/{lang?}', 'APIsController@banners');
 // section & topics
 Route::get('/section/{section_id}/{lang?}', 'APIsController@section');
 Route::get('/categories/{section_id}/{lang?}', 'APIsController@categories');
-Route::get('/topics/{section_id}/page/{pageSign in to the system?}/count/{topics_count?}/{lang?}', 'APIsController@topics');
-Route::get('/category/{cat_id}/page/{pageSign in to the system?}/count/{topics_count?}/{lang?}', 'APIsController@category');
+Route::get('/topics/{section_id}/page/{page?}/count/{topics_count?}/{lang?}', 'APIsController@topics');
+Route::get('/category/{cat_id}/page/{page?}/count/{topics_count?}/{lang?}', 'APIsController@category');
 // topic sub details
 Route::get('/topic/fields/{topic_id}/{lang?}', 'APIsController@topic_fields');
 Route::get('/topic/photos/{topic_id}/{lang?}', 'APIsController@topic_photos');
@@ -29,7 +29,7 @@ Route::get('/topic/related/{topic_id}/{lang?}', 'APIsController@topic_related');
 // topic page
 Route::get('/topic/{topic_id}/{lang?}', 'APIsController@topic');
 // user topics
-Route::get('/user/{user_id}/topics/page/{pageSign in to the system?}/count/{topics_count?}/{lang?}', 'APIsController@user_topics');
+Route::get('/user/{user_id}/topics/page/{page?}/count/{topics_count?}/{lang?}', 'APIsController@user_topics');
 // Forms Submit
 Route::post('/subscribe', 'APIsController@subscribeSubmit');
 Route::post('/comment', 'APIsController@commentSubmit');

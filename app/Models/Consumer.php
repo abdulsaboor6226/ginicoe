@@ -69,4 +69,8 @@ class Consumer extends Model
     {
         return $this->hasMany(ConsumerImage::class,'consumer_id_fk');
     }
+    public function merchant(): \Illuminate\Database\Eloquent\Relations\HasOne
+    {
+        return $this->hasOne(ConsumerMerchant::class,'consumer_id_fk');
+    }
 }

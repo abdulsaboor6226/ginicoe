@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Dashboard;
 
-use App\Models\ConsumerDiscount;
+use App\Http\Controllers\Controller;
+use App\Models\ConsumerMerchant;
 use Illuminate\Http\Request;
 
-class ConsumerDiscountController extends Controller
+class ConsumerMerchantController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -41,10 +42,10 @@ class ConsumerDiscountController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\ConsumerDiscount  $consumerDiscount
+     * @param  \App\Models\ConsumerMerchant  $consumerMerchant
      * @return \Illuminate\Http\Response
      */
-    public function show(ConsumerDiscount $consumerDiscount)
+    public function show(ConsumerMerchant $consumerMerchant)
     {
         //
     }
@@ -52,10 +53,10 @@ class ConsumerDiscountController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\ConsumerDiscount  $consumerDiscount
+     * @param  \App\Models\ConsumerMerchant  $consumerMerchant
      * @return \Illuminate\Http\Response
      */
-    public function edit(ConsumerDiscount $consumerDiscount)
+    public function edit(ConsumerMerchant $consumerMerchant)
     {
         //
     }
@@ -64,10 +65,10 @@ class ConsumerDiscountController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\ConsumerDiscount  $consumerDiscount
+     * @param  \App\Models\ConsumerMerchant  $consumerMerchant
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, ConsumerDiscount $consumerDiscount)
+    public function update(Request $request, ConsumerMerchant $consumerMerchant)
     {
         //
     }
@@ -75,10 +76,10 @@ class ConsumerDiscountController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\ConsumerDiscount  $consumerDiscount
+     * @param  \App\Models\ConsumerMerchant  $consumerMerchant
      * @return \Illuminate\Http\Response
      */
-    public function destroy(ConsumerDiscount $consumerDiscount)
+    public function destroy(ConsumerMerchant $consumerMerchant)
     {
         //
     }

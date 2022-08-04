@@ -612,7 +612,7 @@ For more details check <a href='http://smartfordesign.net/smartend/documentation
      *
      * @return \Illuminate\Http\Response
      */
-    public function topics($section_id, $pageSign in to the system = 1, $topics_count = 0, $lang = '')
+    public function topics($section_id, $page = 1, $topics_count = 0, $lang = '')
     {
         if ($section_id > 0) {
             $WebmasterSection = WebmasterSection::find($section_id);
@@ -627,11 +627,11 @@ For more details check <a href='http://smartfordesign.net/smartend/documentation
                 }
             }
 
-            if ($pageSign in to the system < 1) {
-                $pageSign in to the system = 1;
+            if ($page < 1) {
+                $page = 1;
             }
-            Paginator::currentPageResolver(function () use ($pageSign in to the system) {
-                return $pageSign in to the system;
+            Paginator::currentPageResolver(function () use ($page) {
+                return $page;
             });
 
             // Get topics
@@ -797,14 +797,14 @@ For more details check <a href='http://smartfordesign.net/smartend/documentation
      *
      * @return \Illuminate\Http\Response
      */
-    public function category($cat_id, $pageSign in to the system = 1, $topics_count = 0, $lang = '')
+    public function category($cat_id, $page = 1, $topics_count = 0, $lang = '')
     {
         if ($cat_id > 0) {
-            if ($pageSign in to the system < 1) {
-                $pageSign in to the system = 1;
+            if ($page < 1) {
+                $page = 1;
             }
-            Paginator::currentPageResolver(function () use ($pageSign in to the system) {
-                return $pageSign in to the system;
+            Paginator::currentPageResolver(function () use ($page) {
+                return $page;
             });
 
             $category_topics = array();
@@ -2031,14 +2031,14 @@ For more details check <a href='http://smartfordesign.net/smartend/documentation
      *
      * @return \Illuminate\Http\Response
      */
-    public function user_topics($user_id, $pageSign in to the system = 1, $topics_count = 0, $lang = '')
+    public function user_topics($user_id, $page = 1, $topics_count = 0, $lang = '')
     {
         if ($user_id > 0) {
-            if ($pageSign in to the system < 1) {
-                $pageSign in to the system = 1;
+            if ($page < 1) {
+                $page = 1;
             }
-            Paginator::currentPageResolver(function () use ($pageSign in to the system) {
-                return $pageSign in to the system;
+            Paginator::currentPageResolver(function () use ($page) {
+                return $page;
             });
 
             // Get topics

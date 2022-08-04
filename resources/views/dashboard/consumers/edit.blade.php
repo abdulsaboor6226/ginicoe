@@ -17,11 +17,14 @@
                             </li>
                             <li class="nav-item {{ empty($main_tab) || $main_tab == 'multi_values_form_data' ? 'active' : '' }}">
                                 <a class="nav-link" href="#multi_values_form_data" data-toggle="tab"
-                                   aria-expanded="false">Multi Value Data</a>
+                                   aria-expanded="false">Licences</a>
                             </li>
                             <li class="nav-item {{ empty($main_tab) || $main_tab == 'consumer_images' ? 'active' : '' }}">
                                 <a class="nav-link" href="#consumer_images" data-toggle="tab" aria-expanded="false">Consumers
                                     Images</a>
+                            </li>
+                            <li class="nav-item {{ empty($main_tab) || $main_tab == 'merchant' ? 'active' : '' }}">
+                                <a class="nav-link" href="#merchant" data-toggle="tab" aria-expanded="false">Merchant</a>
                             </li>
                             <li class="nav-item {{ empty($main_tab) || $main_tab == 'consumers_cards' ? 'active' : '' }}">
                                 <a class="nav-link" href="#consumers_cards" data-toggle="tab" aria-expanded="false">Consumers
@@ -52,6 +55,14 @@
                                 @include('dashboard.consumers.tabs.consumer_image.consumer_images')
                             @else
                                 @include('dashboard.consumers.tabs.consumer_image.consumer_images_update')
+                            @endif
+                        </div>
+                        <div class="tab-pane animated fadeIn text-muted {{ empty($main_tab) || $main_tab == 'merchant' ? 'active' : '' }}"
+                             id="merchant" aria-expanded="true">
+                            @if($consumer->merchant)
+                                @include('dashboard.consumers.tabs.merchant.index')
+                            @else
+                                @include('dashboard.consumers.tabs.merchant.edit')
                             @endif
                         </div>
                         <div class="tab-pane animated fadeIn text-muted {{ empty($main_tab) || $main_tab == 'consumers_cards' ? 'active' : '' }}"
