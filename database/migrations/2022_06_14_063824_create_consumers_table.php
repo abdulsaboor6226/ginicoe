@@ -107,7 +107,11 @@ class CreateConsumersTable extends Migration
             $table->string('eye_color')->nullable();
             $table->string('prescribed_glasses')->nullable();
             $table->string('hand_usage_preference')->nullable();
+            $table->unsignedBigInteger('created_by')->nullable();
+            $table->unsignedBigInteger('updated_by')->nullable();
+            $table->unsignedBigInteger('deleted_by')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
