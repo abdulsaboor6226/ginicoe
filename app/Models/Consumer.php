@@ -112,10 +112,10 @@ class Consumer extends Model
     {
         return $this->hasMany(ConsumerImage::class,'consumer_id_fk');
     }
-    public function merchant(): \Illuminate\Database\Eloquent\Relations\HasOne
-    {
-        return $this->hasOne(ConsumerMerchant::class,'consumer_id_fk');
-    }
+//    public function merchant(): \Illuminate\Database\Eloquent\Relations\HasOne
+//    {
+//        return $this->hasOne(ConsumerMerchant::class,'consumer_id_fk');
+//    }
     public function user(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo(User::class,'created_by');
