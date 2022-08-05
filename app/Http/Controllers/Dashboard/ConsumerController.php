@@ -82,7 +82,7 @@ class ConsumerController extends Controller
     public function edit($id ,$main_tab = null,$sub_tab = null)
     {
         $GeneralWebmasterSections = WebmasterSection::where('status', '=', '1')->orderby('row_no', 'asc')->get();
-        $consumer = Consumer::whereId($id)->with('driving_licence','aviation','fire_arms','fishing','hunting','medicaids','medicares','non_US_employment','passport','twins','image','merchant','user')->first();
+        $consumer = Consumer::whereId($id)->with('driving_licence','aviation','fire_arms','fishing','hunting','medicaids','medicares','non_US_employment','passport','twins','image','user')->first();
         $main_tab = $main_tab !=null ? $main_tab :'primary_info';
         $sub_tab = $sub_tab !=null ? $sub_tab :'personal_info';
         $countries = AllCountry::all();
