@@ -21,8 +21,9 @@ $mnu_title_var2 = 'title_' . env('DEFAULT_LANGUAGE');
         </div>
         <div flex class="hide-scroll">
             <nav class="scroll nav-active-primary">
-
                 <ul class="nav" ui-nav>
+                    @if(@Auth::user()->permissionsGroup->settings_status)
+
                     <li class="nav-header hidden-folded">
                         <small class="text-muted">{{ __('backend.main') }}</small>
                     </li>
@@ -35,7 +36,7 @@ $mnu_title_var2 = 'title_' . env('DEFAULT_LANGUAGE');
                             <span class="nav-text">{{ __('backend.dashboard') }}</span>
                         </a>
                     </li>
-
+                    @endif
 
 {{--                    @if (env('GEOIP_STATUS', false))--}}
 {{--                        @if (Helper::GeneralWebmasterSettings('analytics_status'))--}}
@@ -343,7 +344,6 @@ $mnu_title_var2 = 'title_' . env('DEFAULT_LANGUAGE');
                             </li>
                         @endif
                     @endif
-
                     @if (Helper::GeneralWebmasterSettings('settings_status'))
                         @if (@Auth::user()->permissionsGroup->settings_status)
                             <li class="nav-header hidden-folded">
@@ -473,7 +473,7 @@ $mnu_title_var2 = 'title_' . env('DEFAULT_LANGUAGE');
                         <span class="nav-icon">
                             <i class="material-icons">&#xE8E8;</i>
                         </span>
-                            <span class="nav-text">{{ __('backend.consumer') }}</span>
+                            <span class="nav-text">{{auth()->user()->permissions_id == 3 ? 'My Profile': __('backend.consumer') }}</span>
                         </a>
                     </li>
                 </ul>

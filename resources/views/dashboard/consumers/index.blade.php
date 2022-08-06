@@ -10,14 +10,12 @@
                     class="text-primary">{{ __('backend.consumer') }}</span>
             </h5>
         </div>
-        @if(auth()->user()->permissions_id !=3 && count($consumers)>1)
-        <div style="float: right; padding-bottom: 5px;" >
-            <a class="btn btn-fw primary" href="{{route("consumers.create")}}">
+        <div style="float: right; padding-bottom: 5px;{{(auth()->user()->permissions_id ==3 && count($consumers)!=0) ?'display: none;': 'display: block;'}}">
+            <a class="btn btn-fw primary"  href="{{route("consumers.create")}}">
                 <i class="material-icons">&#xe02e;</i>
                 &nbsp; <span>{{ __('backend.create') }}</span>
             </a>
         </div>
-        @endif
         <div class="tab-pane" id="tab_version">
             <div class="box-body">
 
