@@ -234,6 +234,8 @@ return array(
     'topicAdditionalVersion' => 'Version',
     'penal' => 'Penal',
     'consumer' => 'Consumer',
+    'merchant' => 'Merchandiser',
+    'role' => 'Role',
     'consumers_cards' => 'Consumers Cards',
     'consumers_face_details' => 'Consumers Face Details',
     'consumers_surgery_details' => 'Consumers Surgery Details',

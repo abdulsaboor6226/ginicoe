@@ -7,11 +7,11 @@
     <div class="padding p-b-0">
         <div class="margin">
             <h5 class="m-b-0 _300"><span
-                    class="text-primary">{{ __('backend.consumer') }}</span>
+                    class="text-primary">{{ __('backend.merchant') }}</span>
             </h5>
         </div>
-        <div style="float: right; padding-bottom: 5px;{{(auth()->user()->permissions_id ==3 && count($consumers)!=0) ?'display: none;': 'display: block;'}}">
-            <a class="btn btn-fw primary"  href="{{route("consumers.create")}}">
+        <div style="float: right; padding-bottom: 5px;{{(auth()->user()->permissions_id ==3 && count($merchants)!=0) ?'display: none;': 'display: block;'}}">
+            <a class="btn btn-fw primary"  href="{{route("merchant.create")}}">
                 <i class="material-icons">&#xe02e;</i>
                 &nbsp; <span>{{ __('backend.create') }}</span>
             </a>
@@ -23,35 +23,36 @@
                     <table class="table table-bordered dataTable no-footer dtr-inline" style="width: 100%;" id="topics_1"
                            aria-describedby="topics_1_info" role="grid">
                         <thead class="dker">
-
                         <tr role="row">
                             <th>#</th>
-                            <th>Name</th>
-                            <th>Email</th>
-                            <th>Contact</th>
-                            <th>City</th>
-                            <th>State</th>
+                            <th>Business Legal Name</th>
+                            <th>Business DBA Name</th>
+                            <th>Federal Tax ID</th>
+                            <th>DUNS No</th>
+                            <th>Owner</th>
+                            <th>Phone No</th>
+                            <th>Country</th>
+                            <th>owner %</th>
                             <th>Created At</th>
                             <th>Action</th>
                         </tr>
                         </thead>
                         <tbody>
-                        @foreach($consumers as $key => $consumer)
+                        @foreach($merchants as $key => $merchant)
                             <tr class="row">
                                 <td>{{$key+1}}</td>
-                                <td>
-                                    <small>{{$consumer->salutation}} {{$consumer->first_name}} {{$consumer->middle_name}} {{$consumer->last_name}}</small>
-                                </td>
-                                <td>
-                                    <div class="text-center">{{$consumer->primary_email}}</div>
-                                </td>
-                                <td>{{$consumer->primary_phone}}</td>
-                                <td>{{$consumer->current_us_city}}</td>
-                                <td>{{$consumer->current_us_state}}</td>
-                                <td>{{$consumer->current_us_zip}}</td>
+                                <td>{{$merchant->business_legal_name}}</td>
+                                <td>{{$merchant->business_DBA_name}}</td>
+                                <td>{{$merchant->federal_tax_id}}</td>
+                                <td>{{$merchant->DUNS_number}}</td>
+                                <td>{{$merchant->first_name}} {{$merchant->middle_name}} {{$merchant->last_name}}</td>
+                                <td>{{$merchant->phone_no}}</td>
+                                <td>{{$merchant->country->name}}</td>
+                                <td>{{$merchant->ownership_percentage}}</td>
+                                <td>{{$merchant->created_at->diffForHumans()}}</td>
                                 <td>
                                     <div class="text-center">
-                                        <a class="btn btn-sm success" href="{{route("consumers.edit",$consumer->id)}}"
+                                        <a class="btn btn-sm success" href="{{route("merchant.edit",$merchant->id)}}"
                                            data-toggle="tooltip" data-original-title=" Edit">
                                             <i class="material-icons"></i>
                                         </a>
@@ -71,7 +72,7 @@
                                             <h6>{{ __('backend.confirmationDeleteMsg') }}</h6>
                                         </div>
                                         <div class="modal-footer">
-                                            <form action="{{route('consumers.destroy',$consumer->id)}}" method="post">
+                                            <form action="{{route('merchant.destroy',$merchant->id)}}" method="post">
                                                 @csrf
                                                 @method('DELETE')
                                                 <button type="button" class="btn dark-white p-x-md" data-dismiss="modal">{{ __('backend.no') }}</button>

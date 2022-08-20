@@ -15,6 +15,7 @@ class CreateConsumersTable extends Migration
     {
         Schema::create('consumers', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('user_id_fk');
             $table->string('salutation')->nullable();
             $table->string('first_name')->nullable();
             $table->string('middle_name')->nullable();
@@ -107,7 +108,12 @@ class CreateConsumersTable extends Migration
             $table->string('eye_color')->nullable();
             $table->string('prescribed_glasses')->nullable();
             $table->string('hand_usage_preference')->nullable();
+            $table->unsignedBigInteger('created_by')->nullable();
+            $table->unsignedBigInteger('updated_by')->nullable();
+            $table->unsignedBigInteger('deleted_by')->nullable();
             $table->timestamps();
+            $table->softDeletes();
+            $table->foreign('user_id_fk')->references('id')->on('users')->onDelete('cascade');
         });
     }
 

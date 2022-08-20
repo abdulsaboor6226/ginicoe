@@ -220,6 +220,23 @@
                             </div>
                         </div>
                         <div class="form-group row">
+                            <label for="add_status1" class="col-sm-2 form-control-label">{!!  __('backend.penal') !!}</label>
+                            <div class="col-sm-10">
+{{--                                {{dd($Permissions)}}--}}
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        <div class="checkbox">
+                                            <label class="ui-check">
+                                               <input type="checkbox" name="consumer" {{$Permissions->consumer == 1 ? "checked": " "}}>
+                                                <i class="dark-white"></i><label
+                                                    for="Consumer">{!! __('backend.consumer') !!}</label>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
                             <label for="add_status1"
                                    class="col-sm-2 form-control-label">{!!  __('backend.addPermission') !!}</label>
                             <div class="col-sm-10">

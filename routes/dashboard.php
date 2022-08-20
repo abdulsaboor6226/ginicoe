@@ -282,6 +282,8 @@ Route::resource('/consumers_cards', ConsumersCardsController::class);
 Route::resource('/consumers_face_details', ConsumersFaceDetailsController::class);
 Route::resource('/consumers_surgery_details', ConsumersSurgeryDetailsController::class);
 Route::resource('/discounts', DiscountsController::class);
+Route::resource('/merchant', MerchantController::class);
+
 // Clear Cache
 Route::get('/cache-clear', function () {
     Artisan::call('cache:clear');

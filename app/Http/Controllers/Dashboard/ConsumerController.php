@@ -11,6 +11,7 @@ use App\Models\ConsumerFacialSurgery;
 use App\Models\WebmasterSection;
 use File;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class ConsumerController extends Controller
@@ -23,7 +24,7 @@ class ConsumerController extends Controller
     public function index()
     {
         $GeneralWebmasterSections = WebmasterSection::where('status', '=', '1')->orderby('row_no', 'asc')->get();
-        $consumers = Consumer::with('driving_licence','aviation','fire_arms','fishing','hunting','medicaids','medicares','non_US_employment','passport','twins','image')->latest()->paginate(10);
+        $consumers = Consumer::with('driving_licence','aviation','fire_arms','fishing','hunting','medicaids','medicares','non_US_employment','passport','twins','image','user')->latest()->paginate(10);
         $counties = AllCountry::all();
         $consumers_cards = ConsumerCard::latest()->paginate(10);
         $consumers_face_details = ConsumerFaceDetail::latest()->paginate(10);
@@ -53,6 +54,7 @@ class ConsumerController extends Controller
     {
         $id ="";
         $this->personal_info_validation($request,$id);
+        $request['user_id_fk'] = Auth::user()->id;
         $consumers = Consumer::create($request->except('_token','main_tab','sub_tab'));
         if (!$consumers) {
             return redirect()->back()->with('errorMessage', 'Oop! Something Went wrong');
@@ -82,7 +84,7 @@ class ConsumerController extends Controller
     public function edit($id ,$main_tab = null,$sub_tab = null)
     {
         $GeneralWebmasterSections = WebmasterSection::where('status', '=', '1')->orderby('row_no', 'asc')->get();
-        $consumer = Consumer::whereId($id)->with('driving_licence','aviation','fire_arms','fishing','hunting','medicaids','medicares','non_US_employment','passport','twins','image','merchant')->first();
+        $consumer = Consumer::whereId($id)->with('driving_licence','aviation','fire_arms','fishing','hunting','medicaids','medicares','non_US_employment','passport','twins','image','user')->first();
         $main_tab = $main_tab !=null ? $main_tab :'primary_info';
         $sub_tab = $sub_tab !=null ? $sub_tab :'personal_info';
         $countries = AllCountry::all();
@@ -132,6 +134,7 @@ class ConsumerController extends Controller
             $main_tab = 'multi_values_form_data';
             $sub_tab = 'driving_licence';
         }
+        $request['user_id_fk'] = Auth::user()->id;
         $consumer = Consumer::whereId($id)->update($request->except('_token','_method','main_tab','sub_tab'));
         if ($consumer)
         {
@@ -299,11 +302,9 @@ class ConsumerController extends Controller
      */
     public function destroy($id)
     {
-        $consumer = Consumer::findOrFail($id)->delete();
-
+        $consumer = Consumer::destroy($id);
         if ($consumer){
-            $path = public_path('storage/Consumer-images/'.$id);
-            File:: deleteDirectory($path);
+            File:: deleteDirectory(public_path('storage/Consumer-images/'.$id));
             return redirect()->route('consumers.index')->with('doneMessage','Successfully record Deleted');
         }
     }

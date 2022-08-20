@@ -80,9 +80,13 @@
             @endif
 
             @if(Helper::GeneralWebmasterSettings("register_status"))
-                <a href="{{ url('/'.env('BACKEND_PATH').'/register') }}" class="btn info btn-block text-left">
-                    <i class="fa fa-user-plus"></i> {{ __('backend.createNewAccount') }}
-                </a>
+                <div class="p-v-lg text-center">
+                    <div class="m-t">
+                        <a href="{{ url('/'.env('BACKEND_PATH').'/register') }}" class="btn info btn-block">
+                            <i class="fa fa-user-plus"></i> {{ __('backend.createNewAccount') }}
+                        </a>
+                    </div>
+                </div>
             @endif
             <div class="p-v-lg text-center">
                 <div class="m-t"><a href="{{ url('/'.env('BACKEND_PATH').'/password/reset') }}"

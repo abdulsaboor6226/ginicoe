@@ -51,7 +51,6 @@
                     <input id="password-confirm" type="password" class="md-input" name="password_confirmation" required>
                     <label>{{ __('backend.confirmPassword') }}</label>
                 </div>
-
                 <button type="submit" class="btn primary btn-block p-x-md"><i
                         class="material-icons">&#xe7fe;</i> {{ __('backend.createNewAccount') }}</button>
             </form>
