@@ -465,25 +465,31 @@ $mnu_title_var2 = 'title_' . env('DEFAULT_LANGUAGE');
                             </ul>
                         </li>
                     @endif
-                    <li class="nav-header hidden-folded">
-                        <small class="text-muted">{{ __('backend.penal') }}</small>
-                    </li>
-                    <li>
-                        <a href="{{ route('consumers.index') }}">
-                        <span class="nav-icon">
-                            <i class="material-icons">&#xE8E8;</i>
-                        </span>
-                            <span class="nav-text">{{auth()->user()->permissions_id == 3 ? 'My Profile': __('backend.consumer') }}</span>
-                        </a>
-                    </li>
+                    @if (@Auth::user()->permissionsGroup->consumer || @Auth::user()->permissionsGroup->merchant)
+                        <li class="nav-header hidden-folded">
+                            <small class="text-muted">{{ __('backend.penal') }}</small>
+                        </li>
+                    @endif
+                    @if (@Auth::user()->permissionsGroup->consumer)
                         <li>
-                            <a href="{{ route('merchant.index') }}">
-                        <span class="nav-icon">
-                            <i class="material-icons">&#xE8E8;</i>
-                        </span>
-                                <span class="nav-text">{{auth()->user()->permissions_id == 4 ? 'My Merchant': __('backend.merchant') }}</span>
+                            <a href="{{ route('consumers.index') }}">
+                            <span class="nav-icon">
+                                <i class="material-icons">&#xE8E8;</i>
+                            </span>
+                                <span class="nav-text">{{auth()->user()->permissions_id == 3 ? 'My Profile': __('backend.consumer') }}</span>
                             </a>
                         </li>
+                    @endif
+                    @if (@Auth::user()->permissionsGroup->consumer)
+                        <li>
+                            <a href="{{ route('merchant.index') }}">
+                            <span class="nav-icon">
+                                <i class="material-icons">&#xE8E8;</i>
+                            </span>
+                                    <span class="nav-text">{{auth()->user()->permissions_id == 4 ? 'My Merchant': __('backend.merchant') }}</span>
+                                </a>
+                        </li>
+                    @endif
                 </ul>
             </nav>
         </div>
