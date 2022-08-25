@@ -36,3 +36,13 @@
 @stack('after-styles')
 
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script>
+    $(document).ready(function(){
+        $(".become_a_partner").click(function () {
+            var data = $(this).data('number');
+            $("#requestForRole").val(function() {
+                return this.value + data;
+            });
+        });
+    });
+</script>

@@ -129,7 +129,6 @@ class HomeController extends Controller
                         }
                     }
                 }
-
                 if (!empty($Section)) {
                     // SITE Category
                     $section = $Section->webmaster_id;

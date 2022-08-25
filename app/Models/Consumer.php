@@ -57,9 +57,9 @@ class Consumer extends Model
         });
 
         if (Auth::check()){
-            if (Auth::user()->permissions_id ===3) {
+            if (Auth::user()->permissions_id ===4) {
                 static::addGlobalScope('consumers', function (Builder $builder) {
-                    $builder->where('created_by',Auth::user()->id)->whereRelation('user','permissions_id',3);
+                    $builder->where('created_by',Auth::user()->id)->whereRelation('user','permissions_id',4);
                 });
             }
         }
