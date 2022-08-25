@@ -52,7 +52,6 @@
                         </div>
                     </div>
                 </div>
-
                 <div class="form-group row">
                     <label for="analytics_status"
                            class="col-sm-2 form-control-label">{!!  __('backend.activeApps') !!}

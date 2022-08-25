@@ -10,7 +10,7 @@
                     class="text-primary">{{ __('backend.merchant') }}</span>
             </h5>
         </div>
-        <div style="float: right; padding-bottom: 5px;{{(auth()->user()->permissions_id ==3 && count($merchants)!=0) ?'display: none;': 'display: block;'}}">
+        <div style="float: right; padding-bottom: 5px;{{(auth()->user()->permissions_id ==5 && count($merchants)!=0) ?'display: none;': 'display: block;'}}">
             <a class="btn btn-fw primary"  href="{{route("merchant.create")}}">
                 <i class="material-icons">&#xe02e;</i>
                 &nbsp; <span>{{ __('backend.create') }}</span>

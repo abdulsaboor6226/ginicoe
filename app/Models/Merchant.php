@@ -32,29 +32,7 @@ class Merchant extends Model
 
         // updating updated_by when model is updated
         static::updating(function ($model) {
-            if (!$model->isDirty('updated','
-','
-','
-','
-','
-','
-','
-','
-','
-','
-','
-','
-','
-','
-','
-','
-','
-','
-','
-','
-','
-','
-','_by')) {
+            if (!$model->isDirty('updated_by')) {
                 $model->updated_by = auth()->user()->id;
             }
         });
@@ -68,9 +46,9 @@ class Merchant extends Model
         });
 
         if (Auth::check()){
-            if (Auth::user()->permissions_id ===4) {
+            if (Auth::user()->permissions_id ===5) {
                 static::addGlobalScope('merchant', function (Builder $builder) {
-                    $builder->where('created_by',Auth::user()->id)->whereRelation('user','permissions_id',4);
+                    $builder->where('created_by',Auth::user()->id)->whereRelation('user','permissions_id',5);
                 });
             }
         }

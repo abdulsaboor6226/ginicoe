@@ -3,6 +3,8 @@
 return array(
     'home' => 'Home',
     'main' => 'Main',
+    'become-a-partner' => 'User Partner Request',
+    'request_permission' => 'Request Permission',
     'siteData' => 'Site Data',
     'settings' => 'Settings',
     'dashboard' => 'Dashboard',
@@ -66,6 +68,7 @@ return array(
     'confirmation' => 'Confirmation',
     'yes' => 'Yes',
     'no' => 'No',
+    'image' => 'Image',
     'confirmationDeleteMsg' => 'Are you sure you want to delete?',
     'sectionsOf' => 'Categories of ',
     'comments' => 'Comments',
