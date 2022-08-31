@@ -225,7 +225,7 @@ $mnu_title_var2 = 'title_' . env('DEFAULT_LANGUAGE');
 {{--                            </li>--}}
 {{--                        @endif--}}
 {{--                    @endif--}}
-                    @if(@Auth::user()->permissionsGroup->webmaster_status)
+                    @if(@Auth()->user()->permissions_id !=3)
                         <li class="nav-header hidden-folded">
                             <small class="text-muted">{{ __('backend.siteData') }}</small>
                         </li>
@@ -412,15 +412,6 @@ $mnu_title_var2 = 'title_' . env('DEFAULT_LANGUAGE');
                                             <span class="nav-text">{{ __('backend.usersPermissions') }}</span>
                                         </a>
                                     </li>
-                                    <?php
-                                        $currentFolder = 'become-a-partner-index'; // Put folder name here
-                                        $PathCurrentFolder = substr($urlAfterRoot, 0, strlen($currentFolder));
-                                    ?>
-                                    <li {{ $PathCurrentFolder == $currentFolder ? 'class=active' : '' }}>
-                                        <a href="{{ route('become-a-partner-index') }}">
-                                            <span class="nav-text">{{ __('backend.become-a-partner') }}</span>
-                                        </a>
-                                    </li>
                                 </ul>
                             </li>
                         @endif
@@ -485,17 +476,17 @@ $mnu_title_var2 = 'title_' . env('DEFAULT_LANGUAGE');
                             <span class="nav-icon">
                                 <i class="material-icons">&#xE8E8;</i>
                             </span>
-                                <span class="nav-text">{{ __('backend.consumer') }}</span>
+                                <span class="nav-text">{{auth()->user()->permissions_id == 3 ? 'My Profile': __('backend.consumer') }}</span>
                             </a>
                         </li>
                     @endif
-                    @if (@Auth::user()->permissionsGroup->merchant)
+                    @if (@Auth::user()->permissionsGroup->consumer)
                         <li>
                             <a href="{{ route('merchant.index') }}">
                             <span class="nav-icon">
                                 <i class="material-icons">&#xE8E8;</i>
                             </span>
-                                    <span class="nav-text">{{__('backend.merchant') }}</span>
+                                    <span class="nav-text">{{auth()->user()->permissions_id == 4 ? 'My Merchant': __('backend.merchant') }}</span>
                                 </a>
                         </li>
                     @endif

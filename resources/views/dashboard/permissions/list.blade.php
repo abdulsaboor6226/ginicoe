@@ -74,7 +74,14 @@
                                             {{ __('backend.viewOnly') }}
                                             &nbsp;
                                         @endif
-
+                                        @if($Permission->consumer==1)
+                                            <i class="fa fa-check text-success inline"></i> {{ __('backend.consumer') }}
+                                            &nbsp;
+                                        @endif
+                                        @if($Permission->merchant==1)
+                                            <i class="fa fa-check text-success inline"></i> {{ __('backend.merchant') }}
+                                            &nbsp;
+                                        @endif
                                         <br>
                                         @if($Permission->analytics_status==1)
                                             {{ __('backend.visitorsAnalytics') }},
