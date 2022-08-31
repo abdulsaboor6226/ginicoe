@@ -16,6 +16,7 @@ class AddMorePermissionToPermissionsTable extends Migration
         Schema::table('permissions', function (Blueprint $table) {
             $table->tinyInteger('consumer')->default(false);
             $table->tinyInteger('merchant')->default(false);
+            $table->string('dashboard')->default('admin');
         });
     }
 
@@ -29,6 +30,7 @@ class AddMorePermissionToPermissionsTable extends Migration
         Schema::table('permissions', function (Blueprint $table) {
             $table->dropColumn('consumer');
             $table->dropColumn('merchant');
+            $table->dropColumn('dashboard');
         });
     }
 }

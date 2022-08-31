@@ -32,7 +32,7 @@ class AddColumeToUsersTable extends Migration
         Schema::table('users', function (Blueprint $table) {
             $table->dropColumn('verify_through');
             $table->dropColumn('doc_id');
-            $table->dropColumn('doc_photo');
+            $table->dropColumn('doc_photo_url');
             $table->dropColumn('expiry_at');
             $table->dropColumn('requestForRole');
         });
