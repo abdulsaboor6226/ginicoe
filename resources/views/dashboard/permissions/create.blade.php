@@ -188,6 +188,31 @@
                     </div>
                 </div>
                 <div class="form-group row">
+                    <label for="add_status1" class="col-sm-2 form-control-label">{!!  __('backend.penal') !!}</label>
+                    <div class="col-sm-10">
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <div class="checkbox">
+                                    <label class="ui-check">
+                                        {!! Form::checkbox('consumer','1',false, array('id' => 'consumer')) !!}
+                                        <i class="dark-white"></i><label
+                                            for="calendar_status">{{ __('backend.consumer') }}</label>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-sm-3">
+                                <div class="checkbox">
+                                    <label class="ui-check">
+                                        {!! Form::checkbox('merchant','1',false, array('id' => 'merchant')) !!}
+                                        <i class="dark-white"></i><label
+                                            for="calendar_status">{{ __('backend.merchant') }}</label>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group row">
                     <label for="add_status1"
                            class="col-sm-2 form-control-label">{!!  __('backend.addPermission') !!}</label>
                     <div class="col-sm-10">
