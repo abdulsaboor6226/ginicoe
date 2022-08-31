@@ -226,9 +226,11 @@ $mnu_title_var2 = 'title_' . env('DEFAULT_LANGUAGE');
 {{--                        @endif--}}
 {{--                    @endif--}}
                     @if(@Auth()->user()->permissions_id !=3)
-                        <li class="nav-header hidden-folded">
-                            <small class="text-muted">{{ __('backend.siteData') }}</small>
-                        </li>
+                            @if(@Auth::user()->permissionsGroup->webmaster_status)
+                            <li class="nav-header hidden-folded">
+                                <small class="text-muted">{{ __('backend.siteData') }}</small>
+                            </li>
+                            @endif
                     @endif
                     <?php
                     $data_sections_arr = explode(',', Auth::user()->permissionsGroup->data_sections);
@@ -412,6 +414,16 @@ $mnu_title_var2 = 'title_' . env('DEFAULT_LANGUAGE');
                                             <span class="nav-text">{{ __('backend.usersPermissions') }}</span>
                                         </a>
                                     </li>
+                                        <?php
+                                        $currentFolder = 'become-a-partner-index'; // Put folder name here
+                                        $PathCurrentFolder = substr($urlAfterRoot, 0, strlen($currentFolder));
+                                        ?>
+                                    <li {{ $PathCurrentFolder == $currentFolder ? 'class=active' : '' }}>
+                                        <a href="{{ route('become-a-partner-index') }}">
+                                            <span class="nav-text">{{ __('backend.become-a-partner') }}</span>
+                                        </a>
+                                    </li>
+                                    </li>
                                 </ul>
                             </li>
                         @endif
@@ -480,7 +492,7 @@ $mnu_title_var2 = 'title_' . env('DEFAULT_LANGUAGE');
                             </a>
                         </li>
                     @endif
-                    @if (@Auth::user()->permissionsGroup->consumer)
+                    @if (@Auth::user()->permissionsGroup->merchant)
                         <li>
                             <a href="{{ route('merchant.index') }}">
                             <span class="nav-icon">

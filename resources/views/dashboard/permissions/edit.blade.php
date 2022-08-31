@@ -241,15 +241,25 @@
                                             </label>
                                         </div>
                                     </div>
-                                    <div class="col-sm-4">
-                                        <div class="checkbox">
-                                            <label class="ui-check">
-                                                <input type="checkbox" name="merchant" {{$Permissions->merchant == 1 ? "checked": " "}}>
-                                                <i class="dark-white"></i><label
-                                                    for="Consumer">{!! __('backend.merchant') !!}</label>
-                                            </label>
-                                        </div>
-                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="add_status1"
+                                   class="col-sm-2 form-control-label">{!!  __('backend.dashboard') !!}</label>
+                            <div class="col-sm-10">
+                                <div class="radio">
+                                    <label class="ui-check ui-check-md" style="margin-bottom: 5px;">
+                                        {!! Form::radio('dashboard','admin',($Permissions->dashboard == 'admin') ? true : false, array('id' => 'dashboard1','class'=>'has-value')) !!}
+                                        <i class="dark-white"></i>
+                                        {{ __('backend.admin') }}
+                                    </label>
+                                    &nbsp; &nbsp;
+                                    <label class="ui-check ui-check-md" style="margin-bottom: 5px;">
+                                        {!! Form::radio('dashboard','other',($Permissions->dashboard == 'other') ? true : false, array('id' => 'dashboard2','class'=>'has-value')) !!}
+                                        <i class="dark-white"></i>
+                                        {{ __('backend.other') }}
+                                    </label>
                                 </div>
                             </div>
                         </div>
