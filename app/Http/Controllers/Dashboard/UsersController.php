@@ -327,6 +327,7 @@ class UsersController extends Controller
      */
     public function permissions_store(Request $request)
     {
+        dd($request->all());
         //
         $this->validate($request, [
             'name' => 'required'
@@ -357,6 +358,7 @@ class UsersController extends Controller
         $Permissions->consumer = ($request->consumer) ? "1" : "0";
         $Permissions->merchant = ($request->merchant) ? "1" : "0";
         $Permissions->data_sections = $data_sections_values;
+        $Permissions->dashboard = $request->dashboard;
         $Permissions->home_status = 0;
         $Permissions->status = true;
         $Permissions->save();
@@ -436,6 +438,7 @@ class UsersController extends Controller
             $Permissions->data_sections = $data_sections_values;
 
             $Permissions->status = $request->status;
+            $Permissions->dashboard = $request->dashboard;
             $Permissions->save();
             return redirect()->action('Dashboard\UsersController@permissions_edit', $id)->with('doneMessage',
                 __('backend.saveDone'));

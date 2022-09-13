@@ -10,9 +10,11 @@ use App\Models\Event;
 use App\Http\Requests;
 use App\Models\Section;
 use App\Models\Topic;
+use App\Models\VulnerabilitiesStatistics;
 use App\Models\Webmail;
 use App\Models\WebmasterSection;
 use Auth;
+use DB;
 use Helper;
 use Illuminate\Http\Request;
 
@@ -231,10 +233,19 @@ class DashboardController extends Controller
             $TodayVisitorsRate = $TodayVisitorsRate . $fsla . "[$ii,$TotalV]";
         }
 
+//        $query = VulnerabilitiesStatistics::orderBy('year_of_breach')->get()->groupBy(function($data) {
+//            return $data->type_of_breach;
+//        });
+//        dd($query);
+
+        $vulnerabilitiesStatistics = VulnerabilitiesStatistics::select("*",
+            DB::raw("count(*) as total_breach"))
+            ->groupBy('type_of_breach')
+            ->get();
         return view('dashboard.home',
             compact("GeneralWebmasterSections", "Webmails", "Events", "Contacts", "TodayVisitors", "TodayPages",
                 "Last7DaysVisitors", "TodayByCountry", "TodayByBrowser1", "TodayByBrowser1_val", "TodayByBrowser2",
-                "TodayByBrowser2_val", "TodayVisitorsRate"));
+                "TodayByBrowser2_val", "TodayVisitorsRate","vulnerabilitiesStatistics"));
     }
 
     /**
