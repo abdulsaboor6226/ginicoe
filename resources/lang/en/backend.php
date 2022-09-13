@@ -519,6 +519,7 @@ return array(
     'notCurrentlySupported' => ' is not currently supported',
     'timezone' => 'Timezone',
     'other' => 'Other',
+    'vulnerabilities_import' => 'Vulnerabilities Import',
     'dashboardLink' => 'Show dashboard Link',
     'fixedHeader' => 'Fixed Header',
     'messageSentSuccessfully' => 'Message sent successfully',

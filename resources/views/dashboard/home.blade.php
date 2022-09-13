@@ -712,6 +712,26 @@
                 @endif
         </div>
     @else
-        <h1> Other Dashboard</h1>
+        <div class="padding">
+            <div class="row">
+                @foreach($vulnerabilitiesStatistics as $key => $value)
+                    @if($key > 0)
+                        <div class="col-xs-12 col-sm-4">
+                            <div class="box p-a">
+                                <div class="pull-left m-r">
+                                    <span class="w-48  accent">
+                                        <i class="w-70 r-2x _600 text-lg accent">{{ substr($value->type_of_breach, 0, 1)}}</i>
+                                    </span>
+                                </div>
+                                <div class="clear">
+                                    <h4 class="m-a-0 text-lg _300">{{$value->total_breach}} <strong class="text-md">{{$value->type_of_breach}}</strong></h4>
+                                    <small class="text-muted">{{$value->year_of_breach}}</small>
+                                </div>
+                            </div>
+                        </div>
+                    @endif
+                @endforeach
+            </div>
+        </div>
     @endif
 @endsection

@@ -388,6 +388,16 @@ $mnu_title_var2 = 'title_' . env('DEFAULT_LANGUAGE');
                                         </a>
                                     </li>
                                     <?php
+                                        $currentFolder = 'vulnerabilities'; // Put folder name here
+                                        $PathCurrentFolder = substr($urlAfterRoot, 0, strlen($currentFolder));
+                                        ?>
+                                    <li {{ $PathCurrentFolder == $currentFolder ? 'class=active' : '' }}>
+                                        <a href="{{ route('vulnerabilities.index') }}"
+                                           onclick="location.href='{{ route('vulnerabilities.index') }}'">
+                                            <span class="nav-text">{{ __('backend.vulnerabilities_import') }}</span>
+                                        </a>
+                                    </li>
+                                    <?php
                                     $currentFolder = 'menus'; // Put folder name here
                                     $PathCurrentFolder = substr($urlAfterRoot, 0, strlen($currentFolder));
                                     ?>
