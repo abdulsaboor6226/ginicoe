@@ -222,7 +222,7 @@
                 <h5 class="modal-title">Image</h5>
             </div>
             <div class="modal-body text-center p-lg">
-                <img src="{{ Helper::getImage($User->doc_photo_url) }}" width="100%">
+                <img src="{{ Helper::getImage(@$User->doc_photo_url) }}" width="100%">
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn dark-white p-x-md" data-dismiss="modal">Cancel</button>

@@ -72,7 +72,6 @@ class ConsumerController extends Controller
      */
     public function show(Consumer $consumer)
     {
-        dd(1);
     }
 
     /**

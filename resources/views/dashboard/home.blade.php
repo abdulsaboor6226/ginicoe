@@ -4,76 +4,77 @@
     <link rel="stylesheet" href="{{ asset('assets/dashboard/css/flags.css') }}" type="text/css"/>
 @endpush
 @section('content')
-    @if(Auth::user()->permissionsGroup->dashboard == "admin")
-        <div class="padding p-b-0">
-            <div class="margin p-b-2">
-                <div class="col-sm-4">
-                    <h5 class="m-b-0 _300">{{ __('backend.hi') }} <span
-                            class="text-primary">{{ Auth::user()->name }}</span>, {{ __('backend.welcomeBack') }}
-                    </h5>
-                </div>
-                @if(@Auth::user()->permissions_id == 3 && @Auth::user()->requestForRole == null)
-                    <div class="col-sm-2"></div>
+    <div class="padding p-b-0">
+        <div class="margin p-b-2">
+            <div class="col-sm-4">
+                <h5 class="m-b-0 _300">{{ __('backend.hi') }} <span
+                        class="text-primary">{{ Auth::user()->name }}</span>, {{ __('backend.welcomeBack') }}
+                </h5>
+            </div>
+            @if(@Auth::user()->permissions_id == 3 && @Auth::user()->requestForRole == null)
+                <div class="col-sm-2"></div>
 
-                    <div class="col-sm-2">
-                        <a href="#" class="btn btn-warning become_a_partner" id="become_a_partner" data-number="consumer" data-toggle="modal" data-target="#consumer" ui-toggle-class="bounce" ui-target="#animate">Become a Consumer</a>
-                    </div>
-                    <div class="col-sm-1"></div>
-                    <div class="col-sm-2">
-                        <a href="#" class="btn btn-warning become_a_partner" data-number="merchant" data-toggle="modal" data-target="#consumer" ui-toggle-class="bounce" ui-target="#animate">Become a Merchant</a>
-                    </div>
-                @else
-                    @if(@Auth::user()->permissions_id == 3)
-                        <div class="col-sm-8">
-                            <div class="alert alert-warning" role="alert">
-                                <h4> <i class="fas-info-circle"></i> Your <b> Become a {{@Auth::user()->requestForRole}} </b> request has been registered </h4>
-                            </div>
-                        </div>
-                    @endif
-                @endif
-            </div>
-            <!-- .modal -->
-            <div id="consumer" class="modal fade animate" data-backdrop="true">
-                <div class="modal-dialog" id="animate">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title"> Become a Partner</h5>
-                        </div>
-                        <form action="{{route('become-a-partner')}}" method="post" enctype="multipart/form-data">
-                            <div class="modal-body text-center p-lg">
-                                @csrf
-                                <input type="hidden" name="requestForRole" id="requestForRole" value="">
-                                <div class="form-group">
-                                    <label>Verify Through</label>
-                                    <select class="form-control" required name="verify_through">
-                                        <option>Select Option</option>
-                                        <option value="CNIC">CNIC</option>
-                                        <option value="passport">Passport</option>
-                                        <option value="driving_licence">Driving Licence</option>
-                                    </select>
-                                </div>
-                                <div class="form-group">
-                                    <label>Document Id</label>
-                                    <input type="text" class="form-control" name="doc_id" required placeholder="1234567890...">
-                                </div>
-                                <div class="form-group">
-                                    <label>Document Photo</label>
-                                    <input type="file" accept="image/*" class="form-control dropify" name="doc_photo" required>
-                                </div>
-                                <div class="form-group">
-                                    <label>Expiry Date</label>
-                                    <input type="date" class="form-control" name="expiry_at" required>
-                                </div>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn dark-white p-x-md" data-dismiss="modal">No</button>
-                                <button class="btn danger p-x-md">Yes</button>
-                            </div>
-                        </form>
-                    </div><!-- /.modal-content -->
+                <div class="col-sm-2">
+                    <a href="#" class="btn btn-warning become_a_partner" id="become_a_partner" data-number="consumer" data-toggle="modal" data-target="#consumer" ui-toggle-class="bounce" ui-target="#animate">Become a Consumer</a>
                 </div>
+                <div class="col-sm-1"></div>
+                <div class="col-sm-2">
+                    <a href="#" class="btn btn-warning become_a_partner" data-number="merchant" data-toggle="modal" data-target="#consumer" ui-toggle-class="bounce" ui-target="#animate">Become a Merchant</a>
+                </div>
+            @else
+                @if(@Auth::user()->permissions_id == 3)
+                    <div class="col-sm-8">
+                        <div class="alert alert-warning" role="alert">
+                            <h4> <i class="fas-info-circle"></i> Your <b> Become a {{@Auth::user()->requestForRole}} </b> request has been registered </h4>
+                        </div>
+                    </div>
+                @endif
+            @endif
+        </div>
+        <!-- .modal -->
+        <div id="consumer" class="modal fade animate" data-backdrop="true">
+            <div class="modal-dialog" id="animate">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title"> Become a Partner</h5>
+                    </div>
+                    <form action="{{route('become-a-partner')}}" method="post" enctype="multipart/form-data">
+                        <div class="modal-body text-center p-lg">
+                            @csrf
+                            <input type="hidden" name="requestForRole" id="requestForRole" value="">
+                            <div class="form-group">
+                                <label>Verify Through</label>
+                                <select class="form-control" required name="verify_through">
+                                    <option>Select Option</option>
+                                    <option value="CNIC">CNIC</option>
+                                    <option value="passport">Passport</option>
+                                    <option value="driving_licence">Driving Licence</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Document Id</label>
+                                <input type="text" class="form-control" name="doc_id" required placeholder="1234567890...">
+                            </div>
+                            <div class="form-group">
+                                <label>Document Photo</label>
+                                <input type="file" accept="image/*" class="form-control dropify" name="doc_photo" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Expiry Date</label>
+                                <input type="date" class="form-control" name="expiry_at" required>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn dark-white p-x-md" data-dismiss="modal">No</button>
+                            <button class="btn danger p-x-md">Yes</button>
+                        </div>
+                    </form>
+                </div><!-- /.modal-content -->
             </div>
-            <!-- / .modal -->
+        </div>
+        <!-- / .modal -->
+            @if(Auth::user()->permissionsGroup->dashboard == "admin")
+
         @if(@Auth::user()->permissionsGroup->home_status)
                 @if(@Auth::user()->permissionsGroup->{'home_details_'. @Helper::currentLanguage()->code} !="")
                     <div class="row">
@@ -713,6 +714,7 @@
         </div>
     @else
         <div class="padding">
+            <h1>Hacking Incident</h1>
             <div class="row">
                 @foreach($vulnerabilitiesStatistics as $key => $value)
                     @if($key > 0)
