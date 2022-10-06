@@ -51,6 +51,21 @@
                     <input id="password-confirm" type="password" class="md-input" name="password_confirmation" required>
                     <label>{{ __('backend.confirmPassword') }}</label>
                 </div>
+                <div class="md-form-group">
+                    <input  type="hidden" class="md-input">
+                    <label>{{ __('backend.role') }}</label>
+                </div>
+                <div class="md-form-group p-t-0">
+                    <div class="col-md-4">
+                        <input class="has-value" type="radio" value="4" name="role" checked>
+                        <label>{{ __('backend.consumer') }}</label>
+                    </div>
+                    <div class="col-md-1"></div>
+                    <div class="col-md-5">
+                        <input class="has-value" type="radio" value="5" name="role">
+                        <label>{{ __('backend.merchant') }}</label>
+                    </div>
+                </div>
                 <button type="submit" class="btn primary btn-block p-x-md"><i
                         class="material-icons">&#xe7fe;</i> {{ __('backend.createNewAccount') }}</button>
             </form>

@@ -46,7 +46,6 @@ return [
     'locationMap' => 'Location Map',
     'comments' => 'Comments',
     'comment' => 'Comment',
-    'login' => 'Login',
     'enterYourComment' => 'Please enter your comment',
     'sendComment' => 'Send Comment',
     'youCommentSent' => 'Your Comment has been sent successfully. Thank you!',

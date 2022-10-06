@@ -285,8 +285,8 @@ Route::resource('/discounts', DiscountsController::class);
 Route::resource('/merchant', MerchantController::class);
 
 Route::resource('/vulnerabilities', VulnerabilitiesStatisticsController::class);
-Route::post('become-a-partner',[UsersController::class,'becomeAPartner'])->name('become-a-partner');
-Route::get('become-a-partner-index',[UsersController::class,'becomeAPartner_index'])->name('become-a-partner-index');
+//Route::post('become-a-partner',[UsersController::class,'becomeAPartner'])->name('become-a-partner');
+//Route::get('become-a-partner-index',[UsersController::class,'becomeAPartner_index'])->name('become-a-partner-index');
 // Clear Cache
 Route::get('/cache-clear', function () {
     Artisan::call('cache:clear');

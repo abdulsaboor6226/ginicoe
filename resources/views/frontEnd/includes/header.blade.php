@@ -50,7 +50,7 @@
                         @else
                             <strong>
                                 <a href="{{ route("adminHome") }}"><i
-                                        class="fa fa-cog"></i> {{__('frontend.dashboard')}}
+                                        class="fa fa-cog"></i> {{__('frontend.login')}}
                                 </a>
                             </strong>
                         @endif

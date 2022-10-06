@@ -811,46 +811,46 @@ class UsersController extends Controller
 
         return response()->json(['stat' => 'error', 'error' => [__('backend.error')]]);
     }
-    public function becomeAPartner(Request $request){
-        $this->validate($request,[
-            'verify_through' => 'required|string',
-            'doc_id'=>'required',
-            'expiry_at' => 'required|date',
-            'doc_photo'=> 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
-        ]);
-        DB::beginTransaction();
-        $path = public_path('storage/Verify-Doc/'.Auth::user()->id);
-        if (! File::exists($path)) {
-            File::makeDirectory($path);
-        }
-        $storePath ='public/Verify-Doc/'.Auth::user()->id;
-        $data['verify_through'] = $request->verify_through;
-        $data['doc_id'] = $request->doc_id;
-        $data['expiry_at'] = $request->expiry_at;
-        $data['requestForRole'] = $request->requestForRole;
-        if($request->hasFile('doc_photo')){
-            $data['doc_photo_url']=  $request->doc_photo->store($storePath);
-        }
-        $user = User::whereId(Auth::user()->id)->update($data);
-        DB::commit();
-        if (!$user)
-        {
-            return redirect()->back()->with('errorMessage', 'Oop! Something Went wrong');
-        }
-        else{
-            return redirect()->back()->with('doneMessage',"Successfully Request Sent");
-        }
-    }
-    public function becomeAPartner_index(){
-        // General for all pages
-        $GeneralWebmasterSections = WebmasterSection::where('status', '=', '1')->orderby('row_no', 'asc')->get();
-        // General END
-        if (@Auth::user()->permissionsGroup->view_status) {
-            $Users = User::where('created_by', '=', Auth::user()->id)->orwhere('id', '=', Auth::user()->id)->orderby('id',
-                'asc')->paginate(env('BACKEND_PAGINATION'));
-        } else {
-            $Users = User::whereNotIn('id',[1])->latest()->paginate(env('BACKEND_PAGINATION'));
-        }
-        return view("dashboard.users.become_a_partner_list", compact("Users", "GeneralWebmasterSections"));
-    }
+//    public function becomeAPartner(Request $request){
+//        $this->validate($request,[
+//            'verify_through' => 'required|string',
+//            'doc_id'=>'required',
+//            'expiry_at' => 'required|date',
+//            'doc_photo'=> 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
+//        ]);
+//        DB::beginTransaction();
+//        $path = public_path('storage/Verify-Doc/'.Auth::user()->id);
+//        if (! File::exists($path)) {
+//            File::makeDirectory($path);
+//        }
+//        $storePath ='public/Verify-Doc/'.Auth::user()->id;
+//        $data['verify_through'] = $request->verify_through;
+//        $data['doc_id'] = $request->doc_id;
+//        $data['expiry_at'] = $request->expiry_at;
+//        $data['requestForRole'] = $request->requestForRole;
+//        if($request->hasFile('doc_photo')){
+//            $data['doc_photo_url']=  $request->doc_photo->store($storePath);
+//        }
+//        $user = User::whereId(Auth::user()->id)->update($data);
+//        DB::commit();
+//        if (!$user)
+//        {
+//            return redirect()->back()->with('errorMessage', 'Oop! Something Went wrong');
+//        }
+//        else{
+//            return redirect()->back()->with('doneMessage',"Successfully Request Sent");
+//        }
+//    }
+//    public function becomeAPartner_index(){
+//        // General for all pages
+//        $GeneralWebmasterSections = WebmasterSection::where('status', '=', '1')->orderby('row_no', 'asc')->get();
+//        // General END
+//        if (@Auth::user()->permissionsGroup->view_status) {
+//            $Users = User::where('created_by', '=', Auth::user()->id)->orwhere('id', '=', Auth::user()->id)->orderby('id',
+//                'asc')->paginate(env('BACKEND_PAGINATION'));
+//        } else {
+//            $Users = User::whereNotIn('id',[1])->latest()->paginate(env('BACKEND_PAGINATION'));
+//        }
+//        return view("dashboard.users.become_a_partner_list", compact("Users", "GeneralWebmasterSections"));
+//    }
 }
