@@ -40,13 +40,13 @@ class ConsumerImageController extends Controller
     public function store(Request $request)
     {
         $this->validate($request,[
-            'front.*'=>'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            'right_side.*'=>'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            'left_side.*'=>'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            'with_glasses.*'=>'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            'with_mask.*'=>'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            'with_face_tattoo.*'=>'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            'with_piercing.*'=>'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'front.*'=>'required|image|mimes:jpeg,png,jpg,gif,svg|max:10240',
+            'right_side.*'=>'required|image|mimes:jpeg,png,jpg,gif,svg|max:10240',
+            'left_side.*'=>'required|image|mimes:jpeg,png,jpg,gif,svg|max:10240',
+            'with_glasses.*'=>'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:10240',
+            'with_mask.*'=>'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:10240',
+            'with_face_tattoo.*'=>'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:10240',
+            'with_piercing.*'=>'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:10240',
             'video.*'=>'nullable|mimes:mp4,ogx,oga,ogv,ogg,webm|max:8192',
             'compress_file.*'=>'nullable|file|mimes:zip,rar|max:5120',
         ]);
@@ -54,9 +54,9 @@ class ConsumerImageController extends Controller
         DB::beginTransaction();
         $path = public_path('storage/Consumer-images/'.$request->consumer_id_fk);
         if (! File::exists($path)) {
-            File::makeDirectory($path);
-            File::makeDirectory($path."/video");
-            File::makeDirectory($path."/compress_file");
+            File::makeDirectory($path, 0777, true, true);
+            File::makeDirectory($path."/video" , 0777, true, true);
+            File::makeDirectory($path."/compress_file",0777, true, true);
         }
         $storePath ='public/Consumer-images/'.$request->consumer_id_fk;
         foreach ($request->except('_token','main_tab','consumer_id_fk') as $key => $value ){
@@ -117,21 +117,21 @@ class ConsumerImageController extends Controller
     {
         $image = ConsumerImage::findOrfail($id);
         $this->validate($request,[
-            'front.*'=>'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            'right_side.*'=>'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            'left_side.*'=>'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            'with_glasses.*'=>'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            'with_mask.*'=>'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            'with_face_tattoo.*'=>'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            'with_piercing.*'=>'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'front.*'=>'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:10240',
+            'right_side.*'=>'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:10240',
+            'left_side.*'=>'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:10240',
+            'with_glasses.*'=>'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:10240',
+            'with_mask.*'=>'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:201024048',
+            'with_face_tattoo.*'=>'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:10240',
+            'with_piercing.*'=>'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:10240',
             'video.*'=>'nullable|video|mimes:mp4,ogx,oga,ogv,ogg,webm|max:8192',
-            'compress_file.*'=>'nullable|file|mimes:zip,rar|size:5120',
+            'compress_file.*'=>'nullable|file|mimes:zip,rar|max:5120',
         ]);
         $path = public_path('storage/Consumer-images/'.$request->consumer_id_fk);
         if (! File::exists($path)) {
-            File::makeDirectory($path);
-            File::makeDirectory($path."/video");
-            File::makeDirectory($path."/compress");
+            File::makeDirectory($path, 0777, true, true);
+            File::makeDirectory($path."/video" , 0777, true, true);
+            File::makeDirectory($path."/compress_file",0777, true, true);
         }
         $storePath ='public/Consumer-images/'.$request->consumer_id_fk;
         $request['front_image_url'] = $request->front ==null ? $image->front_image_url :$request->front->store($storePath) ;
