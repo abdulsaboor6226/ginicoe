@@ -155,6 +155,19 @@
                           onclick="update_restcolor2()">{!!  __('backend.restoreDefault') !!}</a>
                 </small>
             </div>
+            <div class="col-sm-4">
+                <label>{!!  __('backend.fontFamily') !!}</label>
+                    <div class="form-group">
+                        <select class="form-control" required  name="font_family">
+                            <option value="">Select Option</option>
+                            @foreach($dictionary as $key => $value)
+                                <option {{ $value->id == $Setting->font_family ? 'selected' : ""}} value="{{$value->id}}">{{$value->value}}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                <div>
+                </div>
+            </div>
         </div>
         <hr>
         <div class="form-group row">

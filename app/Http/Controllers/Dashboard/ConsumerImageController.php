@@ -115,7 +115,6 @@ class ConsumerImageController extends Controller
      */
     public function update(Request $request,$id)
     {
-        $image = ConsumerImage::findOrfail($id);
         $this->validate($request,[
             'front.*'=>'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:10240',
             'right_side.*'=>'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:10240',
@@ -134,16 +133,20 @@ class ConsumerImageController extends Controller
             File::makeDirectory($path."/compress_file",0777, true, true);
         }
         $storePath ='public/Consumer-images/'.$request->consumer_id_fk;
-        $request['front_image_url'] = $request->front ==null ? $image->front_image_url :$request->front->store($storePath) ;
-        $request['right_side_image_url'] = $request->right_side ==null ? $image->right_side_image_url : $request->right_side->store($storePath) ;
-        $request['left_side_image_url'] = $request->left_side ==null ? $image->left_side_image_url : $request->left_side->store($storePath) ;
-        $request['with_glasses_image_url'] = $request->with_glasses == null ? $image->with_glasses_image_url:  $request->with_glasses->store($storePath);
-        $request['with_mask_image_url'] = $request->with_mask == null ? $image->with_mask_image_url:  $request->with_mask->store($storePath);
-        $request['with_face_tattoo_image_url'] = $request->with_face_tattoo == null ? $image->with_face_tattoo_image_url:  $request->with_face_tattoo->store($storePath);
-        $request['with_piercing_image_url'] = $request->with_piercing == null ? $image->with_piercing_image_url:  $request->with_piercing->store($storePath);
-        $request['video_url'] = $request->video == null ? $image->video_url:  $request->video->store($storePath);
-        $request['compress_file_url'] = $request->compress_file == null ? $image->compress_file_url:  $request->with_piercing->store($storePath);
-        $consumerImage = $image->update($request->except('_token','front','right_side','left_side','with_glasses','with_mask','with_face_tattoo','with_piercing','video','compress_file'));
+        foreach ($request->except('_token','_method','main_tab','consumer_id_fk') as $key => $value ){
+            foreach ($value as $ItemKey => $item){
+                $data['consumer_id_fk'] = $request->consumer_id_fk;
+                $data['file_type'] =$item->getMimeType();
+                $data['image_content_type'] = $key;
+                $data['extension'] = $item->extension();
+                if ($key == 'video'||$key == 'compress_file'){
+                    $data['url'] = $item->store($storePath.'/'.$key);
+                }else{
+                    $data['url'] = $item->store($storePath);
+                }
+                $consumerImage = ConsumerImage::findOrFail($ItemKey)->update($data);
+            }
+        }
         if (!$consumerImage)
         {
             return redirect()->back()->with('errorMessage', 'Oop! Something Went wrong');

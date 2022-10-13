@@ -286,6 +286,7 @@ return array(
     'moveTo' => 'Move to ',
     'replay' => 'Replay',
     'forward' => 'Forward',
+    'fontFamily' => 'Font Family',
     'sendTo' => 'To',
     'sendFrom' => 'From',
     'sendCc' => 'Cc',

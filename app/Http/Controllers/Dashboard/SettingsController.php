@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests;
+use App\Models\Dictionary;
 use App\Models\Setting;
 use App\Models\WebmasterSection;
 use Auth;
@@ -39,9 +40,10 @@ class SettingsController extends Controller
         // General END
 
         $id = 1;
-        $Setting = Setting::find($id);
+        $Setting = Setting::where('id',$id)->with('fontFamily')->first();
+        $dictionary = Dictionary::fontFamily()->get();
         if (!empty($Setting)) {
-            return view("dashboard.settings.settings", compact("Setting", "GeneralWebmasterSections"));
+            return view("dashboard.settings.settings", compact("Setting","dictionary", "GeneralWebmasterSections"));
 
         } else {
             return redirect()->route('adminHome');
@@ -204,6 +206,7 @@ class SettingsController extends Controller
             }
             $Setting->style_preload = $request->style_preload;
             $Setting->css = $request->css_code;
+            $Setting->font_family = $request->font_family;
 
             $Setting->social_link1 = $request->social_link1;
             $Setting->social_link2 = $request->social_link2;

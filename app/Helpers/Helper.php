@@ -26,6 +26,11 @@ use Storage;
 
 class Helper
 {
+    public function fontFamily(){
+         $setting = Setting::where('id',1)->with('fontFamily')->first();
+         return $setting->fontFamily->value;
+    }
+
     public function getImage($value)
     {
         return url('/core'.Storage::url('app/'.$value));

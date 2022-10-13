@@ -3,7 +3,7 @@
 <head>
     @include('dashboard.layouts.head')
 </head>
-<body>
+<body style="font-family: {{Helper::fontFamily()}};">
 <div class="app" id="app">
     @php( $webmailsNewCount= Helper::webmailsNewCount())
     @include('dashboard.layouts.menu')
