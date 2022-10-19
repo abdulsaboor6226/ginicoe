@@ -234,7 +234,50 @@
                         </li>
                     @endif
                 @endforeach
+                <li class="dropdown">
+                    <div style="padding: 13px;">
+                        @if(Helper::GeneralWebmasterSettings("dashboard_link_status"))
+                        @if(Auth::check())
+                            <div class="btn-group header-dropdown">
+                                <button type="button" class="btn dropdown-toggle" data-toggle="dropdown"
+                                        aria-haspopup="true" aria-expanded="false">
+                                    <i class="fa fa-user"></i> {{ Auth::user()->name }} <i class="fa fa-angle-down"></i>
+                                </button>
+                                <div class="dropdown-menu">
+                                    <a class="dropdown-item"
+                                       href="{{ route("adminHome") }}"> <i
+                                            class="fa fa-cog"></i> {{__('frontend.dashboard')}}</a>
+                                    @if(Auth::user()->permissions ==0 || Auth::user()->permissions ==1)
+                                        <a class="dropdown-item"
+                                           href="{{ route('usersEdit',Auth::user()->id) }}"> <i
+                                                class="fa fa-user"></i> {{ __('backend.profile') }}</a>
+                                    @endif
+                                    @if(Helper::GeneralWebmasterSettings("inbox_status"))
+                                        @if(@Auth::user()->permissionsGroup->inbox_status)
+                                            <a href="{{ route('webmails') }}" class="dropdown-item">
+                                                <i class="fa fa-envelope"></i> {{ __('backend.siteInbox') }}
+                                            </a>
+                                        @endif
+                                    @endif
+                                    <a onclick="event.preventDefault();document.getElementById('logout-form').submit();"
+                                       class="dropdown-item" href="{{ url('/logout') }}"><i
+                                            class="fa fa-sign-out"></i> {{ __('backend.logout') }}</a>
 
+                                    <form id="logout-form" action="{{ url('/logout') }}" method="POST"
+                                          style="display: none;">
+                                        {{ csrf_field() }}
+                                    </form>
+                                </div>
+                            </div>
+                        @else
+                            <strong>
+                                <a href="{{ route("adminHome") }}"></i> {{__('frontend.login')}}
+                                </a>
+                            </strong>
+                        @endif
+                    @endif
+                    </div>
+                </li>
             </ul>
         </div>
     @endif

@@ -26,9 +26,9 @@ use Storage;
 
 class Helper
 {
-    public function fontFamily(){
+    public static function fontFamily(){
          $setting = Setting::where('id',1)->with('fontFamily')->first();
-         return $setting->fontFamily->value;
+         return @$setting->fontFamily->value;
     }
 
     public function getImage($value)
