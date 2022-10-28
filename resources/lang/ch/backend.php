@@ -339,7 +339,7 @@ return array(
     'dataManagements1' => 'His Own Data Only (for Personal Accounts)',
     'dataManagements2' => 'All Users Data (for General Administration Accounts)',
     'activeApps' => 'Active Apps',
-    'activeSiteSections' => 'Active Site Sections',
+    'activeSiteSections' => 'Active Site Pages',
     'addPermission' => 'ADD Permission',
     'editPermission' => 'EDIT Permission',
     'deletePermission' => 'DELETE Permission',

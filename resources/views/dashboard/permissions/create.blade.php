@@ -209,6 +209,15 @@
                                     </label>
                                 </div>
                             </div>
+                            <div class="col-sm-3">
+                                <div class="checkbox">
+                                    <label class="ui-check">
+                                        {!! Form::checkbox('bank','1',false, array('id' => 'bank')) !!}
+                                        <i class="dark-white"></i><label
+                                            for="calendar_status">{{ __('backend.bank') }}</label>
+                                    </label>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

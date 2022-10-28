@@ -24,24 +24,6 @@ class DictionaryTableSeeder extends Seeder
                 'meta' => ['color' => $value]
             ]);
         }
-        $dealStatus = [
-            'pending deal' => 'warning',
-            'pending token' => 'warning',
-            'un confirm' => 'info',
-            'cancelled' => 'danger',
-            'completed' => 'success',
-            'closure' => 'primary'
-        ];
-        $index = 0;
-        foreach ($dealStatus as $key => $value) {
-            Dictionary::create([
-                'entity' => 'DEAL',
-                'key' => 'STATUS',
-                'value' => $key,
-                'sort' => $index++,
-                'meta' => ['color' => $value]
-            ]);
-        }
 
         $gender = ['male', 'female', 'other'];
         foreach ($gender as $key => $value) {

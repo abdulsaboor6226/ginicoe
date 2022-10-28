@@ -327,7 +327,6 @@ class UsersController extends Controller
      */
     public function permissions_store(Request $request)
     {
-        dd($request->all());
         //
         $this->validate($request, [
             'name' => 'required'
@@ -357,6 +356,7 @@ class UsersController extends Controller
         $Permissions->webmaster_status = ($request->webmaster_status) ? "1" : "0";
         $Permissions->consumer = ($request->consumer) ? "1" : "0";
         $Permissions->merchant = ($request->merchant) ? "1" : "0";
+        $Permissions->bank = ($request->bank) ? "1" : "0";
         $Permissions->data_sections = $data_sections_values;
         $Permissions->dashboard = $request->dashboard;
         $Permissions->home_status = 0;
@@ -431,6 +431,7 @@ class UsersController extends Controller
             $Permissions->banners_status = ($request->banners_status) ? "1" : "0";
             $Permissions->consumer = ($request->consumer) ? "1" : "0";
             $Permissions->merchant = ($request->merchant) ? "1" : "0";
+            $Permissions->bank = ($request->bank) ? "1" : "0";
             if ($id != 1) {
                 $Permissions->settings_status = ($request->settings_status) ? "1" : "0";
                 $Permissions->webmaster_status = ($request->webmaster_status) ? "1" : "0";

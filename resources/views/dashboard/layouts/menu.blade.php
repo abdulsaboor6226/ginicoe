@@ -511,6 +511,16 @@ $mnu_title_var2 = 'title_' . env('DEFAULT_LANGUAGE');
                                 </a>
                         </li>
                     @endif
+                    @if (@Auth::user()->permissionsGroup->bank)
+                        <li>
+                            <a href="{{ route('bank.index') }}">
+                        <span class="nav-icon">
+                            <i class="material-icons">&#xE8E8;</i>
+                        </span>
+                                <span class="nav-text">{{auth()->user()->permissions_id == 5 ? 'My Bank': __('backend.bank') }}</span>
+                            </a>
+                        </li>
+                    @endif
                 </ul>
             </nav>
         </div>

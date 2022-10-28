@@ -26,5 +26,6 @@ class DatabaseSeeder extends Seeder
         $this->call(WebmailGroupsSeeder::class);
         $this->call(AllCountryTableSeeder::class);
         $this->call(DictionaryTableSeeder::class);
+        $this->call(BankSeeder::class);
     }
 }

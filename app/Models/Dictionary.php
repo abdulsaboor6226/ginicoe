@@ -20,6 +20,26 @@ class Dictionary extends Model
         return self::dictionaryQuery('GENERAL','FONT_FAMILY');
     }
 
+    public static function jobTitle(){
+        return self::dictionaryQuery('BANK','JOB_TITLE');
+    }
+
+    public static function FI_represent(){
+        return self::dictionaryQuery('BANK','FI_REPRESENT');
+    }
+
+    public static function assetSize(){
+        return self::dictionaryQuery('BANK','ASSET_SIZE');
+    }
+
+    public static function FI_charterType(){
+        return self::dictionaryQuery('BANK','FI_CHARTER_TYPE');
+    }
+
+    public static function FI_performs(){
+        return self::dictionaryQuery('BANK','FI_PERFORMS');
+    }
+
     public static function pendingUserStatus(){
         return self::userStatus()->where('sort',0)->first();
     }

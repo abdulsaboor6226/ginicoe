@@ -82,6 +82,10 @@
                                             <i class="fa fa-check text-success inline"></i> {{ __('backend.merchant') }}
                                             &nbsp;
                                         @endif
+                                        @if($Permission->bank==1)
+                                            <i class="fa fa-check text-success inline"></i> {{ __('backend.bank') }}
+                                            &nbsp;
+                                        @endif
                                         <br>
                                         @if($Permission->analytics_status==1)
                                             {{ __('backend.visitorsAnalytics') }},
