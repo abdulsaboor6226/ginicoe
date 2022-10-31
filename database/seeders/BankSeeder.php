@@ -36,7 +36,7 @@ class BankSeeder extends Seeder
         foreach ($FI_charter_type as $key => $value) {
             Dictionary::create([
                 'entity' => 'BANK',
-                'key' => 'FI_CHARTER_TYPE',
+                'key' => 'FI_TYPE',
                 'value' => $value,
                 'sort' => $key
             ]);
@@ -55,6 +55,15 @@ class BankSeeder extends Seeder
             Dictionary::create([
                 'entity' => 'BANK',
                 'key' => 'FI_PERFORMS',
+                'value' => $value,
+                'sort' => $key
+            ]);
+        }
+        $dailyTrades = ['Less or equal 10000','10001 to 30000','30001 to 50000','Greater or equal 50001'];
+        foreach ($dailyTrades as $key => $value) {
+            Dictionary::create([
+                'entity' => 'BANK',
+                'key' => 'DAILY_TRADE',
                 'value' => $value,
                 'sort' => $key
             ]);

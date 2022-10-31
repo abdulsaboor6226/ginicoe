@@ -19,7 +19,7 @@ class BankController extends Controller
     public function index()
     {
         $GeneralWebmasterSections = WebmasterSection::where('status', '=', '1')->orderby('row_no', 'asc')->get();
-        $banks = Bank::latest()->paginate(10);
+        $banks = Bank::with('daily_trades','asset_sizes','financial_institution_represents','FI_performses','job_titles','FI_charterTypes')->latest()->paginate(10);
         return view('dashboard.bank.index',compact('GeneralWebmasterSections','banks'));
     }
 
@@ -33,10 +33,11 @@ class BankController extends Controller
         $GeneralWebmasterSections = WebmasterSection::where('status', '=', '1')->orderby('row_no', 'asc')->get();
         $jobTitles = Dictionary::jobTitle()->pluck('value','id');
         $FI_represents = Dictionary::FI_represent()->pluck('value','id');
-        $FI_charterTypes = Dictionary::FI_charterType()->pluck('value','id');
+        $FI_charterTypes = Dictionary::FI_Type()->pluck('value','id');
         $assetSizes = Dictionary::assetSize()->pluck('value','id');
         $FI_performses = Dictionary::FI_performs()->pluck('value','id');
-        return view('dashboard.bank.create',compact('GeneralWebmasterSections','jobTitles','FI_represents','assetSizes','FI_performses','FI_charterTypes'));
+        $dailyTrades = Dictionary::dailyTrade()->pluck('value','id');
+        return view('dashboard.bank.create',compact('GeneralWebmasterSections','jobTitles','FI_represents','assetSizes','FI_performses','FI_charterTypes','dailyTrades'));
     }
 
     /**
@@ -79,8 +80,14 @@ class BankController extends Controller
     public function edit($id)
     {
         $GeneralWebmasterSections = WebmasterSection::where('status', '=', '1')->orderby('row_no', 'asc')->get();
-        $bank = Bank::findOrFail(id);
-        return view('dashboard.bank.edit',compact('GeneralWebmasterSections','bank'));
+        $bank = Bank::findOrFail($id);
+        $jobTitles = Dictionary::jobTitle()->pluck('value','id');
+        $FI_represents = Dictionary::FI_represent()->pluck('value','id');
+        $FI_charterTypes = Dictionary::FI_Type()->pluck('value','id');
+        $assetSizes = Dictionary::assetSize()->pluck('value','id');
+        $FI_performses = Dictionary::FI_performs()->pluck('value','id');
+        $dailyTrades = Dictionary::dailyTrade()->pluck('value','id');
+        return view('dashboard.bank.edit',compact('GeneralWebmasterSections','bank','jobTitles','FI_represents','assetSizes','FI_performses','FI_charterTypes','dailyTrades'));
     }
 
     /**
@@ -124,19 +131,19 @@ class BankController extends Controller
             'f_name' => 'required',
             'm_name' => 'nullable',
             'l_name' => 'required',
-            'phone_no' => 'required|phone|unique:users,phone_no,'.$id,
-            'email' => 'required|email|unique:users,email,'.$id,
+            'phone_no' => 'required',
+            'email' => 'required|email|unique:banks,email,'.$id,
             'job_title' => 'required',
             'secondary_f_name' => 'nullable',
             'secondary_l_name' => 'nullable',
-            'secondary_phone_no' => 'nullable|phone|unique:users,secondary_phone_no,'.$id,
-            'secondary_fax_no' => 'nullable|phone|unique:users,secondary_fax_no,'.$id,
-            'secondary_email' => 'nullable|email|unique:users,secondary_email,'.$id,
-            'financial_institution_represent' => 'nullable',
+            'secondary_phone_no' => 'required',
+            'secondary_fax_no' => 'required',
+            'secondary_email' => 'nullable|email|unique:banks,secondary_email,'.$id,
+            'financial_institution_represent.*' => 'nullable',
             'FI_type' => 'required',
             'FI_operate_across_state' => 'required',
             'asset_size' => 'nullable',
-            'FI_performs' => 'required',
+            'FI_performs.*' => 'required',
             'BIN' => 'required',
             'daily_trade' => 'required',
             'portfolio_size' => 'required',

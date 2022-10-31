@@ -32,12 +32,16 @@ class Dictionary extends Model
         return self::dictionaryQuery('BANK','ASSET_SIZE');
     }
 
-    public static function FI_charterType(){
-        return self::dictionaryQuery('BANK','FI_CHARTER_TYPE');
+    public static function FI_Type(){
+        return self::dictionaryQuery('BANK','FI_TYPE');
     }
 
     public static function FI_performs(){
         return self::dictionaryQuery('BANK','FI_PERFORMS');
+    }
+
+    public static function dailyTrade(){
+        return self::dictionaryQuery('BANK','DAILY_TRADE');
     }
 
     public static function pendingUserStatus(){
