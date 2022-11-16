@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\AllCity;
+use App\Models\AllCountry;
+use App\Models\AllState;
 use Illuminate\Support\Facades\File;
 use App;
 use App\Models\Banner;
@@ -1444,5 +1447,21 @@ class HomeController extends Controller
         } catch (\Exception $e) {
 
         }
+    }
+
+    public function countries()
+    {
+        $data['countries'] = AllCountry::get(["name", "id"]);
+        return view('welcome', $data);
+    }
+    public function states(Request $request)
+    {
+        $data['states'] = AllState::where("country_id",$request->country_id)->get(["name", "id"]);
+        return response()->json($data);
+    }
+    public function cities(Request $request)
+    {
+        $data['cities'] = AllCity::where("state_id",$request->state_id)->get(["name", "id"]);
+        return response()->json($data);
     }
 }

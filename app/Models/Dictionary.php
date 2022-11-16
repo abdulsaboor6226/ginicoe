@@ -55,4 +55,8 @@ class Dictionary extends Model
     public static function dictionaryQuery($entity,$key){
         return self::where('entity',$entity)->where('key',$key);
     }
+
+    public static function dashboard(){
+        return self::dictionaryQuery('GENERAL','DASHBOARD');
+    }
 }

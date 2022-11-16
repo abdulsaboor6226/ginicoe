@@ -24,8 +24,9 @@ class DatabaseSeeder extends Seeder
         $this->call(BannersSeeder::class);
         $this->call(TopicsSeeder::class);
         $this->call(WebmailGroupsSeeder::class);
-        $this->call(AllCountryTableSeeder::class);
         $this->call(DictionaryTableSeeder::class);
         $this->call(BankSeeder::class);
+        $this->call(GovtSeeder::class);
+        $this->call(ConsumerSeeder::class);
     }
 }

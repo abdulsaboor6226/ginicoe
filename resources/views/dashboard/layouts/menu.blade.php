@@ -521,6 +521,16 @@ $mnu_title_var2 = 'title_' . env('DEFAULT_LANGUAGE');
                             </a>
                         </li>
                     @endif
+                    @if (@Auth::user()->permissionsGroup->govt)
+                        <li>
+                            <a href="{{ route('govt.index') }}">
+                    <span class="nav-icon">
+                        <i class="material-icons">&#xE8E8;</i>
+                    </span>
+                                <span class="nav-text">{{auth()->user()->permissions_id == 6 ? 'My Govt': __('backend.govt') }}</span>
+                            </a>
+                        </li>
+                    @endif
                 </ul>
             </nav>
         </div>

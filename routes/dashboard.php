@@ -15,6 +15,7 @@ use App\Http\Controllers\Dashboard\EventsController;
 use App\Http\Controllers\Dashboard\AnalyticsController;
 use App\Http\Controllers\Dashboard\MenusController;
 use App\Http\Controllers\Dashboard\FileManagerController;
+use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -284,7 +285,11 @@ Route::resource('/consumers_surgery_details', ConsumersSurgeryDetailsController:
 Route::resource('/discounts', DiscountsController::class);
 Route::resource('/merchant', MerchantController::class);
 Route::resource('/bank', BankController::class);
+Route::resource('/govt', GovtController::class);
 
+Route::get('all-country',[HomeController::class,'countries'])->name('all_countries');
+Route::get('all-state/{id?}',[HomeController::class,'states'])->name('all_states');
+Route::get('all-city/{id?}',[HomeController::class,'cities'])->name('all_cities');
 Route::resource('/vulnerabilities', VulnerabilitiesStatisticsController::class);
 //Route::post('become-a-partner',[UsersController::class,'becomeAPartner'])->name('become-a-partner');
 //Route::get('become-a-partner-index',[UsersController::class,'becomeAPartner_index'])->name('become-a-partner-index');

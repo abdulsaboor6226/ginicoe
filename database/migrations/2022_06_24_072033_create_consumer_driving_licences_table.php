@@ -17,7 +17,7 @@ class CreateConsumerDrivingLicencesTable extends Migration
             $table->id();
             $table->unsignedBigInteger('consumer_id_fk');
             $table->unsignedBigInteger('driving_license_country_id_fk');
-            $table->string('driving_licensing_state');
+            $table->unsignedBigInteger('driving_licensing_state_id_fk');
             $table->string('driving_license_id');
             $table->timestamps();
             $table->foreign('consumer_id_fk')->references('id')->on('consumers')->onDelete('cascade');

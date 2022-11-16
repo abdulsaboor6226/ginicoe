@@ -16,7 +16,7 @@ class CreateConsumersTable extends Migration
         Schema::create('consumers', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id_fk');
-            $table->string('salutation')->nullable();
+            $table->unsignedBigInteger('salutation_id_fk')->nullable();
             $table->string('first_name')->nullable();
             $table->string('middle_name')->nullable();
             $table->string('last_name')->nullable();
@@ -26,14 +26,14 @@ class CreateConsumersTable extends Migration
             $table->string('current_us_address_1')->nullable();
             $table->text('current_us_address_2')->nullable();
             $table->string('current_us_urbanization_name')->nullable();
-            $table->string('current_us_city')->nullable();
-            $table->string('current_us_state')->nullable();
+            $table->unsignedBigInteger('current_us_state_id_fk')->nullable();
+            $table->unsignedBigInteger('current_us_city_id_fk')->nullable();
             $table->string('current_us_zip')->nullable();
             $table->string('current_us_area_code')->nullable();
             $table->tinyInteger('current_us_lived_for_more_than_two_years')->default(0);
             $table->unsignedBigInteger('birth_country_id_fk')->nullable();
-            $table->string('birth_state')->nullable();
-            $table->string('birth_city')->nullable();
+            $table->unsignedBigInteger('birth_state_id_fk')->nullable();
+            $table->unsignedBigInteger('birth_city_id_fk')->nullable();
             $table->string('birth_hospital')->nullable();
             $table->string('social_security')->nullable();
             $table->string('credit_privacy')->nullable();
@@ -41,8 +41,8 @@ class CreateConsumersTable extends Migration
             $table->string('previous_us_address_1')->nullable();
             $table->text('previous_us_address_2')->nullable();
             $table->string('previous_us_urbanization_name')->nullable();
-            $table->string('previous_us_city')->nullable();
-            $table->string('previous_us_state')->nullable();
+            $table->unsignedBigInteger('previous_us_state_id_fk')->nullable();
+            $table->unsignedBigInteger('previous_us_city_id_fk')->nullable();
             $table->string('previous_us_zip')->nullable();
             $table->string('previous_us_area_code')->nullable();
             $table->string('secondary_email')->unique()->nullable();
@@ -55,8 +55,8 @@ class CreateConsumersTable extends Migration
             $table->string('emergency_us_address_1')->nullable();
             $table->text('emergency_us_address_2')->nullable();
             $table->string('emergency_us_urbanization_name')->nullable();
-            $table->string('emergency_us_city')->nullable();
-            $table->string('emergency_us_state')->nullable();
+            $table->unsignedBigInteger('emergency_us_state_id_fk')->nullable();
+            $table->unsignedBigInteger('emergency_us_city_id_fk')->nullable();
             $table->string('emergency_us_zip')->nullable();
             $table->string('emergency_us_area_code')->nullable();
             $table->string('emergency_email')->unique()->nullable();
@@ -67,12 +67,12 @@ class CreateConsumersTable extends Migration
             $table->string('medication')->nullable();
             $table->string('net_worth')->nullable();
             $table->string('occupation')->nullable();
-            $table->string('state_id')->nullable();
+            $table->unsignedBigInteger('state_id_fk')->nullable();
             $table->string('us_military_branch')->nullable();
             $table->string('us_military')->nullable();
             $table->string('us_employee_badge')->nullable();
             $table->unsignedBigInteger('us_govt_badge_country_id_fk')->nullable();
-            $table->string('us_govt_badge_state')->nullable();
+            $table->unsignedBigInteger('us_govt_badge_state_id_fk')->nullable();
             $table->string('us_govt_badge_id')->nullable();
             $table->string('us_agency_description')->nullable();
             $table->string('foreign_agency_description')->nullable();

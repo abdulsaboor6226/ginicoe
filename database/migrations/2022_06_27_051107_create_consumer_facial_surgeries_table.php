@@ -31,8 +31,8 @@ class CreateConsumerFacialSurgeriesTable extends Migration
             $table->string('address_2')->nullable();
             $table->string('urbanization_name')->nullable();
             $table->string('country_id_fk')->nullable();
-            $table->string('state')->nullable();
-            $table->string('city')->nullable();
+            $table->string('state_id_fk')->nullable();
+            $table->string('city_id_fk')->nullable();
             $table->string('zip')->nullable();
             $table->string('area_code')->nullable();
             $table->timestamps();

@@ -17,7 +17,7 @@ class CreateConsumerNonUSEmploymentsTable extends Migration
             $table->id();
             $table->unsignedBigInteger('consumer_id_fk');
             $table->unsignedBigInteger('non_us_govt_badge_country_id_fk');
-            $table->string('non_us_govt_badge_state');
+            $table->unsignedBigInteger('non_us_govt_badge_state_id_fk');
             $table->string('non_us_govt_badge_id');
             $table->timestamps();
             $table->foreign('consumer_id_fk')->references('id')->on('consumers')->onDelete('cascade');

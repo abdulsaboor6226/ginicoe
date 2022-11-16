@@ -250,6 +250,15 @@
                                             </label>
                                         </div>
                                     </div>
+                                    <div class="col-sm-3">
+                                        <div class="checkbox">
+                                            <label class="ui-check">
+                                                {!! Form::checkbox('govt','1',($Permissions->govt==1) ? true : false, array('id' => 'govt')) !!}
+                                                <i class="dark-white"></i><label
+                                                    for="calendar_status">{{ __('backend.govt') }}</label>
+                                            </label>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -258,17 +267,14 @@
                                    class="col-sm-2 form-control-label">{!!  __('backend.dashboard') !!}</label>
                             <div class="col-sm-10">
                                 <div class="radio">
-                                    <label class="ui-check ui-check-md" style="margin-bottom: 5px;">
-                                        {!! Form::radio('dashboard','admin',($Permissions->dashboard == 'admin') ? true : false, array('id' => 'dashboard1','class'=>'has-value')) !!}
-                                        <i class="dark-white"></i>
-                                        {{ __('backend.admin') }}
-                                    </label>
-                                    &nbsp; &nbsp;
-                                    <label class="ui-check ui-check-md" style="margin-bottom: 5px;">
-                                        {!! Form::radio('dashboard','other',($Permissions->dashboard == 'other') ? true : false, array('id' => 'dashboard2','class'=>'has-value')) !!}
-                                        <i class="dark-white"></i>
-                                        {{ __('backend.other') }}
-                                    </label>
+                                    @foreach($dashboard as $key =>$value)
+                                        <label class="ui-check ui-check-md" style="margin-bottom: 5px;">
+                                            {!! Form::radio('dashboard',$key,($Permissions->dashboard == $key) ? true : false, array('id' => 'dashboard','class'=>'has-value')) !!}
+                                            <i class="dark-white"></i>
+                                            {{ __('backend.'.$value) }}
+                                        </label>
+                                        &nbsp; &nbsp;
+                                    @endforeach
                                 </div>
                             </div>
                         </div>

@@ -13,4 +13,8 @@ class Permissions extends Model
     {
         return $this->hasMany('App\Models\User', 'permissions_id');
     }
+
+    public function penal(){
+        return $this->belongsTo(Dictionary::class,'dashboard');
+    }
 }

@@ -240,6 +240,7 @@ return array(
     'consumer' => 'Consumer',
     'merchant' => 'Merchant',
     'bank' => 'Bank',
+    'govt' => 'Govt',
     'role' => 'Role',
     'consumers_cards' => 'Consumers Cards',
     'consumers_face_details' => 'Consumers Face Details',

@@ -17,7 +17,7 @@ class CreateConsumerMedicaresTable extends Migration
             $table->id();
             $table->unsignedBigInteger('consumer_id_fk');
             $table->unsignedBigInteger('medicare_country_id_fk');
-            $table->string('medicare_state');
+            $table->unsignedBigInteger('medicare_state_id_fk');
             $table->string('medicare_id');
             $table->timestamps();
             $table->foreign('consumer_id_fk')->references('id')->on('consumers')->onDelete('cascade');

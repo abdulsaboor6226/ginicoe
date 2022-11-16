@@ -17,7 +17,7 @@ class CreateConsumerFireArmsTable extends Migration
             $table->id();
             $table->unsignedBigInteger('consumer_id_fk');
             $table->unsignedBigInteger('fire_arm_country_id_fk');
-            $table->string('fire_arm_state');
+            $table->string('fire_arm_state_id_fk');
             $table->string('fire_arm_id');
             $table->timestamps();
             $table->foreign('consumer_id_fk')->references('id')->on('consumers')->onDelete('cascade');

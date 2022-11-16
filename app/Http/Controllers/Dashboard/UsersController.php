@@ -4,10 +4,12 @@ namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests;
+use App\Models\Dictionary;
 use App\Models\Permissions;
 use App\Models\User;
 use App\Models\WebmasterSection;
 use Auth;
+use Dflydev\DotAccessData\Data;
 use File;
 use Illuminate\Config;
 use Illuminate\Http\Request;
@@ -315,8 +317,8 @@ class UsersController extends Controller
         // General for all pages
         $GeneralWebmasterSections = WebmasterSection::where('status', '=', '1')->orderby('row_no', 'asc')->get();
         // General END
-
-        return view("dashboard.permissions.create", compact("GeneralWebmasterSections"));
+        $dashboard = Dictionary::dashboard()->pluck('value','id');
+        return view("dashboard.permissions.create", compact("GeneralWebmasterSections",'dashboard'));
     }
 
     /**
@@ -329,7 +331,8 @@ class UsersController extends Controller
     {
         //
         $this->validate($request, [
-            'name' => 'required'
+            'name' => 'required',
+            'dashboard' => 'required'
         ]);
 
         $data_sections_values = "";
@@ -357,6 +360,7 @@ class UsersController extends Controller
         $Permissions->consumer = ($request->consumer) ? "1" : "0";
         $Permissions->merchant = ($request->merchant) ? "1" : "0";
         $Permissions->bank = ($request->bank) ? "1" : "0";
+        $Permissions->govt = ($request->govt) ? "1" : "0";
         $Permissions->data_sections = $data_sections_values;
         $Permissions->dashboard = $request->dashboard;
         $Permissions->home_status = 0;
@@ -379,14 +383,14 @@ class UsersController extends Controller
         // General for all pages
         $GeneralWebmasterSections = WebmasterSection::where('status', '=', '1')->orderby('row_no', 'asc')->get();
         // General END
-
         if (@Auth::user()->permissionsGroup->view_status) {
             $Permissions = Permissions::where('created_by', '=', Auth::user()->id)->find($id);
         } else {
             $Permissions = Permissions::find($id);
         }
+        $dashboard = Dictionary::dashboard()->pluck('value','id');
         if (!empty($Permissions)) {
-            return view("dashboard.permissions.edit", compact("Permissions", "GeneralWebmasterSections"));
+            return view("dashboard.permissions.edit", compact("Permissions", "GeneralWebmasterSections","dashboard"));
         } else {
             return redirect()->action('Dashboard\UsersController@index');
         }
@@ -407,7 +411,8 @@ class UsersController extends Controller
 
 
             $this->validate($request, [
-                'name' => 'required'
+                'name' => 'required',
+                'dashboard' => 'required'
             ]);
 
             $data_sections_values = "";
@@ -432,6 +437,7 @@ class UsersController extends Controller
             $Permissions->consumer = ($request->consumer) ? "1" : "0";
             $Permissions->merchant = ($request->merchant) ? "1" : "0";
             $Permissions->bank = ($request->bank) ? "1" : "0";
+            $Permissions->govt = ($request->govt) ? "1" : "0";
             if ($id != 1) {
                 $Permissions->settings_status = ($request->settings_status) ? "1" : "0";
                 $Permissions->webmaster_status = ($request->webmaster_status) ? "1" : "0";

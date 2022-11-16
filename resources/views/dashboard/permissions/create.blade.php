@@ -218,6 +218,31 @@
                                     </label>
                                 </div>
                             </div>
+                            <div class="col-sm-3">
+                                <div class="checkbox">
+                                    <label class="ui-check">
+                                        {!! Form::checkbox('govt','1',false, array('id' => 'govt')) !!}
+                                        <i class="dark-white"></i><label
+                                            for="calendar_status">{{ __('backend.govt') }}</label>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="add_status1"
+                           class="col-sm-2 form-control-label">{!!  __('backend.dashboard') !!}</label>
+                    <div class="col-sm-10">
+                        <div class="radio">
+                            @foreach($dashboard as $key =>$value)
+                                <label class="ui-check ui-check-md" style="margin-bottom: 5px;">
+                                    {!! Form::radio('dashboard',$key,false, array('id' => 'dashboard','class'=>'has-value')) !!}
+                                    <i class="dark-white"></i>
+                                    {{ __('backend.'.$value) }}
+                                </label>
+                                &nbsp; &nbsp;
+                            @endforeach
                         </div>
                     </div>
                 </div>

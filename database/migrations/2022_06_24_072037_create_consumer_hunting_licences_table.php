@@ -17,7 +17,7 @@ class CreateConsumerHuntingLicencesTable extends Migration
             $table->id();
             $table->unsignedBigInteger('consumer_id_fk');
             $table->unsignedBigInteger('hunting_country_id_fk');
-            $table->string('hunting_state');
+            $table->unsignedBigInteger('hunting_state_id_fk');
             $table->string('hunting_license_id');
             $table->timestamps();
             $table->foreign('consumer_id_fk')->references('id')->on('consumers')->onDelete('cascade');

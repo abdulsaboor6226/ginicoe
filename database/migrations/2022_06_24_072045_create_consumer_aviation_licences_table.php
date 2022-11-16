@@ -17,7 +17,7 @@ class CreateConsumerAviationLicencesTable extends Migration
             $table->id();
             $table->unsignedBigInteger('consumer_id_fk');
             $table->unsignedBigInteger('pilot_license_country_id_fk');
-            $table->string('pilot_license_state');
+            $table->unsignedBigInteger('pilot_license_state_id_fk');
             $table->string('pilot_license_id');
             $table->timestamps();
             $table->foreign('consumer_id_fk')->references('id')->on('consumers')->onDelete('cascade');

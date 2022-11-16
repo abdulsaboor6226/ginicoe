@@ -43,6 +43,15 @@ class DictionaryTableSeeder extends Seeder
                 'sort' => $key
             ]);
         }
+        $dashboard = ['admin', 'other'];
+        foreach ($dashboard as $key => $value) {
+            Dictionary::create([
+                'entity' => 'GENERAL',
+                'key' => 'DASHBOARD',
+                'value' => $value,
+                'sort' => $key
+            ]);
+        }
     }
 
 }

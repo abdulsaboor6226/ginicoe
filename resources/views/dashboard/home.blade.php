@@ -73,7 +73,7 @@
 {{--            </div>--}}
 {{--        </div>--}}
         <!-- / .modal -->
-            @if(Auth::user()->permissionsGroup->dashboard == "admin")
+            @if(Auth::user()->permissionsGroup->penal->value == "admin")
 
         @if(@Auth::user()->permissionsGroup->home_status)
                 @if(@Auth::user()->permissionsGroup->{'home_details_'. @Helper::currentLanguage()->code} !="")

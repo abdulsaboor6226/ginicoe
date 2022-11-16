@@ -20,10 +20,10 @@ class CreateMerchantsTable extends Migration
             $table->string('business_DBA_name');
             $table->string('business_structure');
             $table->string('business_legal_address');
-            $table->string('business_city');
-            $table->string('business_state');
-            $table->string('business_zip');
             $table->unsignedBigInteger('business_country_id_fk');
+            $table->unsignedBigInteger('business_state_id_fk');
+            $table->unsignedBigInteger('business_city_id_fk');
+            $table->string('business_zip');
             $table->string('federal_tax_id');
             $table->string('DUNS_number');
             $table->string('ownership');
@@ -34,9 +34,9 @@ class CreateMerchantsTable extends Migration
             $table->string('telephone_number')->nullable();
             $table->string('DOB');
             $table->string('home_address');
-            $table->string('city');
-            $table->string('state');
-            $table->string('country_id_fk');
+            $table->unsignedBigInteger('city_id_fk');
+            $table->unsignedBigInteger('state_id_fk');
+            $table->unsignedBigInteger('country_id_fk');
             $table->string('ownership_percentage');
             $table->unsignedBigInteger('created_by')->nullable();
             $table->unsignedBigInteger('updated_by')->nullable();
