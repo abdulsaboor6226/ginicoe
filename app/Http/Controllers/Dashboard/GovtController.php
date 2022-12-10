@@ -3,10 +3,13 @@
 namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Controllers\Controller;
+use App\Models\AllCountry;
 use App\Models\Dictionary;
 use App\Models\Govt;
 use App\Models\WebmasterSection;
+use DB;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class GovtController extends Controller
 {
@@ -18,8 +21,8 @@ class GovtController extends Controller
     public function index()
     {
         $GeneralWebmasterSections = WebmasterSection::where('status', '=', '1')->orderby('row_no', 'asc')->get();
-        $banks = Govt::with('daily_trades','asset_sizes','financial_institution_represents','FI_performses','job_titles','FI_charterTypes')->latest()->paginate(10);
-        return view('dashboard.govt.index',compact('GeneralWebmasterSections','banks'));
+        $govts = Govt::with('agency_types','govtTitle','cities','states','countries','agency_sector','budgeting_authorities')->latest()->get();
+        return view('dashboard.govt.index',compact('GeneralWebmasterSections','govts'));
     }
 
     /**
@@ -30,13 +33,12 @@ class GovtController extends Controller
     public function create()
     {
         $GeneralWebmasterSections = WebmasterSection::where('status', '=', '1')->orderby('row_no', 'asc')->get();
-        $jobTitles = Dictionary::jobTitle()->pluck('value','id');
-        $FI_represents = Dictionary::FI_represent()->pluck('value','id');
-        $FI_charterTypes = Dictionary::FI_Type()->pluck('value','id');
-        $assetSizes = Dictionary::assetSize()->pluck('value','id');
-        $FI_performses = Dictionary::FI_performs()->pluck('value','id');
-        $dailyTrades = Dictionary::dailyTrade()->pluck('value','id');
-        return view('dashboard.govt.create',compact('GeneralWebmasterSections','jobTitles','FI_represents','assetSizes','FI_performses','FI_charterTypes','dailyTrades'));
+        $titles = Dictionary::govtTitle()->pluck('value','id');
+        $countries = AllCountry::all();
+        $govtAgencySector = Dictionary::govtAgencySector()->pluck('value','id');
+        $govtBudgetAmount = Dictionary::govtBudgetAmount()->pluck('value','id');
+        $agencyType = Dictionary::agencyType()->pluck('value','id');
+        return view('dashboard.govt.create',compact('GeneralWebmasterSections','countries','titles','govtAgencySector','govtBudgetAmount','agencyType'));
     }
 
     /**
@@ -47,11 +49,10 @@ class GovtController extends Controller
      */
     public function store(Request $request)
     {
-        $id ="";
-        $this->govt_validation($request,$id);
+        $this->govt_validation($request);
         $request['user_id_fk'] = Auth::user()->id;
-        $consumers = Govt::create($request->except('_token'));
-        if (!$consumers) {
+        $govt = Govt::create($request->except('_token'));
+        if (!$govt) {
             return redirect()->back()->with('errorMessage', 'Oop! Something Went wrong');
         }
         else{
@@ -79,14 +80,13 @@ class GovtController extends Controller
     public function edit($id)
     {
         $GeneralWebmasterSections = WebmasterSection::where('status', '=', '1')->orderby('row_no', 'asc')->get();
-        $bank = Govt::findOrFail($id);
-        $jobTitles = Dictionary::jobTitle()->pluck('value','id');
-        $FI_represents = Dictionary::FI_represent()->pluck('value','id');
-        $FI_charterTypes = Dictionary::FI_Type()->pluck('value','id');
-        $assetSizes = Dictionary::assetSize()->pluck('value','id');
-        $FI_performses = Dictionary::FI_performs()->pluck('value','id');
-        $dailyTrades = Dictionary::dailyTrade()->pluck('value','id');
-        return view('dashboard.govt.edit',compact('GeneralWebmasterSections','bank','jobTitles','FI_represents','assetSizes','FI_performses','FI_charterTypes','dailyTrades'));
+        $govt = Govt::findOrFail($id);
+        $titles = Dictionary::govtTitle()->pluck('value','id');
+        $countries = AllCountry::all();
+        $govtAgencySector = Dictionary::govtAgencySector()->pluck('value','id');
+        $govtBudgetAmount = Dictionary::govtBudgetAmount()->pluck('value','id');
+        $agencyType = Dictionary::agencyType()->pluck('value','id');
+        return view('dashboard.govt.edit',compact('GeneralWebmasterSections','govt','countries','titles','govtAgencySector','govtBudgetAmount','agencyType'));
     }
 
     /**
@@ -98,12 +98,12 @@ class GovtController extends Controller
      */
     public function update(Request $request,$id)
     {
-        $this->govt_validation($request,$id);
+        $this->govt_validation($request);
         $request['user_id_fk'] = Auth::user()->id;
-        $bank = Govt::whereId($id)->update($request->except('_token','_method'));
-        if ($bank)
+        $govt = Govt::whereId($id)->update($request->except('_token','_method'));
+        if ($govt)
         {
-            return redirect()->route('bank.index')->with('doneMessage',"Successfully record save");
+            return redirect()->route('govt.index')->with('doneMessage',"Successfully record save");
         }
         else{
             return redirect()->back()->with('errorMessage','SomeThing went wrong');
@@ -118,34 +118,32 @@ class GovtController extends Controller
      */
     public function destroy($id)
     {
-        $merchant = Govt::destroy($id);
-        if ($merchant){
+        $govt = Govt::destroy($id);
+        if ($govt){
             return redirect()->route('govt.index')->with('doneMessage','Successfully record Deleted');
         }
     }
-    public function govt_validation($request,$id): array
+    public function govt_validation($request): array
     {
         return $this->validate($request,[
-            'financial_institution_title' => 'required',
             'f_name' => 'required',
-            'm_name' => 'nullable',
             'l_name' => 'required',
             'phone_no' => 'required',
-            'email' => 'required|email|unique:banks,email,'.$id,
-            'job_title' => 'required',
-            'secondary_f_name' => 'nullable',
-            'secondary_l_name' => 'nullable',
-            'secondary_phone_no' => 'required',
-            'secondary_fax_no' => 'required',
-            'secondary_email' => 'nullable|email|unique:banks,secondary_email,'.$id,
-            'financial_institution_represent.*' => 'nullable',
-            'FI_type' => 'required',
-            'FI_operate_across_state' => 'required',
-            'asset_size' => 'nullable',
-            'FI_performs.*' => 'required',
-            'BIN' => 'required',
-            'daily_trade' => 'required',
-            'portfolio_size' => 'required',
+            's_phone_no' => 'nullable',
+            'title' => 'required',
+            'building_number' => 'required',
+            'street_name' => 'required',
+            'urbanization_number' => 'nullable',
+            'country_id_fk' => 'required',
+            'state_id_fk' => 'required',
+            'city_id_fk' => 'required',
+            'agency_type' => 'required',
+            'zip_code' => 'required',
+            'agency_sector_id_fk' => 'required',
+            'agency_represent' => 'required',
+            'budgeting_authority' => 'required',
+            'amount_of_budgeting' => 'required',
+            'how_ginicoe_help_you' => 'nullable',
         ]);
     }
 

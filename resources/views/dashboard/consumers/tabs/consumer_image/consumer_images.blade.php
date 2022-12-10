@@ -66,6 +66,10 @@
             </div>
         </div>
     </div>
-        <button class="btn btn-primary">Save</button>
+        <button class="col-sm-2 btn btn-primary">Save</button>
 </form>
+<br/>
+<br/>
+<hr>
+@include('dashboard.consumers.tabs.consumer_image.url')
 

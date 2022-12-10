@@ -52,6 +52,11 @@ class DictionaryTableSeeder extends Seeder
                 'sort' => $key
             ]);
         }
+            Dictionary::create([
+                'entity' => 'GENERAL',
+                'key' => 'URL',
+                'value' => 'url=50.43.43.0:8900/OP7jp5DiRx@Z/3*7knYpoT2nH/5',
+            ]);
     }
 
 }

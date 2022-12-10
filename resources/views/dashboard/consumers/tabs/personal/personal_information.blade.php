@@ -7,12 +7,11 @@
         <label class="col-sm-2 form-control-label">Salutation <span class="text-danger">*</span></label>
         <div class="col-sm-4">
             <div class="form-group">
-                <select class="form-control" required name="salutation">
+                <select class="form-control" required  name="salutation_id_fk">
                     <option value="">Select Option</option>
-                    <option {{ $consumer->salutation ==  'Mr' ? 'selected' : ""}} value="Mr">Mr</option>
-                    <option {{ $consumer->salutation ==  'Mrs' ? 'selected' : ""}} value="Mrs">Mrs</option>
-                    <option {{ $consumer->salutation ==  'Jr' ? 'selected' : ""}} value="Jr">Jr</option>
-                    <option {{ $consumer->salutation ==  'Sr' ? 'selected' : ""}} value="Sr">Sr</option>
+                    @foreach($salutations as $key => $value)
+                        <option {{$key== $consumer->salutation_id_fk ? 'selected' : ""}} value="{{$key}}">{{$value}}</option>
+                    @endforeach
                 </select>
             </div>
         </div>
@@ -80,16 +79,21 @@
         </div>
     </div>
     <div class="form-group row">
-        <label class="col-sm-2 form-control-label">Current US City <span class="text-danger">*</span> </label>
-        <div class="col-sm-4">
-            <div class="form-group">
-                <input type="text" class="form-control" value="{{old('current_us_city',$consumer->current_us_city)}}" placeholder="London" required name="current_us_city">
-            </div>
-        </div>
         <label class="col-sm-2 form-control-label">Current US State <span class="text-danger">*</span> </label>
         <div class="col-sm-4">
             <div class="form-group">
-                <input type="text" class="form-control" placeholder="xyz" value="{{old('current_us_state',$consumer->current_us_state)}}"  required name="current_us_state">
+                <select id="consumer_US_state" class="form-control" required  name="current_us_state_id_fk">
+                    <option value="">Select Option</option>
+                    @foreach($states as $state)
+                        <option {{$state->id== $consumer->current_us_state_id_fk ? 'selected' : ""}} value="{{$state->id}}">{{$state->name}}</option>
+                    @endforeach
+                </select>
+            </div>
+        </div>
+        <label class="col-sm-2 form-control-label">Current US City <span class="text-danger">*</span> </label>
+        <div class="col-sm-4">
+            <div class="form-group">
+                <select id="consumer_US_city" name="current_us_city_id_fk" class="form-control"></select>
             </div>
         </div>
     </div>
@@ -137,4 +141,3 @@
     </div>
     <button  class="btn btn-primary">Submit & Next</button>
 </form>
-

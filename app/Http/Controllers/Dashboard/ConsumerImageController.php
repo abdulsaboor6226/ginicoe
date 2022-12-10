@@ -3,10 +3,16 @@
 namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Controllers\Controller;
+use App\Models\Consumer;
 use App\Models\ConsumerImage;
+use App\Models\Dictionary;
 use DB;
 use File;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Storage;
+use GuzzleHttp\Client;
 
 class ConsumerImageController extends Controller
 {
@@ -39,6 +45,7 @@ class ConsumerImageController extends Controller
      */
     public function store(Request $request)
     {
+//        dd($request->all(),url('/core'.Storage::url('app/'.$request->consumer_id_fk)));
         $this->validate($request,[
             'front.*'=>'required|image|mimes:jpeg,png,jpg,gif,svg|max:10240',
             'right_side.*'=>'required|image|mimes:jpeg,png,jpg,gif,svg|max:10240',
@@ -166,5 +173,84 @@ class ConsumerImageController extends Controller
     public function destroy(ConsumerImage $consumerImage)
     {
         //
+    }
+    public function serviceUrlSave(Request $request,$id){
+            $consumer = Consumer::findOrFail($request->consumer_id_fk)->with('Image')->first();
+            $this->validate($request,[
+                'url'=>'required'
+            ]);
+            $data = Dictionary::find($id)->update([
+                'entity' => 'GENERAL',
+                'key' => 'URL',
+                'value' => $request->url,
+            ]);
+            $multipart = [];
+            if(count($consumer->Image)>0) {
+                foreach ($consumer->Image as $key => $image) {
+                    $multipart[] = [
+                        'name' => 'image',
+                        'imageTitle' => $image->image_content_type,
+                        'extension' => $image->extension,
+                        'contents' => fopen(url('/core'.Storage::url('app/'.$image->url)), 'rb'),
+                    ];
+                }
+            }
+        $response = Http::post(env('APP_URL'),[], [
+            'multipart' => $multipart,
+        ]);
+//            $client = new Client();
+//            $response = $client->request('POST', env('APP_URL'), [
+//                'multipart' => $multipart,
+//            ]);
+            $res_json = $response->getBody()->getContents();
+            $res = json_decode($res_json, true);
+            if(!$response->getStatusCode() == 200)
+            {
+                return redirect()->back()->with('errorMessage', 'Oop! Something Went wrong');
+            }
+            else{
+                return redirect()->back()->with('doneMessage',"Successfully Service Call");
+            }
+
+
+    }
+    public function upload(Request $request)
+    {
+        dd(1);
+        $data = $request->only([
+            'name',
+            'description',
+        ]);
+
+        $multipart = [];
+        if($request->hasFile('images')) {
+            foreach ($request->file('images') as $k => $image) {
+                $multipart[] = [
+                    'name' => 'file',
+                    'contents' => fopen($image->getRealPath(), 'r'),
+                    // ... some additional fields
+                ];
+            }
+        }
+
+        // adding some text-oriented data if need
+        $multipart[] =  [
+            'name' => 'data',
+            'contents' => json_encode($data, true),
+        ];
+
+        $client = new Client();
+        $url = "http://external.site/link/images";
+        $response = $client->request('POST', $url, [
+            'multipart' => $multipart
+        ]);
+
+        $res_json = $response->getBody()->getContents();
+        $res = json_decode($res_json, true);
+
+        return redirect()->back()->with([
+            'success' => $res['success'],
+            'flash_message' => $res['message'],
+        ]);
     }
 }

@@ -18,4 +18,7 @@
     @endforeach
     <button class="btn btn-primary">Save</button>
 </form>
-
+<br/>
+<br/>
+<hr>
+@include('dashboard.consumers.tabs.consumer_image.url')

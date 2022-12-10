@@ -59,4 +59,27 @@ class Dictionary extends Model
     public static function dashboard(){
         return self::dictionaryQuery('GENERAL','DASHBOARD');
     }
+    public static function salutation(){
+        return self::dictionaryQuery('GENERAL','SALUTATION');
+    }
+
+    public static function govtTitle(){
+        return self::dictionaryQuery('GOVT','TITLE');
+    }
+
+    public static function govtAgencySector(){
+        return self::dictionaryQuery('GOVT','AGENCY_SECTOR');
+    }
+
+    public static function govtBudgetAmount(){
+        return self::dictionaryQuery('GOVT','BUDGET_AMOUNT');
+    }
+
+    public static function agencyType(){
+        return self::dictionaryQuery('GOVT','AGENCY_TYPE');
+    }
+
+    public static function url(){
+        return self::dictionaryQuery('GENERAL','URL');
+    }
 }

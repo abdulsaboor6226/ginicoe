@@ -41,5 +41,14 @@ class GovtSeeder extends Seeder
                 'sort' => $key
             ]);
         }
+        $agencyType = ['Federal','County','State','City','Township','Village','Parish'];
+        foreach ($agencyType as $key => $value){
+            Dictionary::create([
+                'entity' => 'GOVT',
+                'key' => 'AGENCY_TYPE',
+                'value' => $value,
+                'sort' => $key
+            ]);
+        }
     }
 }

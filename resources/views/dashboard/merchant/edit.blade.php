@@ -41,35 +41,35 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="col-sm-2 form-control-label">Business City <span class="text-danger">*</span> </label>
+                            <label class="col-sm-2 form-control-label">Business Country<span class="text-danger">*</span> </label>
                             <div class="col-sm-4">
                                 <div class="form-group">
-                                    <input type="text" class="form-control" placeholder="xyz" value="{{old('business_city',$merchant->business_city)}}"  required name="business_city">
+                                    <select id="merchant_business_country" class="form-control" required  name="business_country_id_fk">
+                                        <option value="">-- Select Option --</option>
+                                        @foreach($countries as $country)
+                                            <option {{ $merchant->country_id_fk ==  $country->id ? 'selected' : ""}} value="{{$country->id}}">{{$country->name}} - {{$country->iso3}}</option>
+                                        @endforeach
+                                    </select>
                                 </div>
                             </div>
                             <label class="col-sm-2 form-control-label">Business State<span class="text-danger">*</span> </label>
                             <div class="col-sm-4">
                                 <div class="form-group">
-                                    <input type="text" class="form-control" value="{{old('business_state',$merchant->business_state)}}" placeholder="xyz@example.com" required name="business_state">
+                                    <select id="merchant_business_state" name="business_state_id_fk" class="form-control"></select>
                                 </div>
                             </div>
                         </div>
                         <div class="form-group row">
+                            <label class="col-sm-2 form-control-label">Business City <span class="text-danger">*</span> </label>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <select id="merchant_business_city" name="business_city_id_fk" class="form-control"></select>
+                                </div>
+                            </div>
                             <label class="col-sm-2 form-control-label">Business Zip<span class="text-danger">*</span> </label>
                             <div class="col-sm-4">
                                 <div class="form-group">
                                     <input type="number" class="form-control" value="{{old('business_zip',$merchant->business_zip)}}" placeholder="123456789" required name="business_zip">
-                                </div>
-                            </div>
-                            <label class="col-sm-2 form-control-label">Business Country<span class="text-danger">*</span> </label>
-                            <div class="col-sm-4">
-                                <div class="form-group">
-                                    <select class="form-control" required  name="business_country_id_fk">
-                                        <option value="">Select Option</option>
-                                        @foreach($countries as $country)
-                                            <option {{ $merchant->business_country_id_fk ==  $country->id ? 'selected' : ""}} value="{{$country->id}}">{{$country->name}} - {{$country->code}}</option>
-                                        @endforeach
-                                    </select>
                                 </div>
                             </div>
                         </div>
@@ -144,29 +144,29 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="col-sm-2 form-control-label">City<span class="text-danger">*</span> </label>
+                            <label class="col-sm-2 form-control-label">Country<span class="text-danger">*</span> </label>
                             <div class="col-sm-4">
                                 <div class="form-group">
-                                    <input type="text" class="form-control" value="{{old('city',$merchant->city)}}" placeholder="12345" required name="city">
+                                    <select id="merchant_country" class="form-control" required  name="country_id_fk">
+                                        <option value="">Select Option</option>
+                                        @foreach($countries as $country)
+                                            <option {{ $merchant->country_id_fk ==  $country->id ? 'selected' : ""}} value="{{$country->id}}">{{$country->name}} - {{$country->iso3}}</option>
+                                        @endforeach
+                                    </select>
                                 </div>
                             </div>
                             <label class="col-sm-2 form-control-label">State<span class="text-danger">*</span> </label>
                             <div class="col-sm-4">
                                 <div class="form-group">
-                                    <input type="text" class="form-control" value="{{old('state',$merchant->state)}}" placeholder="12345" required name="state">
+                                    <select id="merchant_state" name="state_id_fk" class="form-control"></select>
                                 </div>
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="col-sm-2 form-control-label">Country<span class="text-danger">*</span> </label>
+                            <label class="col-sm-2 form-control-label">City<span class="text-danger">*</span> </label>
                             <div class="col-sm-4">
                                 <div class="form-group">
-                                    <select class="form-control" required  name="country_id_fk">
-                                        <option value="">Select Option</option>
-                                        @foreach($countries as $country)
-                                            <option {{ $merchant->country_id_fk ==  $country->id ? 'selected' : ""}} value="{{$country->id}}">{{$country->name}} - {{$country->code}}</option>
-                                        @endforeach
-                                    </select>
+                                    <select id="merchant_city" name="city_id_fk" class="form-control"></select>
                                 </div>
                             </div>
                             <label class="col-sm-2 form-control-label">Ownership Percentage</label>
@@ -176,9 +176,9 @@
                                 </div>
                             </div>
                         </div>
-
                         <button  class="btn btn-primary">Update</button>
                     </form>
+
                 </div>
             </div>
         </div>

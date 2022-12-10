@@ -4,7 +4,7 @@
             let idCountry = this.value;
             $("#merchant_business_state").html('');
             $.ajax({
-                url: "{{route('all_states')}}"+"/"+idCountry,
+                url: "{{route('state_according_country')}}"+"/"+idCountry,
                 type: "GET",
                 data: {
                     country_id: idCountry,
@@ -25,7 +25,7 @@
             var idState = this.value;
             $("#merchant_business_city").html('');
             $.ajax({
-                url: "{{route('all_cities')}}"+"/"+idState,
+                url: "{{route('city_according_state')}}"+"/"+idState,
                 type: "GET",
                 data: {
                     state_id: idState,
@@ -48,7 +48,7 @@
             let idCountry = this.value;
             $("#merchant_state").html('');
             $.ajax({
-                url: "{{route('all_states')}}"+"/"+idCountry,
+                url: "{{route('state_according_country')}}"+"/"+idCountry,
                 type: "GET",
                 data: {
                     country_id: idCountry,
@@ -69,7 +69,7 @@
             var idState = this.value;
             $("#merchant_city").html('');
             $.ajax({
-                url: "{{route('all_cities')}}"+"/"+idState,
+                url: "{{route('city_according_state')}}"+"/"+idState,
                 type: "GET",
                 data: {
                     state_id: idState,

@@ -7,10 +7,10 @@
         <label class="col-sm-2 form-control-label">Birth Country <span class="text-danger">*</span></label>
         <div class="col-sm-4">
             <div class="form-group">
-                <select class="form-control" required  name="birth_country_id_fk">
+                <select id="birth_country" class="form-control" required  name="birth_country_id_fk">
                     <option value="">Select Option</option>
                     @foreach($countries as $country)
-                        <option {{ $country->id ==  $consumer->birth_country_id_fk ? 'selected' : ""}} value="{{$country->id}}">{{$country->name}} - {{$country->code}}</option>
+                        <option value="{{$country->id}}">{{$country->name}} - {{$country->iso3}}</option>
                     @endforeach
                 </select>
             </div>
@@ -18,7 +18,7 @@
         <label class="col-sm-2 form-control-label">Birth State <span class="text-danger">*</span> </label>
         <div class="col-sm-4">
             <div class="form-group">
-                <input type="text" class="form-control" value="{{old('birth_state',$consumer->birth_state)}}" placeholder="xyz.." required name="birth_state">
+                <select id="birth_state" name="birth_state_id_fk" class="form-control"></select>
             </div>
         </div>
     </div>
@@ -26,7 +26,7 @@
         <label class="col-sm-2 form-control-label">Birth City <span class="text-danger">*</span></label>
         <div class="col-sm-4">
             <div class="form-group">
-                <input type="text" class="form-control" value="{{old('birth_city',$consumer->birth_city)}}" placeholder="xyz..." required name="birth_city">
+                <select id="birth_city" name="birth_city_id_fk" class="form-control"></select>
             </div>
         </div>
         <label class="col-sm-2 form-control-label">Birth Hospital <span class="text-danger">*</span> </label>

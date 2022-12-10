@@ -48,7 +48,7 @@ class CreateConsumersTable extends Migration
             $table->string('secondary_email')->unique()->nullable();
             $table->string('secondary_phone')->unique()->nullable();
             $table->string('emergency_phone')->unique()->nullable();
-            $table->string('emergency_salutation')->nullable();
+            $table->string('emergency_salutation_id_fk')->nullable();
             $table->string('emergency_first_name')->nullable();
             $table->string('emergency_last_name')->nullable();
             $table->string('emergency_middle_name')->nullable();
@@ -67,7 +67,7 @@ class CreateConsumersTable extends Migration
             $table->string('medication')->nullable();
             $table->string('net_worth')->nullable();
             $table->string('occupation')->nullable();
-            $table->unsignedBigInteger('state_id_fk')->nullable();
+            $table->string('state_id')->nullable();
             $table->string('us_military_branch')->nullable();
             $table->string('us_military')->nullable();
             $table->string('us_employee_badge')->nullable();

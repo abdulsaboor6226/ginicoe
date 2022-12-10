@@ -12,7 +12,7 @@ class Merchant extends Model
 {
     use HasFactory,SoftDeletes;
 
-    protected $fillable = ['user_id_fk','business_legal_name','business_DBA_name','business_structure','business_legal_address','business_city','business_state','business_zip','business_country_id_fk','federal_tax_id','DUNS_number','ownership','first_name','middle_name','last_name','phone_no','telephone_number','DOB','home_address','city','state','country_id_fk','ownership_percentage'];
+    protected $fillable = ['user_id_fk','business_legal_name','business_DBA_name','business_structure','business_legal_address','business_city_id_fk','business_state_id_fk','business_zip','business_country_id_fk','federal_tax_id','DUNS_number','ownership','first_name','middle_name','last_name','phone_no','telephone_number','DOB','home_address','city_id_fk','state_id_fk','country_id_fk','ownership_percentage'];
 
     protected $hidden = ['created_by', 'updated_by', 'deleted_by', 'created_at', 'updated_at', 'deleted_at'];
 

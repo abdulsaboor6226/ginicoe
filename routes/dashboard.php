@@ -286,14 +286,17 @@ Route::resource('/discounts', DiscountsController::class);
 Route::resource('/merchant', MerchantController::class);
 Route::resource('/bank', BankController::class);
 Route::resource('/govt', GovtController::class);
-
+Route::post('service-call',[HomeController::class,'serviceCall'])->name('serviceCall');
+Route::put('service-url-save/{id?}','ConsumerImageController@serviceUrlSave')->name('service-call-save');
 Route::get('all-country',[HomeController::class,'countries'])->name('all_countries');
-Route::get('all-state/{id?}',[HomeController::class,'states'])->name('all_states');
-Route::get('all-city/{id?}',[HomeController::class,'cities'])->name('all_cities');
+Route::get('all-state',[HomeController::class,'states'])->name('all_states');
+Route::get('all-city',[HomeController::class,'cities'])->name('all_cities');
+Route::get('all-state/{id?}',[HomeController::class,'state_according_country'])->name('state_according_country');
+Route::get('all-city/{id?}',[HomeController::class,'city_according_state'])->name('city_according_state');
 Route::resource('/vulnerabilities', VulnerabilitiesStatisticsController::class);
 //Route::post('become-a-partner',[UsersController::class,'becomeAPartner'])->name('become-a-partner');
 //Route::get('become-a-partner-index',[UsersController::class,'becomeAPartner_index'])->name('become-a-partner-index');
-// Clear Cache
+// Clear Cache state_according_country
 Route::get('/cache-clear', function () {
     Artisan::call('cache:clear');
     Artisan::call('view:clear');

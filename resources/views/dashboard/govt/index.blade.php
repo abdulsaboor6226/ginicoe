@@ -7,11 +7,11 @@
     <div class="padding p-b-0">
         <div class="margin">
             <h5 class="m-b-0 _300"><span
-                    class="text-primary">{{ __('backend.bank') }}</span>
+                    class="text-primary">{{ __('backend.govt') }}</span>
             </h5>
         </div>
-        <div style="float: right; padding-bottom: 5px;{{(auth()->user()->permissions_id ==5 && count($banks)!=0) ?'display: none;': 'display: block;'}}">
-            <a class="btn btn-fw primary"  href="{{route("bank.create")}}">
+        <div style="float: right; padding-bottom: 5px;{{(auth()->user()->permissions_id ==5 && count($govts)!=0) ?'display: none;': 'display: block;'}}">
+            <a class="btn btn-fw primary"  href="{{route("govt.create")}}">
                 <i class="material-icons">&#xe02e;</i>
                 &nbsp; <span>{{ __('backend.create') }}</span>
             </a>
@@ -24,32 +24,32 @@
                         <thead class="dker">
                         <tr role="row">
                             <th>#</th>
-                            <th>FI Title</th>
+                            <th>Title</th>
                             <th>Name</th>
                             <th>Phone</th>
-                            <th>Email</th>
-                            <th>Job Title</th>
-                            <th>FI Charter Type</th>
+                            <th>Address</th>
+                            <th>Agency Sector</th>
+                            <th>Agency Represent</th>
                             <th>Asset Size</th>
                             <th>Created At</th>
                             <th>Action</th>
                         </tr>
                         </thead>
                         <tbody>
-                        @foreach($banks as $key => $bank)
+                        @foreach($govts as $key => $govt)
                             <tr class="row">
                                 <td>{{$key+1}}</td>
-                                <td>{{$bank->financial_institution_title}}</td>
-                                <td>{{$bank->f_name}} {{$bank->m_name}} {{$bank->l_name}}</td>
-                                <td>{{$bank->phone_no}}</td>
-                                <td>{{$bank->email}}</td>
-                                <td>{{$bank->job_titles->value}}</td>
-                                <td>{{$bank->FI_charterTypes->value}}</td>
-                                <td>{{$bank->asset_sizes->value}}</td>
-                                <td>{{$bank->created_at->diffForHumans()}}</td>
+                                <td>{{ucfirst($govt->govtTitle->value)}}</td>
+                                <td>{{$govt->f_name}} {{$govt->l_name}}</td>
+                                <td>{{$govt->phone_no}}</td>
+                                <td>{{$govt->building_number}},{{$govt->street_name}},{{@$govt->urbanization_number}},{{$govt->cities->city_id_fk}},{{$govt->states->urbanization_number}},{{$govt->countries->urbanization_number}}</td>
+                                <td>{{$govt->agency_sector->value}}</td>
+                                <td>{{$govt->agency_represent}}</td>
+                                <td>{{$govt->budgeting_authorities->value}}</td>
+                                <td>{{$govt->created_at->diffForHumans()}}</td>
                                 <td>
                                     <div class="text-center">
-                                        <a class="btn btn-sm success" href="{{route("bank.edit",$bank->id)}}"
+                                        <a class="btn btn-sm success" href="{{route("govt.edit",$govt->id)}}"
                                            data-toggle="tooltip" data-original-title=" Edit">
                                             <i class="material-icons"></i>
                                         </a>
@@ -69,7 +69,7 @@
                                             <h6>{{ __('backend.confirmationDeleteMsg') }}</h6>
                                         </div>
                                         <div class="modal-footer">
-                                            <form action="{{route('bank.destroy',$bank->id)}}" method="post">
+                                            <form action="{{route('govt.destroy',$govt->id)}}" method="post">
                                                 @csrf
                                                 @method('DELETE')
                                                 <button type="button" class="btn dark-white p-x-md" data-dismiss="modal">{{ __('backend.no') }}</button>

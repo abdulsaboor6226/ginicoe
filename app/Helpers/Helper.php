@@ -31,7 +31,7 @@ class Helper
          return @$setting->fontFamily->value;
     }
 
-    public function getImage($value)
+    public static function getImage($value)
     {
         return url('/core'.Storage::url('app/'.$value));
     }

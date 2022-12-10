@@ -8,12 +8,11 @@
         <label class="col-sm-2 form-control-label">Emergency Salutation <span class="text-danger">*</span></label>
         <div class="col-sm-4">
             <div class="form-group">
-                <select class="form-control" required name="emergency_salutation">
+                <select class="form-control" required  name="emergency_salutation_id_fk">
                     <option value="">Select Option</option>
-                    <option {{ $consumer->emergency_salutation ==  'Mr' ? 'selected' : ""}} value="Mr">Mr</option>
-                    <option {{ $consumer->emergency_salutation ==  'Mrs' ? 'selected' : ""}} value="Mrs">Mrs</option>
-                    <option {{ $consumer->emergency_salutation ==  'Jr' ? 'selected' : ""}} value="Jr">Jr</option>
-                    <option {{ $consumer->emergency_salutation ==  'Sr' ? 'selected' : ""}} value="Sr">Sr</option>
+                    @foreach($salutations as $key => $value)
+                        <option value="{{$key}}">{{$value}}</option>
+                    @endforeach
                 </select>
             </div>
         </div>
@@ -67,16 +66,21 @@
         </div>
     </div>
     <div class="form-group row">
-        <label class="col-sm-2 form-control-label">Emergency US City <span class="text-danger">*</span> </label>
-        <div class="col-sm-4">
-            <div class="form-group">
-                <input type="text" class="form-control" placeholder="xyz" value="{{old('emergency_us_city',$consumer->emergency_us_city)}}"  required name="emergency_us_city">
-            </div>
-        </div>
         <label class="col-sm-2 form-control-label">Emergency US State <span class="text-danger">*</span> </label>
         <div class="col-sm-4">
             <div class="form-group">
-                <input type="text" class="form-control" value="{{old('emergency_us_state',$consumer->emergency_us_state)}}" placeholder="xyz" required name="emergency_us_state">
+                <select id="emergency_US_state" class="form-control" required  name="emergency_us_state_id_fk">
+                    <option value="">Select Option</option>
+                    @foreach($states as $state)
+                        <option {{$state->id== $consumer->emergency_us_state_id_fk ? 'selected' : ""}} value="{{$state->id}}">{{$state->name}}</option>
+                    @endforeach
+                </select>
+            </div>
+        </div>
+        <label class="col-sm-2 form-control-label">Emergency US City <span class="text-danger">*</span> </label>
+        <div class="col-sm-4">
+            <div class="form-group">
+                <select id="emergency_US_city" name="emergency_us_city_id_fk" class="form-control"></select>
             </div>
         </div>
     </div>

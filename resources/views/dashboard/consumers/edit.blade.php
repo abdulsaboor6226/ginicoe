@@ -82,6 +82,7 @@
             </div>
         </div>
     </div>
+    @include('dashboard.consumers.js')
 @endsection
 <!-- .modal -->
 <div id="m" class="modal" data-backdrop="true">

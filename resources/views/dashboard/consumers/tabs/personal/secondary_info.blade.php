@@ -35,13 +35,18 @@
         <label class="col-sm-2 form-control-label">Previous US State <span class="text-danger">*</span> </label>
         <div class="col-sm-4">
             <div class="form-group">
-                <input type="text" class="form-control" placeholder="California" value="{{old('previous_us_state',$consumer->previous_us_state)}}" required name="previous_us_state">
+                <select id="previous_us_state" class="form-control" required  name="previous_us_state_id_fk">
+                    <option value="">Select Option</option>
+                    @foreach($states as $state)
+                        <option {{$state->id== $consumer->previous_us_state_id_fk ? 'selected' : ""}} value="{{$state->id}}">{{$state->name}}</option>
+                    @endforeach
+                </select>
             </div>
         </div>
         <label class="col-sm-2 form-control-label">Previous US City <span class="text-danger">*</span> </label>
         <div class="col-sm-4">
             <div class="form-group">
-                <input type="text" class="form-control" value="{{old('previous_us_city',$consumer->previous_us_city)}}" placeholder="London" required name="previous_us_city">
+                <select id="previous_us_city" name="previous_us_city_id_fk" class="form-control"></select>
             </div>
         </div>
     </div>

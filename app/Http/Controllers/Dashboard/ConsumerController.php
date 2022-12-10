@@ -3,11 +3,15 @@
 namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Controllers\Controller;
+use App\Models\AllCity;
 use App\Models\AllCountry;
+use App\Models\AllState;
 use App\Models\Consumer;
 use App\Models\ConsumerCard;
 use App\Models\ConsumerFaceDetail;
 use App\Models\ConsumerFacialSurgery;
+use App\Models\ConsumerImage;
+use App\Models\Dictionary;
 use App\Models\WebmasterSection;
 use File;
 use Illuminate\Http\Request;
@@ -24,12 +28,11 @@ class ConsumerController extends Controller
     public function index()
     {
         $GeneralWebmasterSections = WebmasterSection::where('status', '=', '1')->orderby('row_no', 'asc')->get();
-        $consumers = Consumer::with('driving_licence','aviation','fire_arms','fishing','hunting','medicaids','medicares','non_US_employment','passport','twins','image','user')->latest()->paginate(10);
-        $counties = AllCountry::all();
+        $consumers = Consumer::with('driving_licence','aviation','fire_arms','fishing','hunting','medicaids','medicares','non_US_employment','passport','twins','image','user','birth_country','birth_state','birth_city','us_govt_badge_country','us_govt_badge_state','current_us_state','current_us_city','salutations')->latest()->paginate(10);
         $consumers_cards = ConsumerCard::latest()->paginate(10);
         $consumers_face_details = ConsumerFaceDetail::latest()->paginate(10);
         $consumers_surgery_details = ConsumerFacialSurgery::latest()->paginate(10);
-        return view('dashboard.consumers.index',compact('GeneralWebmasterSections','consumers','consumers_cards','consumers_face_details','consumers_surgery_details','counties'));
+        return view('dashboard.consumers.index',compact('GeneralWebmasterSections','consumers','consumers_cards','consumers_face_details','consumers_surgery_details'));
     }
 
     /**
@@ -40,7 +43,10 @@ class ConsumerController extends Controller
     public function create()
     {
         $GeneralWebmasterSections = WebmasterSection::where('status', '=', '1')->orderby('row_no', 'asc')->get();
-        return view('dashboard.consumers.create',compact('GeneralWebmasterSections'));
+        $states = AllState::all();
+        $cities = AllCity::all();
+        $salutations = Dictionary::salutation()->pluck('value','id');
+        return view('dashboard.consumers.create',compact('GeneralWebmasterSections','salutations','cities','states'));
     }
 
     /**
@@ -87,10 +93,14 @@ class ConsumerController extends Controller
         $main_tab = $main_tab !=null ? $main_tab :'primary_info';
         $sub_tab = $sub_tab !=null ? $sub_tab :'personal_info';
         $countries = AllCountry::all();
+        $states = AllState::all();
+        $cities = AllCity::all();
+        $salutations = Dictionary::salutation()->pluck('value','id');
         $consumers_cards = ConsumerCard::latest()->paginate(10);
         $consumers_face_details = ConsumerFaceDetail::latest()->paginate(10);
         $consumers_surgery_details = ConsumerFacialSurgery::latest()->paginate(10);
-        return view('dashboard.consumers.edit',compact('GeneralWebmasterSections','countries','sub_tab','main_tab','consumer','consumers_cards','consumers_face_details','consumers_surgery_details'));
+        $url = Dictionary::url()->first();
+        return view('dashboard.consumers.edit',compact('GeneralWebmasterSections','url','salutations','cities','states','countries','sub_tab','main_tab','consumer','consumers_cards','consumers_face_details','consumers_surgery_details'));
     }
 
     /**
@@ -155,7 +165,7 @@ class ConsumerController extends Controller
     protected function personal_info_validation($request,$id): array
     {
         return $this->validate($request,[
-            'salutation'=> 'required',
+            'salutation_id_fk'=> 'required',
             'first_name'=> 'required',
             'middle_name'=> 'nullable',
             'last_name'=> 'required',
@@ -165,8 +175,8 @@ class ConsumerController extends Controller
             'current_us_urbanization_name'=> 'nullable',
             'current_us_address_1'=> 'required',
             'current_us_address_2'=> 'nullable',
-            'current_us_city'=> 'required',
-            'current_us_state'=> 'required',
+            'current_us_city_id_fk'=> 'required',
+            'current_us_state_id_fk'=> 'required',
             'current_us_zip'=> 'required',
             'current_us_area_code'=> 'required',
             'social_security'=> 'nullable',
@@ -183,8 +193,8 @@ class ConsumerController extends Controller
     {
         return $this->validate($request,[
             'birth_country_id_fk'=> 'required',
-            'birth_state'=> 'required',
-            'birth_city'=> 'required',
+            'birth_state_id_fk'=> 'required',
+            'birth_city_id_fk'=> 'required',
             'birth_hospital'=> 'nullable',
             'birth_house_number'=> 'nullable',
             'birth_street_name'=> 'required',
@@ -209,7 +219,7 @@ class ConsumerController extends Controller
     protected function emergency_info_validation($request,$id): array
     {
         return $this->validate($request,[
-            'emergency_salutation'=> 'required',
+            'emergency_salutation_id_fk'=> 'required',
             'emergency_phone'=> 'required',
             'emergency_email'=> 'required|email|unique:consumers,emergency_email,'.$id,
             'emergency_first_name'=> 'required',
@@ -217,8 +227,8 @@ class ConsumerController extends Controller
             'emergency_last_name'=> 'nullable',
             'emergency_us_address_1'=> 'required',
             'emergency_us_address_2'=> 'required',
-            'emergency_us_city'=> 'required',
-            'emergency_us_state'=> 'required',
+            'emergency_us_city_id_fk'=> 'required',
+            'emergency_us_state_id_fk'=> 'required',
             'emergency_us_zip'=> 'required',
             'emergency_us_area_code'=> 'required',
             'emergency_us_urbanization_name'=> 'required',
@@ -235,8 +245,8 @@ class ConsumerController extends Controller
             'secondary_email'=> 'required|email|unique:consumers,secondary_email,'.$id,
             'previous_us_address_1'=> 'required',
             'previous_us_address_2'=> 'nullable',
-            'previous_us_state'=> 'required',
-            'previous_us_city'=> 'required',
+            'previous_us_state_id_fk'=> 'required',
+            'previous_us_city_id_fk'=> 'required',
             'previous_us_zip'=> 'required',
             'previous_us_area_code'=> 'required',
             'previous_us_urbanization_name'=> 'nullable',
@@ -278,12 +288,12 @@ class ConsumerController extends Controller
         return $this->validate($request,[
             'net_worth'=> 'nullable',
             'occupation'=> 'required',
-            'state_id'=> 'required',
+            'state_id_fk'=> 'required',
             'us_military_branch'=> 'required',
             'us_military'=> 'required',
             'us_employee_badge'=> 'required',
             'us_govt_badge_country_id_fk'=> 'nullable',
-            'us_govt_badge_state'=> 'required',
+            'us_govt_badge_state_id_fk'=> 'required',
             'us_govt_badge_id'=> 'required',
             'us_agency_description'=> 'nullable',
             'foreign_agency_description'=> 'nullable',

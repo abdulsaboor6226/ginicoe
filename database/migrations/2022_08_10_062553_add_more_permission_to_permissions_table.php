@@ -18,7 +18,7 @@ class AddMorePermissionToPermissionsTable extends Migration
             $table->tinyInteger('merchant')->default(false);
             $table->tinyInteger('bank')->default(false);
             $table->tinyInteger('govt')->default(false);
-            $table->unsignedBigInteger('dashboard');
+            $table->unsignedBigInteger('dashboard')->default(11);
         });
     }
 

@@ -34,8 +34,7 @@
     <link rel="stylesheet" href="{{ asset('assets/dashboard/css/app.rtl.css') }}">
 @endif
 @stack('after-styles')
-
-<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="{{ asset('assets/dashboard/js/jquery/dist/jquery-3.5.1.min.js') }}"></script>
 <script>
     $(document).ready(function(){
         $(".become_a_partner").click(function () {
@@ -44,5 +43,14 @@
                 return this.value + data;
             });
         });
+        var text_max = 1000;
+        $('#textarea_feedback').html(text_max + ' characters remaining');
+        $('#textarea').keyup(function() {
+            var text_length = $('#textarea').val().length;
+            var text_remaining = text_max - text_length;
+
+            $('#textarea_feedback').html(text_remaining + ' characters remaining');
+        });
+
     });
 </script>

@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\AllCity;
 use App\Models\AllCountry;
 use App\Models\AllState;
+use App\Models\Consumer;
+use App\Models\Dictionary;
+use GuzzleHttp\Exception\RequestException;
 use Illuminate\Support\Facades\File;
 use App;
 use App\Models\Banner;
@@ -21,11 +24,16 @@ use App\Models\Webmail;
 use App\Models\WebmasterSection;
 use App\Models\WebmasterSetting;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Response;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use Illuminate\Validation\ValidationException;
 use Mail;
 use Redirect;
 use Helper;
 use Auth;
+use Illuminate\Support\Facades\Input;
 
 class HomeController extends Controller
 {
@@ -1454,14 +1462,50 @@ class HomeController extends Controller
         $data['countries'] = AllCountry::get(["name", "id"]);
         return view('welcome', $data);
     }
-    public function states(Request $request)
+    public function state_according_country(Request $request,$id)
     {
         $data['states'] = AllState::where("country_id",$request->country_id)->get(["name", "id"]);
         return response()->json($data);
     }
-    public function cities(Request $request)
+    public function city_according_state(Request $request)
     {
         $data['cities'] = AllCity::where("state_id",$request->state_id)->get(["name", "id"]);
         return response()->json($data);
+    }
+    public function states()
+    {
+        $data['countries'] = AllState::get(["name", "id"]);
+        return view('welcome', $data);
+    }
+    public function cities()
+    {
+        $data['countries'] = AllCity::get(["name", "id"]);
+        return view('welcome', $data);
+    }
+
+    /**
+     * @throws ValidationException
+     */
+    public function serviceUrlSave(Request $request,$id){
+        $this->validate($request,[
+            'url'=>'required'
+        ]);
+//        $url = explode('/',$request->url);
+//        if($url[0]==="url=50.43.43.0:8900" && $url[1]==="OP7jp5DiRx" && $url[2]==="3*7knYpoT2nH"){
+//            return redirect()->back()->with('errorMessage','OOP! Something went wrong in Url');
+//        }
+        $data = null;
+            $data = Dictionary::find($id)->update([
+                'entity' => 'GENERAL',
+                'key' => 'URL',
+                'value' => $request->url,
+            ]);
+        if(!$data)
+        {
+            return redirect()->back()->with('errorMessage', 'Oop! Something Went wrong');
+        }
+        else{
+           return redirect()->back()->with('doneMessage',"Successfully record Save");
+        }
     }
 }

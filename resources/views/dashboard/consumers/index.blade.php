@@ -10,7 +10,7 @@
                     class="text-primary">{{ __('backend.consumer') }}</span>
             </h5>
         </div>
-        <div style="float: right; padding-bottom: 5px;{{(auth()->user()->permissions_id ==4 && count($consumers)!=0) ?'display: none;': 'display: block;'}}">
+       <div style="float: right; padding-bottom: 5px;{{(auth()->user()->permissions_id ==4 && count($consumers)!=0) ?'display: none;': 'display: block;'}}">
             <a class="btn btn-fw primary"  href="{{route("consumers.create")}}">
                 <i class="material-icons">&#xe02e;</i>
                 &nbsp; <span>{{ __('backend.create') }}</span>
@@ -40,15 +40,15 @@
                             <tr class="row">
                                 <td>{{$key+1}}</td>
                                 <td>
-                                    <small>{{$consumer->salutation}} {{$consumer->first_name}} {{$consumer->middle_name}} {{$consumer->last_name}}</small>
+                                    <small>{{$consumer->salutations->value}} {{$consumer->first_name}} {{$consumer->middle_name}} {{$consumer->last_name}}</small>
                                 </td>
                                 <td>
                                     <div class="text-center">{{$consumer->primary_email}}</div>
                                 </td>
                                 <td>{{$consumer->primary_phone}}</td>
-                                <td>{{$consumer->current_us_city}}</td>
-                                <td>{{$consumer->current_us_state}}</td>
-                                <td>{{$consumer->current_us_zip}}</td>
+                                <td>{{$consumer->current_us_city->name}}</td>
+                                <td>{{$consumer->current_us_state->name}}</td>
+                                <td>{{$consumer->created_at->diffForHumans()}}</td>
                                 <td>
                                     <div class="text-center">
                                         <a class="btn btn-sm success" href="{{route("consumers.edit",$consumer->id)}}"

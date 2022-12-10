@@ -26,7 +26,7 @@ class CreateGovtsTable extends Migration
             $table->unsignedBigInteger('country_id_fk');
             $table->unsignedBigInteger('state_id_fk');
             $table->unsignedBigInteger('city_id_fk');
-            $table->unsignedBigInteger('type');
+            $table->json('agency_type');
             $table->string('zip_code')->nullable();
             $table->unsignedBigInteger('agency_sector_id_fk');
             $table->string('agency_represent');
