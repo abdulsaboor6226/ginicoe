@@ -66,6 +66,17 @@
                         <label>{{ __('backend.merchant') }}</label>
                     </div>
                 </div>
+                <div class="md-form-group p-t-0">
+                    <div class="col-md-4">
+                        <input class="has-value" type="radio" value="6" name="role" checked>
+                        <label>{{ __('backend.bank') }}</label>
+                    </div>
+                    <div class="col-md-1"></div>
+                    <div class="col-md-5">
+                        <input class="has-value" type="radio" value="7" name="role">
+                        <label>{{ __('backend.govt') }}</label>
+                    </div>
+                </div>
                 <button type="submit" class="btn primary btn-block p-x-md"><i
                         class="material-icons">&#xe7fe;</i> {{ __('backend.createNewAccount') }}</button>
             </form>

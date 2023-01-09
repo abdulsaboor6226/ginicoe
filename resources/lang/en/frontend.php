@@ -19,6 +19,7 @@ return [
     'name' => 'Name',
     'email' => 'Email',
     'phone' => 'Phone',
+    'signup' => 'Sign Up',
     'latestNews' => 'Latest News',
     'ourGallery' => 'Our Gallery',
     'subscribeToOurNewsletter' => 'Subscribe To Our Newsletter',

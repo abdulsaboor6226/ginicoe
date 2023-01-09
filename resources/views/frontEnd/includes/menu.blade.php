@@ -234,6 +234,9 @@
                         </li>
                     @endif
                 @endforeach
+                    @if(!Auth::check())
+                        <li><a href="{{ route("register") }}"></i> {{__('frontend.signup')}}</a></li>
+                    @endif
                 <li class="dropdown">
                     <div style="padding: 13px;">
                         @if(Helper::GeneralWebmasterSettings("dashboard_link_status"))
@@ -270,10 +273,9 @@
                                 </div>
                             </div>
                         @else
-                            <strong>
-                                <a href="{{ route("adminHome") }}"></i> {{__('frontend.login')}}
-                                </a>
-                            </strong>
+                            <ul>
+                                <a href="{{ route("adminHome") }}"></i> {{__('frontend.login')}}</a>
+                            </ul>
                         @endif
                     @endif
                     </div>
