@@ -15,19 +15,29 @@
                 <div class="card-header">{{ __('Verify Your Email Address') }}</div>
 
                 <div class="card-body">
-                    @if (session('resent'))
-                        <div class="alert alert-success" role="alert">
-                            {{ __('A fresh verification link has been sent to your email address.') }}
-                        </div>
+                    @if (session('status') == 'verification-link-sent')
+                        <div class="alert alert-success text-center">A new email verification link has been emailed to you!</div>
                     @endif
-
-                    {{ __('Before proceeding, please check your email for a verification link.') }}
-                    {{ __('If you did not receive the email') }}, <a
-                        href="{{ route('verification.resend') }}">{{ __('click here to request another') }}</a>.
+{{--                    @if (session('resent'))--}}
+{{--                        <div class="alert alert-success" role="alert">--}}
+{{--                            {{ __('A fresh verification link has been sent to your email address.') }}--}}
+{{--                        </div>--}}
+{{--                    @endif--}}
+                        <div class="text-center mb-5">
+                            <p>You must verify your email address to access this page.</p>
+                        </div>
+                        <form method="POST" action="{{ route('verification.send') }}" class="text-center">
+                            @csrf
+                            <button type="submit" class="btn btn-primary">Resend verification email</button>
+                        </form>
+{{--                    {{ __('Before proceeding, please check your email for a verification link.') }}--}}
+{{--                    {{ __('If you did not receive the email') }}, <a--}}
+{{--                        href="{{ route('verification.resend') }}">{{ __('click here to request another') }}</a>.--}}
                 </div>
+                <p class="mt-3 mb-0 text-center"><small>Issues with the verification process or entered the wrong email?
+                        <br>Please sign up with <a href="{{route('register-retry')}}" >another</a> email address.</small></p>
             </div>
         </div>
-
     </div>
 @endsection
 

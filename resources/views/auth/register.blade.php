@@ -68,7 +68,7 @@
                 </div>
                 <div class="md-form-group p-t-0">
                     <div class="col-md-4">
-                        <input class="has-value" type="radio" value="6" name="role" checked>
+                        <input class="has-value" type="radio" value="6" name="role">
                         <label>{{ __('backend.bank') }}</label>
                     </div>
                     <div class="col-md-1"></div>

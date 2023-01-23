@@ -5,6 +5,8 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LanguageController;
 use App\Http\Controllers\SiteMapController;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Foundation\Auth\EmailVerificationRequest;
+use Illuminate\Http\Request;
 
 /*
 |--------------------------------------------------------------------------
@@ -31,7 +33,16 @@ Route::get('/login', function () {
 //Route::get('/register', function () {
 //    return redirect('/');
 //});
+Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
+    $request->fulfill();
 
+    return redirect('/home');
+})->middleware(['auth', 'signed'])->name('verification.verify');
+Route::get('/register-retry', function(){
+    // Chrome F12 Headers - my_first_application_session=eyJpdiI6ImNnRH...
+    Cookie::queue(Cookie::forget(strtolower(str_replace(' ', '_', config('app.name'))) . '_session'));
+    return redirect('/');
+ })->name('register-retry');
 // RSS Feed Routes
 if (env("RSS_STATUS", 0)) {
     Route::feeds();

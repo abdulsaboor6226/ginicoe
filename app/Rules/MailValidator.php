@@ -25,7 +25,7 @@ class MailValidator implements Rule
      */
     public function passes($attribute, $value)
     {
-        if (Str::contains(Str::lower($value), ['@gmail.com','@outlook.com','@hotmail.com','@yahoo.com','@corporate.com','@icloud.com','@yandex.com','@proton.com','@zoho.com','@tutanota.com','@aol.com'])) {
+        if (Str::contains(Str::lower($value), ['@gmail.com','@outlook.com','@hotmail.com','@yahoo.com','@corporate.com','@icloud.com','@yandex.com','@proton.com','@zoho.com','@tutanota.com','@aol.com','@ginicoe.com'])) {
             return true;
         }
         return false;
@@ -38,6 +38,6 @@ class MailValidator implements Rule
      */
     public function message()
     {
-        return 'Only Gmail Outlook Hotmail Yahoo Corporate iCloud Yandex Proton Zoho Tutanota and AOL mail is Allow.';
+        return 'Only Gmail Outlook Hotmail Yahoo Corporate iCloud Yandex Proton Zoho Tutanota Ginicoe and AOL mail is Allow.';
     }
 }
