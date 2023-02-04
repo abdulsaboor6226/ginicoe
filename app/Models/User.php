@@ -73,4 +73,10 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->belongsTo('App\Models\Permissions', 'permissions_id');
     }
+
+     // relation with old passwords
+     public function oldPasswords()
+     {
+         return $this->hasMany('App\Models\OldPassword', 'user_id')->latest()->limit(4);
+     }
 }

@@ -3,6 +3,9 @@
 namespace App\Exceptions;
 
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Session\TokenMismatchException;
+Use Throwable;
+
 
 class Handler extends ExceptionHandler
 {
@@ -30,8 +33,20 @@ class Handler extends ExceptionHandler
      *
      * @return void
      */
+
+     public function render($request, Throwable $e)
+     {
+         if ($e instanceof TokenMismatchException){
+             return redirect('/admin/login');
+         }
+ 
+         return parent::render($request, $e);
+     }
+ 
     public function register()
     {
         //
     }
+
+    
 }

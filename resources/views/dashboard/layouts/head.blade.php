@@ -35,6 +35,7 @@
 @endif
 @stack('after-styles')
 <script src="{{ asset('assets/dashboard/js/jquery/dist/jquery-3.5.1.min.js') }}"></script>
+<script src="{{ asset('assets/dashboard/js/jquery.validate.min.js') }}"></script>
 <script>
     $(document).ready(function(){
         $(".become_a_partner").click(function () {

@@ -23,11 +23,12 @@
                 </div>
             @endif
 
-            <form name="reset" method="POST" action="{{ url('/'.env('BACKEND_PATH').'/password/email') }}">
+            <form id="resetPasswordForm" name="reset" method="POST" action="{{ url('/'.env('BACKEND_PATH').'/password/email') }}">
                 {{ csrf_field() }}
                 <div class="md-form-group {{ $errors->has('email') ? ' has-error' : '' }}">
                     <input type="email" name="email" value="{{ old('email') }}" class="md-input" required>
                     <label>{{ __('backend.yourEmail') }}</label>
+                    <span style="float: left;color:red"> </span>
                 </div>
                 @if ($errors->has('email'))
                     <div class="alert alert-danger">
@@ -47,5 +48,28 @@
         </div>
         </div>
     </div>
+    <script>
+        $("#resetPasswordForm").validate({
+            errorPlacement: function(error, element) {
+
+                error.appendTo(element.siblings("span"));
+            },
+            rules: {
+              
+                email: {
+                    required: true,
+                    email: true,
+                    maxlength: 50
+                },
+
+
+            },
+            messages: {
+            
+                email: "Please enter a valid email address",
+
+            }
+        });
+    </script>
 @endsection
 
