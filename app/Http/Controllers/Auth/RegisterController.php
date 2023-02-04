@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\OldPassword;
 use App\Providers\RouteServiceProvider;
 use App\Models\User;
 use App\Rules\MailValidator;
@@ -11,6 +12,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Redirect;
 use Helper;
+use Illuminate\Validation\Rules\Password;
 
 class RegisterController extends Controller
 {
@@ -55,7 +57,12 @@ class RegisterController extends Controller
         return Validator::make($data, [
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users', new MailValidator()],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'password' => ['required', 'string', 'min:8', 'confirmed',
+            Password::min(8)
+            ->mixedCase()
+            ->numbers()
+            ->symbols()
+            ->uncompromised(),],
         ]);
     }
 
@@ -67,12 +74,15 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
+        $user = User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
             'status' => true,
             'permissions_id' => $data['role'] ? $data['role'] : Helper::GeneralWebmasterSettings("permission_group"),    // Permission Group ID
         ]);
+        OldPassword::create(['user_id'=>$user->id,'password'=>Hash::make($data['password'])]);
+        
+        return $user;
     }
 }

@@ -128,7 +128,7 @@
             {{Form::close()}}
         <!-- link and dropdown -->
             @if(@Auth::user()->permissionsGroup->add_status)
-                <ul class="nav navbar-nav">
+                {{-- <ul class="nav navbar-nav">
                     <li class="nav-item dropdown">
                         <a class="nav-link" href data-toggle="dropdown">
                             <i class="fa fa-fw fa-plus text-muted"></i>
@@ -212,7 +212,7 @@
 
                         </div>
                     </li>
-                </ul>
+                </ul> --}}
         @endif
         <!-- / -->
         </div>
