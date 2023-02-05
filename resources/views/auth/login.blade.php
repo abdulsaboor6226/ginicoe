@@ -6,9 +6,9 @@
             <div class="text-center">
                 @if (Helper::GeneralSiteSettings('style_logo_' . @Helper::currentLanguage()->code) != '')
                     <img alt="" class="app-logo"
-                        src="{{ URL::to('uploads/settings/' . Helper::GeneralSiteSettings('style_logo_' . @Helper::currentLanguage()->code)) }}">
+                        src="{{ asset('uploads/settings/' . Helper::GeneralSiteSettings('style_logo_' . @Helper::currentLanguage()->code)) }}">
                 @else
-                    <img alt="" src="{{ URL::to('uploads/settings/nologo.png') }}">
+                    <img alt="" src="{{ asset('uploads/settings/nologo.png') }}">
                 @endif
             </div>
             <div class="m-y text-muted text-center">

@@ -41,9 +41,9 @@ class HomeController extends Controller
     {
         // check if script not installed yet.
         // check for installation
-        if (!File::exists('core/storage/installed')) {
-            Redirect::to('/install')->send();
-        }
+        // if (!File::exists('core/storage/installed')) {
+        //     Redirect::to('/install')->send();
+        // }
 
         // check if website is closed
         $this->close_check();
