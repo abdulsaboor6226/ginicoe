@@ -22,8 +22,9 @@
 <link rel="stylesheet" href="{{ asset('assets/dashboard/fonts/material-design-icons/material-design-icons.css') }}"
       type="text/css"/>
 
-<link rel="stylesheet" href="{{ asset('assets/dashboard/css/bootstrap/dist/css/bootstrap.min.css') }}"
-      type="text/css"/>
+<link rel="stylesheet" href="{{ asset('assets/dashboard/css/bootstrap/dist/css/bootstrap.min.css') }}" />
+
+  
 <link rel="stylesheet" href="{{ asset('assets/dashboard/css/app.css') }}" type="text/css"/>
 <link rel="stylesheet" href="{{ asset('assets/dashboard/css/font.css') }}" type="text/css"/>
 <link rel="stylesheet" href="{{ asset('assets/dashboard/css/topic.css') }}" type="text/css"/>
@@ -36,6 +37,7 @@
 @stack('after-styles')
 <script src="{{ asset('assets/dashboard/js/jquery/dist/jquery-3.5.1.min.js') }}"></script>
 <script src="{{ asset('assets/dashboard/js/jquery.validate.min.js') }}"></script>
+<link rel="stylesheet" href="{{ asset('css/dashboard_card.css') }}" type="text/css"/>
 <script>
     $(document).ready(function(){
         $(".become_a_partner").click(function () {

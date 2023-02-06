@@ -37,6 +37,7 @@ class DashboardController extends Controller
      */
     public function index()
     {
+       
         // General for all pages
         $GeneralWebmasterSections = WebmasterSection::where('status', '=', '1')->orderby('row_no', 'asc')->get();
         // General END
