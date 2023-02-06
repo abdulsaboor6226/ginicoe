@@ -296,14 +296,17 @@
 
 
                 <div class="row text-dark font-weight-bold">
-                    Natural disasters - Relocation of victims of fire, flood, hurricanes, earth quakes, tornadoes, mudslides and similar housing and County & State disasters in conjunction w/ FEMA, enjoy 100%  Platinum lowest prices in service & goods. geocoding system map
+                    Natural disasters - Relocation of victims of fire, flood, hurricanes, earth quakes, tornadoes,
+                    mudslides and similar housing and County & State disasters in conjunction w/ FEMA, enjoy 100%
+                    Platinum lowest prices in service & goods. geocoding system map
 
                 </div>
 
                 <div class="row text-dark font-weight-bold">
-                    Man-made disasters – riots, property damage, demonstrations, acts of violence, things that trigger high insurance claims are shamed at 0% copper highest prices in service & goods.
+                    Man-made disasters – riots, property damage, demonstrations, acts of violence, things that trigger
+                    high insurance claims are shamed at 0% copper highest prices in service & goods.
                 </div>
-                
+
             </div>
         </div>
 
@@ -386,40 +389,57 @@
                     </p>
                     <p class="name-client">
                         Types of Data Breach as of 02/06/2023
+
+                        <span class="text-left" style="margin-top: 2rem"
+                        title="Fraud Involving Debit and Credit Cards Not Via Hacking (skimming devices at point-of-service terminals, etc.)">
+                        1. CARD ...............................................68</span>
+
+                    <span class="text-left" style="margin-top: 2rem"
+                        title="Hacked by an Outside Party or Infected by Malware">
+                        2. HACK ..............................................2533
+                    </span>
+
+                    <span class="text-left" style="margin-top: 2rem"
+                        title="Insider (employee, contractor or customer)">
+                        3. INSIDER .........................................606
+                    </span>
+
+
+
+                    <span class="text-left" style="margin-top: 2rem"
+                        title="Physical (paper documents that are lost, discarded or stolen)">
+                        4. PHYSICAL ..................................... 1733
+                    </span>
+
+
+
+                    <span class="text-left" style="margin-top: 2rem"
+                        title="Portable Device (lost, discarded or stolen laptop, PDA, smartphone, memory stick, CDs, hard drive,data tape, etc.)">
+                        5. PORTABLE.....................................1172
+                    </span>
+
+
+                    <span class="text-left" style="margin-top: 2rem"
+                        title=" Stationary Computer Loss (lost, inappropriately accessed, discarded or stolen computer or server not designed for mobility)">
+                        6. STATATIONARY...............................249
+                    </span>
+
+
+                    <span class="text-left" style="margin-top: 2rem"
+                        title="Unintended Disclosure Not Involving Hacking, Intentional Breach or Physical Loss (sensitive information posted publicly, mishandled or sent to the wrong party via publishing online, sending in an email,sending in a mailing or sending via fax)">
+                        7. DISCLOSED..................................1861
+                    </span>
+
+
+
+                    <span class="text-left" style="margin-top: 2rem"
+                        title="Unknown (not enough information about breach to know how exactly the information was exposed)">
+                        8. UNKNOWN/OTHER.......................704
+                    </span>
                     </p>
 
-                    1. CARD
-                    Fraud Involving Debit and Credit Cards Not Via Hacking (skimming devices at point-of-service
-                    terminals,
-                    etc.)<br>
+                  
 
-                    2. HACK
-                    Hacked by an Outside Party or Infected by Malware<br>
-
-                    3. INSIDER
-                    Insider (employee, contractor or customer)<br>
-
-
-                    4. PHYSICAL
-                    Physical (paper documents that are lost, discarded or stolen)<br>
-
-                    5. PORTABLE
-                    Portable Device (lost, discarded or stolen laptop, PDA, smartphone, memory stick, CDs, hard drive,
-                    data
-                    tape, etc.)<br>
-
-                    6. STATATIONARY
-                    Stationary Computer Loss (lost, inappropriately accessed, discarded or stolen computer or server not
-                    designed for mobility)<br>
-
-                    7. DISCLOSED
-                    Unintended Disclosure Not Involving Hacking, Intentional Breach or Physical Loss (sensitive
-                    information
-                    posted publicly, mishandled or sent to the wrong party via publishing online, sending in an email,
-                    sending in a mailing or sending via fax)<br>
-
-                    8. UNKNOWN/OTHER
-                    Unknown (not enough information about breach to know how exactly the information was exposed)<br>
 
                 </div>
             </div>
